@@ -1,5 +1,5 @@
 package mens;
-
+ 
 /*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
  *
@@ -33,6 +33,10 @@ package mens;
 
 /*
  * KeyEventDemo
+ */
+
+/*
+ * version 0.5 
  */
 
 import java.awt.BorderLayout;
@@ -227,7 +231,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 		// flag[4]=1;
 		// break;
 		default:
-			System.err.println("Ungültige Eingabe!");
+			System.err.println("Ungï¿½ltige Eingabe!");
 		}
 	}
 
@@ -250,7 +254,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 		// flag[4]=0;
 		// break;
 		default:
-			System.err.println("Ungültige Eingabe!");
+			System.err.println("Ungï¿½ltige Eingabe!");
 		}
 	}
 	

@@ -33,9 +33,9 @@ public class MainMenu extends JFrame
 		
 	}
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		
-	}
+	}*/
 	
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet.");
