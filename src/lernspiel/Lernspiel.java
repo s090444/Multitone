@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.System;
 import java.math.*;
+import java.applet.*;
 
 /**
  * 
@@ -34,24 +35,22 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	// Anfang Attribute
 	long time;
 	long occtime;
-	long reaction;
 	int kombi;
-	String bwertung = "";
-	String btasten = "";
 	String string;
 	char letter;
 	int eingabe;
-	String[] allLetters = { "a", "b", "c" };
-	int[][] kombis = { { 0, 0, 0, 1,0,0,0, 0, 0, 1, 97 }, { 0, 1, 0, 1,0,0,0, 1, 0, 1, 98 },
-			{ 1, 0, 1, 0,0,0,0, 1, 0, 0, 99 }, { 1, 1, 0, 0,0,0, 1, 0, 0,0, 100 }, { 1, 0, 0, 1,0,0,0, 0, 1, 1, 101 } };
+	int[][] kombis = { { 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 97 },
+			{ 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 98 },
+			{ 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 99 },
+			{ 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 100 },
+			{ 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 101 } };
 	boolean[] tasten = { false, false, false, false, false, false, false,
 			false, false, false };
 
 	long maximum = 100; // Anzahl aller Tastenkombinationen
 	int zufall;
 	// private JLabel wertung = new JLabel(bwertung);
-	ImageLabel wertung = new ImageLabel(new ImageIcon(bwertung));
-	// ImageLabel tasten = new ImageLabel(new ImageIcon(btasten));
+	ImageLabel wertung = new ImageLabel(new ImageIcon(""));
 	ImageLabel tastenbild[] = { new ImageLabel(new ImageIcon("")),
 			new ImageLabel(new ImageIcon("")),
 			new ImageLabel(new ImageIcon("")),
@@ -62,6 +61,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			new ImageLabel(new ImageIcon("")),
 			new ImageLabel(new ImageIcon("")),
 			new ImageLabel(new ImageIcon("")) };
+	Sound Sound = new Sound();
 	JLabel zeit = new JLabel("");
 	JLabel zeichen = new JLabel("");
 	JTextField text = new JTextField();
@@ -85,22 +85,24 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		cp.setLayout(null);
 		// Anfang Komponenten
 
-		text.setBounds(0, 0, 400, 10);
+		text.setBounds(0, 0, 400, 0);
 		cp.add(text);
-		wertung.setBounds(0, 10, 400, 300);
+		wertung.setBounds(0, 0, 400, 300);
 		wertung.setBackground(Color.WHITE);
 		cp.add(wertung);
 
-		for (int i = 0; i <= 5; i++) { // faengt obere Tasteneihe hinzu
+		for (int i = 0; i < 5; i++) { // faengt obere Tastenreihe hinzu
 			tastenbild[i].setBounds(400 + 80 * i, 0, 80, 80);
 			tastenbild[i].setBackground(Color.WHITE);
 			cp.add(tastenbild[i]);
+			System.out.println(400 + 80 * i);
 
 		}
-		for (int i = 6; i < 10; i++) { // fuegt untere Tastenreihe hinzu
-			tastenbild[i].setBounds(400 + 80 * i, 150, 80, 80);
+		for (int i = 5; i < 10; i++) { // fuegt untere Tastenreihe hinzu
+			tastenbild[i].setBounds(400 + (80 * (i - 5)), 150, 80, 80);
 			tastenbild[i].setBackground(Color.WHITE);
 			cp.add(tastenbild[i]);
+			System.out.println(400 + (80 * (i - 6)));
 		}
 		row1.setBounds(400, 80, 400, 70);
 		row1.setOpaque(true);
@@ -161,6 +163,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				case 49:
 					tasten[0] = true;
 					updatetasten(0, true);
+					check();
 					break;
 				case 50:
 					tasten[1] = true;
@@ -199,9 +202,10 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					updatetasten(9, true);
 					break;
 				default:
-					
+
 					break;
 				}
+				check();
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -253,66 +257,34 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					System.err.println("Irgendwas stimmt nicht!");
 					break;
 				}
+				check();
 
 			}
 
 			public void keyTyped(KeyEvent e) {
 				// text.dispatchEvent(e);
-				/*System.out.println(e);
-				eingabe = e.getKeyCode();
-				switch (eingabe) {
-				case 49:
-					tasten[0] = true;
-					updatetasten(0, true);
-					break;
-				case 50:
-					tasten[1] = true;
-					updatetasten(1, true);
-					break;
-				case 51:
-					tasten[2] = true;
-					updatetasten(2, true);
-					break;
-				case 52:
-					tasten[3] = true;
-					updatetasten(3, true);
-					break;
-				case 53:
-					tasten[4] = true;
-					updatetasten(4, true);
-					break;
-				case 54:
-					tasten[5] = true;
-					updatetasten(5, true);
-					break;
-				case 55:
-					tasten[6] = true;
-					updatetasten(6, true);
-					break;
-				case 56:
-					tasten[7] = true;
-					updatetasten(7, true);
-					break;
-				case 57:
-					tasten[8] = true;
-					updatetasten(8, true);
-					break;
-				case 48:
-					tasten[9] = true;
-					updatetasten(9, true);
-					break;
-				default:
-					
-					break;
-				}*/
+				/*
+				 * System.out.println(e); eingabe = e.getKeyCode(); switch
+				 * (eingabe) { case 49: tasten[0] = true; updatetasten(0, true);
+				 * break; case 50: tasten[1] = true; updatetasten(1, true);
+				 * break; case 51: tasten[2] = true; updatetasten(2, true);
+				 * break; case 52: tasten[3] = true; updatetasten(3, true);
+				 * break; case 53: tasten[4] = true; updatetasten(4, true);
+				 * break; case 54: tasten[5] = true; updatetasten(5, true);
+				 * break; case 55: tasten[6] = true; updatetasten(6, true);
+				 * break; case 56: tasten[7] = true; updatetasten(7, true);
+				 * break; case 57: tasten[8] = true; updatetasten(8, true);
+				 * break; case 48: tasten[9] = true; updatetasten(9, true);
+				 * break; default:
+				 * 
+				 * break; }
+				 */
 
 				if (e.getKeyChar() == 'q') {
 					System.exit(0);
 				} else {
 					if (eingabe == letter) {
-						time = System.currentTimeMillis();
-						double reaction = (Math.round((time - occtime) * 10) / 10000.0);
-						updatezeit(reaction);
+
 						updatetasten();
 						// sleep(1000);
 						newround();
@@ -325,6 +297,33 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		});
 	}
 
+	public void check() {
+		boolean richtig = true;
+		for (int i = 0; i < 10; i++) {
+			if (((kombis[kombi][i] == 0) && (tasten[i] == false))
+					|| (kombis[kombi][i] == 1) && (tasten[i] == true)) {
+
+			} else {
+				richtig = false;
+			}
+		}
+		if (richtig == true) {
+
+			playsound();
+			getreaction();
+
+			newround();
+
+		}
+	}
+
+	public void getreaction() {
+		time = System.currentTimeMillis();
+		double reaction = (Math.round((time - occtime) * 10) / 10000.0);
+		updatezeit(reaction);
+		updatewertung(reaction);
+	}
+
 	public void newround() {
 		newletter();
 		updatezeichen();
@@ -335,16 +334,17 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 	public void countdown() {
 		updatewertung("src/Pics/start3.jpeg");
-		updatezeit(time);
+		updatezeit(3);
 		sleep(1000);
 		time--;
 		updatewertung("src/Pics/start2.jpeg");
-		updatezeit(time);
+		updatezeit(2);
 		time--;
 		sleep(1000);
 		updatewertung("src/Pics/start1.jpeg");
-		updatezeit(time);
+		updatezeit(1);
 		sleep(1000);
+		updatewertung("src/Pics/info.jpeg");
 		updatetasten();
 	}
 
@@ -353,7 +353,6 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		long random = (System.currentTimeMillis() % kombis.length);
 		kombi = (int) random;
 		letter = (char) kombis[kombi][10];
-		System.out.println(kombis[4][9]);
 	}
 
 	public void sleep(Integer sleeptime) {
@@ -364,23 +363,34 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		}
 	}
 
-	public void updatetasten() { // updatet das Tastenbild-Feld
+	public void updatetasten() { // updatet das Tastenbild-Feld komplett
 
-		
-		  for (int i=0; i<10; i++ ){ if (kombis[kombi][i] == 1){
-		  tastenbild[i].setIcon(new ImageIcon("src/Pics/pressit.jpeg")); } else {
-		  tastenbild[i].setIcon(new ImageIcon("src/Pics/pressthisnot.jpeg")); } }
-		 
+		for (int i = 0; i < 10; i++) {
+			if (kombis[kombi][i] == 1) {
+				tastenbild[i].setIcon(new ImageIcon("src/Pics/pressit.jpeg"));
+			} else {
+				tastenbild[i].setIcon(new ImageIcon(
+						"src/Pics/pressthisnot.jpeg"));
+			}
+		}
+
 	}
 
-	public void updatetasten(int i, boolean pressed) {
+	public void updatetasten(int i, boolean pressed) { // ändert das Bild, je
+														// nachdem welche Tasten
+														// im Moment gedrückt
+														// werden
 		if ((i >= 0) && (i < 10)) {
 			if (pressed == true) {
 				tastenbild[i].setIcon(new ImageIcon("src/Pics/used.jpeg"));
-				System.out.println("Taste gedrückt");
 				sleep(20);
 			} else {
-				tastenbild[i].setIcon(new ImageIcon("src/Pics/unused.jpeg"));
+				// tastenbild[i].setIcon(new ImageIcon("src/Pics/unused.jpeg"));
+				if (kombis[kombi][i] == 1) {
+					tastenbild[i].setIcon(new ImageIcon("src/Pics/pressit.jpeg"));
+				} else {
+					tastenbild[i].setIcon(new ImageIcon("src/Pics/pressthisnot.jpeg"));
+				}
 			}
 
 		} else {
@@ -392,29 +402,43 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		wertung.setIcon(new ImageIcon(image));
 	}
 
+	public void updatewertung(double reaction) { // ändert das Wertungsbild je
+													// nach Reaktionszeit
+		if (reaction < 1.5) {
+			updatewertung("src/Pics/awesome.jpeg");
+		} else if (reaction < 3) {
+			updatewertung("src/Pics/nice.jpeg");
+		} else {
+			updatewertung("src/Pics/fail.jpeg");
+		}
+
+	}
+	
+	public void playsound(){
+		Sound.playSound((char) kombis[kombi][10]);
+	}
+
 	public void updatezeit(double time) { // updatet die Zeit
 
 		zeit.setText("Reaktionszeit: " + time + " s");
 	}
 
-	public void updatezeichen() {
+	public void updatezeit(int time) { // updatet die Zeit
+
+		zeit.setText(time + "");
+	}
+
+	public void updatezeichen() { // updatet das Zeichen, dass eingegeben werden
+									// soll
 		zeichen.setText(letter + "");
 	}
 
-	public String kombipfad() {
+	public String kombipfad() { // legacy method
 		return "src/Pics/" + letter + ".jpeg";
-	}
-
-	public void random() {
-
-		// zufall = Random.nextInt();
 	}
 
 	public static void main(String[] args) {
 		new Lernspiel("Lernspiel");
-
-		// sleep(4);
-		// updatewertung("src/Pics/fail.jpeg");
 
 	}
 }
