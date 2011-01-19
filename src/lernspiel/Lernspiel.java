@@ -9,19 +9,12 @@ import java.awt.Container;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.awt.Font;
-import java.util.Random;
-import java.io.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.System;
-import java.math.*;
-import java.applet.*;
 
 /**
  * 

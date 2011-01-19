@@ -1,12 +1,12 @@
 package lernspiel;
 
-import java.awt.*;
 import java.applet.*;
 import java.io.*;
 import java.net.MalformedURLException;
 
 public class Sound extends Applet {
       
+	@SuppressWarnings("deprecation")
 	public void playSound(char letter){
 		System.out.println(letter);
 		File file= new File("src/Audio/" + letter+ ".wav");
