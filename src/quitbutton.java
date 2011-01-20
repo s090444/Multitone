@@ -5,7 +5,7 @@
 
 // Uebung 1 - simple window example
 
-package javaapplication3;
+package test;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
