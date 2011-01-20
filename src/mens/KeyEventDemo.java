@@ -133,7 +133,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 	}
 
 	/** Configuration */
-	final static int numOfKeys = 3;
+	final static int numOfKeys = 10;
 	final static int TYPING_TIME = 500;
 	
 	/** global variables*/
@@ -184,8 +184,9 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 	public char mapp() {
 		for (int i = 0; i < numOfPoss; i++) {
 			for (int k = 0; k < numOfKeys + 1; k++) {
-				if (k == 3)
+				if (k == numOfKeys){
 					return (char) mapping[k][i];
+				}
 				else if (mapping[k][i] != flag[k])
 					break;
 			}
@@ -215,46 +216,78 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 	/** set flag if key is pressed */
 	public void pressedKey(KeyEvent e) {
 		switch (e.getKeyChar()) {
-		case 'a':
+		case 'q':
 			flag[0] = 1;
 			break;
-		case 's':
+		case 'w':
 			flag[1] = 1;
 			break;
-		case 'd':
+		case 'e':
 			flag[2] = 1;
 			break;
-		// case 'f':
-		// flag[3]=1;
-		// break;
-		// case 'j':
-		// flag[4]=1;
-		// break;
+		 case 'r':
+		 flag[3]=1;
+		 break;
+		 case 'v':
+		 flag[4]=1;
+		 break;
+		 case 'n':
+			 flag[5]=1;
+			 break;
+		 case 'u':
+			 flag[6]=1;
+			 break;
+		 case 'i':
+			 flag[7]=1;
+			 break;
+		 case 'o':
+			 flag[8]=1;
+			 break;
+		 case 'p':
+			 flag[9]=1;
+			 break;
+			 
+		
 		default:
-			System.err.println("Ung�ltige Eingabe!");
+			System.err.println("Ungültige Eingabe!");
 		}
 	}
 
 	/** update flag if key is released */
 	public void releasedKey(KeyEvent e) {
 		switch (e.getKeyChar()) {
-		case 'a':
+		case 'q':
 			flag[0] = 0;
 			break;
-		case 's':
+		case 'w':
 			flag[1] = 0;
 			break;
-		case 'd':
+		case 'e':
 			flag[2] = 0;
 			break;
-		// case 'f':
-		// flag[3]=0;
-		// break;
-		// case 'j':
-		// flag[4]=0;
-		// break;
+		 case 'r':
+		 flag[3]=0;
+		 break;
+		 case 'v':
+		 flag[4]=0;
+		 break;
+		 case 'n':
+			 flag[5]=0;
+			 break;
+		 case 'u':
+			 flag[6]=0;
+			 break;
+		 case 'i':
+			 flag[7]=0;
+			 break;
+		 case 'o':
+			 flag[8]=0;
+			 break;
+		 case 'p':
+			 flag[9]=0;
+			 break;
 		default:
-			System.err.println("Ung�ltige Eingabe!");
+			System.err.println("Ungültige Eingabe!");
 		}
 	}
 	
@@ -263,6 +296,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 		public void run() {
 			firstKeyPressedflag = false;
 			char map = mapp();
+			System.out.println(mapp());
 			if (map != 0)
 				s = s + map;
 			displayArea.setText("Mapping: " + s);
