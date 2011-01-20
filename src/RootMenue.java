@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package javaapplication3;
+package test;
 
 
 import java.awt.Color;

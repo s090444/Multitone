@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package javaapplication3;
+package test;
 
 /*
  * Christian: 29.12.2010 - 2 jButton hinzugefügt, mittels 'j' - Taste weiterschalten im Menue
