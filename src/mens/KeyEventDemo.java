@@ -133,21 +133,45 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 	}
 
 	/** Configuration */
-	final static int numOfKeys = 10;
-	final static int TYPING_TIME = 500;
+	final int numOfKeys = 10;
+	final int TYPING_TIME = 500;
+	
+	
 	
 	/** global variables*/
-	final static int numOfPoss = (int) Math.pow(2, numOfKeys) - 1;
-	static boolean firstKeyPressedflag = false;
-	static int flag[] = new int[numOfKeys];
-	static Timer timer = new Timer();
-	static String s = new String();
-	static int mapping[][] = readMapping();
+	final int numOfPoss = readNumOfPoss();
+	boolean firstKeyPressedflag = false;
+	int flag[] = new int[numOfKeys];
+	Timer timer = new Timer();
+	String s = new String();
+	int mapping[][] = readMapping();
 	
 
 	/** read mapping out of txt file, return it within an integer-array */
 	
-	public static int[][] readMapping() {
+	public int readNumOfPoss(){
+		RandomAccessFile f = null;
+		int counter =0;
+		try{
+			f = new RandomAccessFile("Mapping.txt", "r");
+			for (String line; (line = f.readLine())!= null;)
+				counter++;
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (f != null)
+				try {
+					f.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+		return counter;
+	}
+	
+	public int[][] readMapping() {
 		int mapping[][] = new int[numOfKeys + 1][numOfPoss];
 		RandomAccessFile f = null;
 		try {
@@ -174,6 +198,13 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+		}
+		
+		for(int i =0; i<numOfPoss; i++){
+			for(int k =0; k<numOfKeys+1; k++){
+				System.out.print(mapping[k][i]);
+			}
+			System.out.println();
 		}
 		return mapping;
 	}
