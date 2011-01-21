@@ -20,11 +20,11 @@ class MappedKey extends TimerTask {
 		char mappedKey = mapp();
 		
 		//System.out.println("Var map: " + mappedKey);		
-		
+
+		parent.setFirstKeyPressedflag(false);		
 		if (mappedKey != 0){
 			parent.setMap(mappedKey);
 			System.out.println("MappedKey: " + parent.getMap());
-			parent.setFirstKeyPressedflag(false);		
 			
 			parent.runApplication(mappedKey);			
 		}
