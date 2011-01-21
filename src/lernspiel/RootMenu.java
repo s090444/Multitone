@@ -76,7 +76,7 @@ public class RootMenu extends JFrame
         System.out.println("RootWindow: " + e);
         
         new Lernspiel("Lernspiel", root);
-        this.dispose();
+        //this.dispose();
 
         //throw new UnsupportedOperationException("Not supported yet.");
     }

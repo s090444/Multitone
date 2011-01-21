@@ -73,6 +73,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		super(title);
 		
 		parent = root;
+		parent.dispose();
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 800;
