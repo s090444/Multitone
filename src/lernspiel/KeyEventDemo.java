@@ -1,4 +1,4 @@
-package mens;
+package lernspiel;
  
 /*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
@@ -57,8 +57,8 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 	JTextArea displayArea;
 	static final String newline = System.getProperty("line.separator");
 
-	public static void main(String[] args) {
-		/* Use an appropriate Look and Feel */
+	/*public static void main(String[] args) {
+		/* Use an appropriate Look and Feel 
 		try {
 			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -72,7 +72,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
 		}
-		/* Turn off metal's use of bold fonts */
+		/* Turn off metal's use of bold fonts 
 		UIManager.put("swing.boldMetal", Boolean.FALSE);
 
 		// Schedule a job for event dispatch thread:
@@ -82,7 +82,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 				createAndShowGUI();
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the GUI and show it. For thread safety, this method should be

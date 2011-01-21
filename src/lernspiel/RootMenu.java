@@ -7,11 +7,13 @@ package lernspiel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Timer;
 
 import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+
 
 /**
  *
@@ -20,15 +22,36 @@ import javax.swing.JFrame;
 public class RootMenu extends JFrame
         implements KeyListener{
 
-    private static final long serialVersionUID = 7465416001464648515L;
-    
+    private static final long serialVersionUID = 7465416001464648515L;    
     static RootMenu root;
+    
+
+	/** Configuration */
+	final int numOfKeys = 10;
+	final int TYPING_TIME = 500;	
+	
+	
+	/** global variables*/
+	boolean firstKeyPressedflag = false;
+	char map;
+	int numOfPoss = 0;
+	int flag[] = new int[numOfKeys];
+	
+	String s = new String();
+	int mapping[][];
+
 
     /*
      * Constructor
      */
     public RootMenu(){
         super();
+
+        System.out.println("Initializiere RootMenu...");
+        new ReadNumOfPoss(root);
+        System.out.println("NumOfPoss(): " + this.numOfPoss);
+        new ReadMapping(root);
+        
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         this.addComponentsToPanel();
@@ -50,6 +73,10 @@ public class RootMenu extends JFrame
         });
     }
 
+    /*
+     * GUI
+     */
+    
     public void addComponentsToPanel(){
 
         JPanel panel = new JPanel();
@@ -62,11 +89,12 @@ public class RootMenu extends JFrame
         this.getContentPane().add(panel);
 
         setTitle("RootMenu");
-        setSize(300, 200);
+        setSize(800, 600);
 
         setLocationRelativeTo(null);
     }
 
+      
     public void keyTyped(KeyEvent e) {
         //System.out.println(e);
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -75,15 +103,51 @@ public class RootMenu extends JFrame
     public void keyPressed(KeyEvent e) {
         System.out.println("RootWindow: " + e);
         
-        new Lernspiel("Lernspiel", root);
+        //new Lernspiel("Lernspiel", root);
         //this.dispose();
+        
+        
+    	/** Handle the key pressed event. */
+    	this.setFlac(e, 1);
+    	
+		if (firstKeyPressedflag == false) {
+			firstKeyPressedflag = true;
 
+			Timer timer = new Timer();
+			timer.schedule(new MappedKey(root), TYPING_TIME);
+			System.out.println("MappedKey: " + map);
+		}
+
+    	/** set flag if key is pressed */
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void keyReleased(KeyEvent e) {
-        //System.out.println(e);
+    	
+    	/** update flag if key is released */
+    	this.setFlac(e, 0);
+    	
+        //System.out.println(e);	
         //throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public void setFlac(KeyEvent e, int flac){
+    	
+    	switch (e.getKeyChar()) {
+		case 'q': flag[0] = flac; break;
+		case 'w': flag[1] = flac; break;
+		case 'e': flag[2] = flac; break;
+		case 'r': flag[3] = flac; break;
+		case 'v': flag[4] = flac; break;
+		case 'n': flag[5] = flac; break;
+		case 'u': flag[6] = flac; break;
+		case 'i': flag[7] = flac; break;
+		case 'o': flag[8] = flac; break;
+		case 'p': flag[9] = flac; break;
+		
+		default:
+			System.err.println("Ungültige Eingabe!");
+		}
     }
 
 }

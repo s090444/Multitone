@@ -255,7 +255,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					tasten[9] = false;
 					updatetasten(9, false);
 					break;
-				default:
+				default:http://www.torsten-horn.de/techdocs/ascii.htm
 					System.err.println("Irgendwas stimmt nicht!");
 					break;
 				}
