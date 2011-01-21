@@ -28,7 +28,7 @@ public class RootMenu extends JFrame
 
 	/** Configuration */
 	final int numOfKeys = 10;
-	final int typingTime = 3000;	
+	final int typingTime = 500;	
 	
 	
 	/** global variables*/
@@ -42,16 +42,42 @@ public class RootMenu extends JFrame
 		this.firstKeyPressedflag = firstKeyPressedflag;
 	}
 
-	char map;
 	int numOfPoss = 0;
+	
+	char map;
+	
+	public char getMap() {
+		return map;
+	}
+
+	public void setMap(char map) {
+		this.map = map;
+	}
 
 	int flag[] = new int[numOfKeys];
 	
+	public int[] getFlag() {
+		return flag;
+	}
+
+	public void setFlag(int field, int flac) {
+		this.flag[field] = flac;
+	}
+
 	String s = new String();
-	int mapping[][];
+	
+	private int mapping[][];
 
 
-    /*
+    public int[][] getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(int[][] mapping) {
+		this.mapping = mapping;
+	}
+
+	/*
      * Constructor
      */
     public RootMenu(){
@@ -67,7 +93,7 @@ public class RootMenu extends JFrame
         System.out.println("Read numbers of Possibilities (out of file): " + this.numOfPoss);
         
         ReadMapping readMapp = new ReadMapping(this.numOfKeys, this.numOfPoss);
-        this.mapping = readMapp.readMapping();
+        this.setMapping(readMapp.readMapping());
         System.out.println("Einlesen des Mappings. Erste Mapping[0][0] ist : " + this.mapping[0][0]);
         
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -119,7 +145,7 @@ public class RootMenu extends JFrame
     }
 
     public void keyPressed(KeyEvent e) {
-        System.out.println("RootWindow: " + e);
+        //System.out.println("RootWindow: " + e);
         
         //new Lernspiel("Lernspiel", root);
         //this.dispose();
@@ -154,18 +180,19 @@ public class RootMenu extends JFrame
     }
     
     public void setFlac(KeyEvent e, int flac){
+    	//System.out.println("keyChar: " + e.getKeyChar());
     	
     	switch (e.getKeyChar()) {
-		case 'q': flag[0] = flac; break;
-		case 'w': flag[1] = flac; break;
-		case 'e': flag[2] = flac; break;
-		case 'r': flag[3] = flac; break;
-		case 'v': flag[4] = flac; break;
-		case 'n': flag[5] = flac; break;
-		case 'u': flag[6] = flac; break;
-		case 'i': flag[7] = flac; break;
-		case 'o': flag[8] = flac; break;
-		case 'p': flag[9] = flac; break;
+		case 'q': this.setFlag(0, flac); break;
+		case 'w': this.setFlag(1, flac); break;
+		case 'e': this.setFlag(2, flac); break;
+		case 'r': this.setFlag(3, flac); break;
+		case 'v': this.setFlag(4, flac); break;
+		case 'n': this.setFlag(5, flac); break;
+		case 'u': this.setFlag(6, flac); break;
+		case 'i': this.setFlag(7, flac); break;
+		case 'o': this.setFlag(8, flac); break;
+		case 'p': this.setFlag(9, flac); break;
 		
 		default:
 			System.err.println("Ungültige Eingabe!");
