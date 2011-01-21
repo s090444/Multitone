@@ -26,6 +26,9 @@ import java.lang.System;
 
 public class Lernspiel extends JFrame implements SwingConstants {
 	// Anfang Attribute
+	
+    private static final long serialVersionUID = 4361337321071606387L;
+	
 	long time;
 	long occtime;
 	int kombi;
@@ -63,9 +66,14 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 	// Ende Attribute
 
-	public Lernspiel(String title) {
+	static RootMenu parent;
+	
+	public Lernspiel(String title, RootMenu root) {
 		// Frame-Initialisierung
 		super(title);
+		
+		parent = root;
+		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 800;
 		int frameHeight = 600;
@@ -274,7 +282,11 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				 */
 
 				if (e.getKeyChar() == 'q') {
-					System.exit(0);
+					//System.exit(0);
+					
+			        //setVisible(false);
+					parent.setVisible(true);
+					dispose();
 				} else {
 					if (eingabe == letter) {
 
@@ -369,9 +381,9 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 	}
 
-	public void updatetasten(int i, boolean pressed) { // ändert das Bild, je
+	public void updatetasten(int i, boolean pressed) { // ï¿½ndert das Bild, je
 														// nachdem welche Tasten
-														// im Moment gedrückt
+														// im Moment gedrï¿½ckt
 														// werden
 		if ((i >= 0) && (i < 10)) {
 			if (pressed == true) {
@@ -395,7 +407,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		wertung.setIcon(new ImageIcon(image));
 	}
 
-	public void updatewertung(double reaction) { // ändert das Wertungsbild je
+	public void updatewertung(double reaction) { // ï¿½ndert das Wertungsbild je
 													// nach Reaktionszeit
 		if (reaction < 1.5) {
 			updatewertung("src/Pics/awesome.jpeg");
@@ -430,8 +442,12 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		return "src/Pics/" + letter + ".jpeg";
 	}
 
-	public static void main(String[] args) {
+	
+	/* Starten des Programms in das RootMenu ausgelagert 
+	 * Instanziierung des Lernspiels
+	 */
+	/*public static void main(String[] args) {
 		new Lernspiel("Lernspiel");
 
-	}
+	}*/
 }
