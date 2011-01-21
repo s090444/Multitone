@@ -16,7 +16,6 @@ class MappedKey extends TimerTask {
 	
 	public void run() {
 		
-		parent.setFirstKeyPressedflag(false);
         //System.out.println("(MappedKey) FirstKeyPressedflag gesetzt auf " + parent.isFirstKeyPressedflag());
 		char mappedKey = mapp();
 		
@@ -24,6 +23,9 @@ class MappedKey extends TimerTask {
 		
 		if (mappedKey != 0)
 			parent.setMap(mappedKey);
+		
+		System.out.println("MappedKey: " + parent.getMap());
+		parent.setFirstKeyPressedflag(false);		
 		
 	}
 

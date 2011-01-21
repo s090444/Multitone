@@ -28,7 +28,7 @@ public class RootMenu extends JFrame
 
 	/** Configuration */
 	final int numOfKeys = 10;
-	final int typingTime = 500;	
+	final int typingTime = 1000;	
 	
 	
 	/** global variables*/
@@ -162,8 +162,7 @@ public class RootMenu extends JFrame
 
 			Timer timer = new Timer();
 			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
-			
-			System.out.println("MappedKey: " + map);			
+				
 		}
 
     	/** set flag if key is pressed */
