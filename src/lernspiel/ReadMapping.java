@@ -14,7 +14,7 @@ public class ReadMapping {
 		numOfKeys = keys;
 		numOfPoss = poss;
 
-		System.out.println("NumOfKeys: " + numOfKeys);
+		//System.out.println("NumOfKeys: " + numOfKeys);
 		readMapping();
 	}
 	

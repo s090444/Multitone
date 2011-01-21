@@ -17,10 +17,10 @@ class MappedKey extends TimerTask {
 	public void run() {
 		
 		parent.setFirstKeyPressedflag(false);
-        System.out.println("(MappedKey) FirstKeyPressedflag gesetzt auf " + parent.isFirstKeyPressedflag());
+        //System.out.println("(MappedKey) FirstKeyPressedflag gesetzt auf " + parent.isFirstKeyPressedflag());
 		char mappedKey = mapp();
 		
-		System.out.println("Var map: " + mappedKey);		
+		//System.out.println("Var map: " + mappedKey);		
 		
 		if (mappedKey != 0)
 			parent.setMap(mappedKey);
@@ -29,10 +29,10 @@ class MappedKey extends TimerTask {
 
 	/** check typed keys against mapping-array and return mapped char */
 	public char mapp() {
-		System.out.println("numOfPoss: " + numOfPoss);
+		/*System.out.println("numOfPoss: " + numOfPoss);
 		System.out.println("numOfKeys: " + numOfKeys);
 		System.out.println("Mapping: " + parent.getMapping()[10][0]);
-		System.out.println("flag: " + parent.getFlag()[0]);
+		System.out.println("flag: " + parent.getFlag()[0]);*/
 		
 		for (int i = 0; i < numOfPoss; i++) {
 			for (int k = 0; k < numOfKeys + 1; k++) {

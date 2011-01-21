@@ -157,8 +157,8 @@ public class RootMenu extends JFrame
         //System.out.println("(RootM keyPressed) FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
 		if (this.isFirstKeyPressedflag() == false) {
 			this.setFirstKeyPressedflag(true);
-	        System.out.println("FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
-			System.out.println("Eingabe beginn...");
+	        //System.out.println("FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
+			//System.out.println("Eingabe beginn...");
 
 			Timer timer = new Timer();
 			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
