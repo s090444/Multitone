@@ -28,49 +28,22 @@ public class RootMenu extends JFrame
 
 	/** Configuration */
 	final int numOfKeys = 10;
-	final int TYPING_TIME = 500;	
+	final int typingTime = 3000;	
 	
 	
 	/** global variables*/
-	boolean firstKeyPressedflag = false;
+	private boolean firstKeyPressedflag;
+	
+	public boolean isFirstKeyPressedflag() {
+		return firstKeyPressedflag;
+	}
+
+	public void setFirstKeyPressedflag(boolean firstKeyPressedflag) {
+		this.firstKeyPressedflag = firstKeyPressedflag;
+	}
+
 	char map;
 	int numOfPoss = 0;
-	
-	public char getMap() {
-		return map;
-	}
-
-	public void setMap(char map) {
-		this.map = map;
-	}
-
-	public int getNumOfPoss() {
-		return numOfPoss;
-	}
-
-	public void setNumOfPoss(int numOfPoss) {
-		this.numOfPoss = numOfPoss;
-	}
-
-	public int[] getFlag() {
-		return flag;
-	}
-
-	public void setFlag(int[] flag) {
-		this.flag = flag;
-	}
-
-	public int[][] getMapping() {
-		return mapping;
-	}
-
-	public void setMapping(int[][] mapping) {
-		this.mapping = mapping;
-	}
-
-	public int getNumOfKeys() {
-		return numOfKeys;
-	}
 
 	int flag[] = new int[numOfKeys];
 	
@@ -85,9 +58,17 @@ public class RootMenu extends JFrame
         super();
 
         System.out.println("Initializiere RootMenu...");
-        new ReadNumOfPoss(root);
-        System.out.println("NumOfPoss(): " + this.numOfPoss);
-        new ReadMapping(root);
+        
+        this.setFirstKeyPressedflag(false);
+        System.out.println("FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
+        
+        ReadNumOfPoss readNum = new ReadNumOfPoss();
+        this.numOfPoss = readNum.readNumOfPoss();        
+        System.out.println("Read numbers of Possibilities (out of file): " + this.numOfPoss);
+        
+        ReadMapping readMapp = new ReadMapping(this.numOfKeys, this.numOfPoss);
+        this.mapping = readMapp.readMapping();
+        System.out.println("Einlesen des Mappings. Erste Mapping[0][0] ist : " + this.mapping[0][0]);
         
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -146,13 +127,17 @@ public class RootMenu extends JFrame
         
     	/** Handle the key pressed event. */
     	this.setFlac(e, 1);
-    	
-		if (firstKeyPressedflag == false) {
-			firstKeyPressedflag = true;
+
+        //System.out.println("(RootM keyPressed) FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
+		if (this.isFirstKeyPressedflag() == false) {
+			this.setFirstKeyPressedflag(true);
+	        System.out.println("FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
+			System.out.println("Eingabe beginn...");
 
 			Timer timer = new Timer();
-			timer.schedule(new MappedKey(root), TYPING_TIME);
-			System.out.println("MappedKey: " + map);
+			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
+			
+			System.out.println("MappedKey: " + map);			
 		}
 
     	/** set flag if key is pressed */
@@ -185,6 +170,10 @@ public class RootMenu extends JFrame
 		default:
 			System.err.println("Ungültige Eingabe!");
 		}
+    }
+    
+    public void run(){
+    	
     }
 
 }

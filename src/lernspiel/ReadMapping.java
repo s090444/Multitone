@@ -8,21 +8,26 @@ import java.io.RandomAccessFile;
 
 public class ReadMapping {
 	
-	RootMenu parent;
+	int numOfKeys, numOfPoss;
 	
-	public ReadMapping(RootMenu root){
-		parent = root;
+	public ReadMapping(int keys, int poss){
+		numOfKeys = keys;
+		numOfPoss = poss;
+
+		System.out.println("NumOfKeys: " + numOfKeys);
 		readMapping();
 	}
 	
-	public void readMapping() {
-		int mapping[][] = new int[parent.numOfKeys + 1][parent.numOfPoss];
+	public int[][] readMapping() {
+		
+		int mapping[][] = new int[numOfKeys + 1][numOfPoss];
 		RandomAccessFile f = null;
+		
 		try {
 			f = new RandomAccessFile("Mapping.txt", "r");
-			for (int i = 0; i < parent.numOfPoss; i++) {
+			for (int i = 0; i < numOfPoss; i++) {
 				for (String line; (line = f.readLine()) != null;) {
-					for (int k = 0; k < parent.numOfKeys + 1; k++) {
+					for (int k = 0; k < numOfKeys + 1; k++) {
 						int index = line.indexOf(';');
 						mapping[k][i] = Integer.parseInt(line.substring(0,
 								index));
@@ -44,6 +49,6 @@ public class ReadMapping {
 				}
 		}
 		
-		parent.mapping = mapping;
+		return mapping;
 	}
 }

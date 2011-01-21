@@ -5,17 +5,12 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class ReadNumOfPoss {
-	
-	RootMenu parent;
-	
-	public ReadNumOfPoss(RootMenu root){
-		parent = root;
-
-		readNumOfPoss();
+		
+	public ReadNumOfPoss(){
 	}
 	
 	
-	public void readNumOfPoss(){
+	public int readNumOfPoss(){
 		
 		RandomAccessFile f = null;
 		int counter = 0;
@@ -35,11 +30,8 @@ public class ReadNumOfPoss {
 					e.printStackTrace();
 				}
 		}
-
-
-		parent.setNumOfPoss(counter);
-        System.out.println("Getter NumOfPoss(): " + parent.getNumOfPoss());
-        System.out.println("NumOfPoss(): " + parent.numOfPoss);
+		
+		return counter;
 		
 	}
 }
