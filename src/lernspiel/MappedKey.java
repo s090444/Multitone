@@ -21,11 +21,13 @@ class MappedKey extends TimerTask {
 		
 		//System.out.println("Var map: " + mappedKey);		
 		
-		if (mappedKey != 0)
+		if (mappedKey != 0){
 			parent.setMap(mappedKey);
-		
-		System.out.println("MappedKey: " + parent.getMap());
-		parent.setFirstKeyPressedflag(false);		
+			System.out.println("MappedKey: " + parent.getMap());
+			parent.setFirstKeyPressedflag(false);		
+			
+			parent.runApplication(mappedKey);			
+		}
 		
 	}
 
