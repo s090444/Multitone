@@ -36,8 +36,9 @@ public class ReadNumOfPoss {
 				}
 		}
 
-        System.out.println("TTest");
-		parent.numOfPoss = counter;
+
+		parent.setNumOfPoss(counter);
+        System.out.println("Getter NumOfPoss(): " + parent.getNumOfPoss());
         System.out.println("NumOfPoss(): " + parent.numOfPoss);
 		
 	}

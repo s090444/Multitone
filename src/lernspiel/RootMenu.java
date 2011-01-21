@@ -35,6 +35,43 @@ public class RootMenu extends JFrame
 	boolean firstKeyPressedflag = false;
 	char map;
 	int numOfPoss = 0;
+	
+	public char getMap() {
+		return map;
+	}
+
+	public void setMap(char map) {
+		this.map = map;
+	}
+
+	public int getNumOfPoss() {
+		return numOfPoss;
+	}
+
+	public void setNumOfPoss(int numOfPoss) {
+		this.numOfPoss = numOfPoss;
+	}
+
+	public int[] getFlag() {
+		return flag;
+	}
+
+	public void setFlag(int[] flag) {
+		this.flag = flag;
+	}
+
+	public int[][] getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(int[][] mapping) {
+		this.mapping = mapping;
+	}
+
+	public int getNumOfKeys() {
+		return numOfKeys;
+	}
+
 	int flag[] = new int[numOfKeys];
 	
 	String s = new String();
