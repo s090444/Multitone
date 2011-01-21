@@ -200,12 +200,12 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener 
 				}
 		}
 		
-		for(int i =0; i<numOfPoss; i++){
-			for(int k =0; k<numOfKeys+1; k++){
-				System.out.print(mapping[k][i]);
-			}
-			System.out.println();
-		}
+//		for(int i =0; i<numOfPoss; i++){
+//			for(int k =0; k<numOfKeys+1; k++){
+//				System.out.print(mapping[k][i]);
+//			}
+//			System.out.println();
+//		}
 		return mapping;
 	}
 
