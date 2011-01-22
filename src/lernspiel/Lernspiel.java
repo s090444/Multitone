@@ -25,7 +25,7 @@ import java.util.TimerTask;
  * @author
  */
 
-public abstract class Lernspiel extends JFrame implements SwingConstants {
+public class Lernspiel extends JFrame implements SwingConstants {
 	// Anfang Attribute
 	
     private static final long serialVersionUID = 4361337321071606387L;
@@ -33,14 +33,19 @@ public abstract class Lernspiel extends JFrame implements SwingConstants {
 	long time;
 	long occtime;
 	int fehler =0;
+	int runden=0;
 	int kombi;
 	String string;
 	char letter;
 	int eingabe;
+	double durchschnitt;
+	double summe;
+	int zaehler=0;
 	boolean firstKey;
 	
 	int[][] kombis = parent.getMapping();
 	Timer timer = new Timer();
+	
 	
 	
 	
@@ -300,17 +305,13 @@ public abstract class Lernspiel extends JFrame implements SwingConstants {
 					//System.exit(0);
 					
 			        //setVisible(false);
-					parent.setVisible(true);
+					durchschnitt=summe / zaehler;
+					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt);
+					Fehler.setVisible(true);
+					//parent.setVisible(true);
 					dispose();
 				} else {
-					if (eingabe == letter) {
-
-						updatetasten();
-						// sleep(1000);
-						newround();
-					} else {
-
-					}
+					
 				}
 			}
 
@@ -335,6 +336,7 @@ public abstract class Lernspiel extends JFrame implements SwingConstants {
 			fehler++;
 			updatezeit("Falsche Eingabe");
 		}
+		runden++;
 
 			
 			newround();
@@ -345,6 +347,13 @@ public abstract class Lernspiel extends JFrame implements SwingConstants {
 	public void getreaction() {
 		time = System.currentTimeMillis();
 		double reaction = (Math.round((time - occtime) * 10) / 10000.0);
+		if (zaehler==0){
+			summe=reaction;
+		}
+		else{
+		  summe=summe+reaction;	
+		}
+		zaehler++;
 		updatezeit(reaction);
 		updatewertung(reaction);
 	}
