@@ -10,36 +10,40 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
-import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.System;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 
  * Beschreibung
  * 
- * @version 1.0 vom 10.01.2011
+ * @version 2.0 vom 22.01.2011
  * @author
  */
 
-public class Lernspiel extends JFrame implements SwingConstants {
+public abstract class Lernspiel extends JFrame implements SwingConstants {
 	// Anfang Attribute
 	
     private static final long serialVersionUID = 4361337321071606387L;
 	
 	long time;
 	long occtime;
+	int fehler =0;
 	int kombi;
 	String string;
 	char letter;
 	int eingabe;
-	int[][] kombis = { { 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 97 },
-			{ 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 98 },
-			{ 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 99 },
-			{ 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 100 },
-			{ 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 101 } };
+	boolean firstKey;
+	
+	int[][] kombis = parent.getMapping();
+	Timer timer = new Timer();
+	
+	
+	
 	boolean[] tasten = { false, false, false, false, false, false, false,
 			false, false, false };
 
@@ -76,6 +80,8 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		parent = root;
 		parent.dispose();
 		typingTime = TypingTime;
+		
+		
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 800;
@@ -161,6 +167,14 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	public void setListener() {
 		text.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
+				if (firstKey==false) {
+					firstKey=true;
+					timer.schedule(new Checker(),typingTime);
+					
+				}
+				else{
+					
+				}
 				System.out.println(e);
 				eingabe = e.getKeyCode();
 				switch (eingabe) {
@@ -209,7 +223,6 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 					break;
 				}
-				check();
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -261,7 +274,6 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					System.err.println("Irgendwas stimmt nicht!");
 					break;
 				}
-				check();
 
 			}
 
@@ -315,14 +327,19 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				richtig = false;
 			}
 		}
-		if (richtig == true) {
-
+		if (richtig==true){
 			playsound();
 			getreaction();
+		}
+		else{
+			fehler++;
+			updatezeit("Falsche Eingabe");
+		}
 
+			
 			newround();
 
-		}
+		
 	}
 
 	public void getreaction() {
@@ -337,6 +354,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		updatezeichen();
 		updatetasten();
 		occtime = System.currentTimeMillis();
+		firstKey=false;
 
 	}
 
@@ -435,6 +453,10 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 		zeit.setText(time + "");
 	}
+	
+	public void updatezeit(String string){
+		zeit.setText(string);
+	}
 
 	public void updatezeichen() { // updatet das Zeichen, dass eingegeben werden
 									// soll
@@ -453,4 +475,14 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		new Lernspiel("Lernspiel");
 
 	}*/
+	
+	public class Checker extends TimerTask{
+		public Checker(){
+			
+		}
+		public void run() {
+			check();
+		}
+		
+	}
 }
