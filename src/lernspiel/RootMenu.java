@@ -32,7 +32,7 @@ public class RootMenu extends JFrame
      * Typing_time
      */
     
-	final int typingTime = 500;	
+	final int typingTime = 300;	
 
 	public int getTypingTime() {
 		return typingTime;
@@ -197,6 +197,15 @@ public class RootMenu extends JFrame
         //this.dispose();
         
         
+    	/** set flag if key is pressed */
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void keyReleased(KeyEvent e) {
+    	
+    	/** update flag if key is released */
+    	//this.setFlac(e, 0);
+
     	/** Handle the key pressed event. */
     	this.setFlac(e, 1);
 
@@ -213,15 +222,6 @@ public class RootMenu extends JFrame
 				this.runApplication(this.getMap());				
 		}
 
-    	/** set flag if key is pressed */
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void keyReleased(KeyEvent e) {
-    	
-    	/** update flag if key is released */
-    	this.setFlac(e, 0);
-    	
         //System.out.println(e);	
         //throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -257,10 +257,10 @@ public class RootMenu extends JFrame
     }
 
     public void runApplication(char mappedChar){
-    	switch(mappedChar){
+    	/*switch(mappedChar){
     		case 'h' : new Schwierigkeitsgrad(root); break;
     		case 'i' : new Lernspiel("Lernspiel", root, 1000); break;
     		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
-    	}
+    	}*/
     }
 }

@@ -24,7 +24,8 @@ class MappedKey extends TimerTask {
 		parent.setFirstKeyPressedflag(false);		
 		if (mappedKey != 0){
 			parent.setMap(mappedKey);
-			System.out.println("MappedKey: " + parent.getMap());					
+			System.out.println("MappedKey: " + parent.getMap());
+			parent.resetFlags();
 		} else {
 			parent.setMap((char)0);
 		}
