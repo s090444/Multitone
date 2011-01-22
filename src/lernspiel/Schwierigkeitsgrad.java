@@ -71,7 +71,9 @@ public class Schwierigkeitsgrad extends JFrame
 		if(parent.isFirstKeyPressedflag() == false){
 			System.out.println("Mapp(vor): " + parent.getMap());
 			parent.keyPressed(e);
-			System.out.println("Mapp(nach): " + parent.getMap());
+			
+			if(parent.getMap() != 0)
+				System.out.println("Mapp(nach): " + parent.getMap());
 		}
 			
     	/** Handle the key pressed event. */
@@ -106,11 +108,5 @@ public class Schwierigkeitsgrad extends JFrame
 		System.out.println("Hallo close");
 		return 0;
 	}
-
-    public void runApplication(char mappedChar){
-    	switch(mappedChar){
-    		case 'i' : new Lernspiel("Lernspiel", parent, 1000); break;
-    		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
-    	}
-    }
+	
 }

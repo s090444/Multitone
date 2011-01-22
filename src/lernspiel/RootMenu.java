@@ -85,7 +85,7 @@ public class RootMenu extends JFrame
 	 * map
 	 */
 	
-	char map;
+	char map = 0;
 	
 	public char getMap() {
 		return map;
@@ -208,7 +208,9 @@ public class RootMenu extends JFrame
 
 			Timer timer = new Timer();
 			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
-				
+
+			if(this.getMap() != 0)
+				this.runApplication(this.getMap());				
 		}
 
     	/** set flag if key is pressed */
@@ -256,7 +258,8 @@ public class RootMenu extends JFrame
 
     public void runApplication(char mappedChar){
     	switch(mappedChar){
-    		case 'i' : new Schwierigkeitsgrad(root); break;
+    		case 'h' : new Schwierigkeitsgrad(root); break;
+    		case 'i' : new Lernspiel("Lernspiel", root, 1000); break;
     		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
     	}
     }
