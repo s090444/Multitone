@@ -27,13 +27,52 @@ public class RootMenu extends JFrame
     
 
 	/** Configuration */
+    
+    /*
+     * Typing_time
+     */
+    
+	final int typingTime = 500;	
+
+	public int getTypingTime() {
+		return typingTime;
+	}
+	
+	/*
+	 * numOfKeys
+	 */
+	
 	final int numOfKeys = 10;
-	final int typingTime = 1000;	
+
+	public int getNumOfKeys() {
+		return numOfKeys;
+	}
+		
 	
+	/** global variables **/
 	
-	/** global variables*/
+	String s = new String();
+	
+	/*
+	 * numOfPoss
+	 */
+	
+	int numOfPoss = 0;
+	
+	public int getNumOfPoss() {
+		return numOfPoss;
+	}
+
+	public void setNumOfPoss(int numOfPoss) {
+		this.numOfPoss = numOfPoss;
+	}
+	
+	/*
+	 * firstkeyPressedflag
+	 */
+	
 	private boolean firstKeyPressedflag;
-	
+
 	public boolean isFirstKeyPressedflag() {
 		return firstKeyPressedflag;
 	}
@@ -41,8 +80,10 @@ public class RootMenu extends JFrame
 	public void setFirstKeyPressedflag(boolean firstKeyPressedflag) {
 		this.firstKeyPressedflag = firstKeyPressedflag;
 	}
-
-	int numOfPoss = 0;
+	
+	/*
+	 * map
+	 */
 	
 	char map;
 	
@@ -53,6 +94,10 @@ public class RootMenu extends JFrame
 	public void setMap(char map) {
 		this.map = map;
 	}
+	
+	/*
+	 * Flag
+	 */
 
 	int flag[] = new int[numOfKeys];
 	
@@ -63,12 +108,13 @@ public class RootMenu extends JFrame
 	public void setFlag(int field, int flac) {
 		this.flag[field] = flac;
 	}
-
-	String s = new String();
+	
+	/*
+	 * Mapping
+	 */
 	
 	private int mapping[][];
-
-
+	
     public int[][] getMapping() {
 		return mapping;
 	}
@@ -198,13 +244,19 @@ public class RootMenu extends JFrame
 		}
     }
     
-    public void run(){
+    public void resetFlags(){
     	
+    	//this.setMap('~');
+    	
+    	for(int i = 0; i < this.getNumOfKeys(); i++)
+    		this.setFlag(i, 0);
+    	
+    	System.out.println("Flags zurueckgesetzt...");
     }
 
     public void runApplication(char mappedChar){
     	switch(mappedChar){
-    		case 'i' : new Lernspiel("Lernspiel", root); break;
+    		case 'i' : new Schwierigkeitsgrad(root); break;
     		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
     	}
     }

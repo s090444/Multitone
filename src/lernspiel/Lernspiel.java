@@ -67,13 +67,15 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	// Ende Attribute
 
 	static RootMenu parent;
+	int typingTime = 0;
 	
-	public Lernspiel(String title, RootMenu root) {
+	public Lernspiel(String title, RootMenu root, int TypingTime) {
 		// Frame-Initialisierung
 		super(title);
 		
 		parent = root;
 		parent.dispose();
+		typingTime = TypingTime;
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 800;
