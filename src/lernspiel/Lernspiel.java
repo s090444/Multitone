@@ -236,43 +236,43 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				eingabe = e.getKeyCode();
 				switch (eingabe) {
 				case 49:
-					tasten[0] = false;
+					tasten[0] = true;
 					updatetasten(0, false);
 					break;
 				case 50:
-					tasten[1] = false;
+					tasten[1] = true;
 					updatetasten(1, false);
 					break;
 				case 51:
-					tasten[2] = false;
+					tasten[2] = true;
 					updatetasten(2, false);
 					break;
 				case 52:
-					tasten[3] = false;
+					tasten[3] = true;
 					updatetasten(3, false);
 					break;
 				case 53:
-					tasten[4] = false;
+					tasten[4] = true;
 					updatetasten(4, false);
 					break;
 				case 54:
-					tasten[5] = false;
+					tasten[5] = true;
 					updatetasten(5, false);
 					break;
 				case 55:
-					tasten[6] = false;
+					tasten[6] = true;
 					updatetasten(6, false);
 					break;
 				case 56:
-					tasten[7] = false;
+					tasten[7] = true;
 					updatetasten(7, false);
 					break;
 				case 57:
-					tasten[8] = false;
+					tasten[8] = true;
 					updatetasten(8, false);
 					break;
 				case 48:
-					tasten[9] = false;
+					tasten[9] = true;
 					updatetasten(9, false);
 					break;
 				default:
@@ -366,6 +366,9 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		updatetasten();
 		occtime = System.currentTimeMillis();
 		firstKey=false;
+		for (int i =0; i<10;i++) {
+		tasten[i] = false;
+		}
 
 	}
 
