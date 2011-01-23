@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -174,7 +175,10 @@ public class RootMenu extends JFrame
         JButton button = new JButton("SubWindow");
         button.addKeyListener(this);
 
+        JLabel label = new JLabel("Starten des Lernspiels mit q,w,e");
+        
         panel.add(button);
+        panel.add(label);
 
         this.getContentPane().add(panel);
 
