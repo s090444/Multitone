@@ -5,6 +5,10 @@
 
 package lernspiel;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
@@ -25,6 +29,8 @@ public class RootMenu extends JFrame
 
     private static final long serialVersionUID = 7465416001464648515L;    
     static RootMenu root;
+    String directory = "src/Pics/";
+    Image image = null;
     
 
 	/** Configuration */
@@ -145,6 +151,14 @@ public class RootMenu extends JFrame
         
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        
+        String curDir = System.getProperty("user.dir");
+
+        System.out.println("current Directory: " + curDir);
+        image = Toolkit.getDefaultToolkit().createImage(directory + "test.png");
+        System.out.println(image.getWidth(this));
+        
+        
         this.addComponentsToPanel();
         //root.pack();
 
@@ -170,8 +184,17 @@ public class RootMenu extends JFrame
     
     public void addComponentsToPanel(){
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                //System.out.println(image);
+                g.drawRect(0, 0, getWidth(), getHeight());
+            }
+        };
 
+        panel.setBackground(Color.WHITE);
+        
         JButton button = new JButton("SubWindow");
         button.addKeyListener(this);
 
@@ -196,21 +219,12 @@ public class RootMenu extends JFrame
 
     public void keyPressed(KeyEvent e) {
         //System.out.println("RootWindow: " + e);
-        
-        //new Lernspiel("Lernspiel", root);
-        //this.dispose();
-        
-        
-    	/** set flag if key is pressed */
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void keyReleased(KeyEvent e) {
-    	
-    	/** update flag if key is released */
-    	//this.setFlac(e, 0);
 
-    	/** Handle the key pressed event. */
+    	/** Handle the Released keys event. */
     	this.setFlac(e, 1);
 
         //System.out.println("(RootM keyPressed) FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
@@ -263,5 +277,11 @@ public class RootMenu extends JFrame
     		case 'i' : new Lernspiel("Lernspiel", root, 1000); break;
     		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
     	}
+    }
+
+    @Override
+    public void paint(Graphics g){
+            super.paint(g);
+            g.drawImage(image, 0, 0, null);
     }
 }
