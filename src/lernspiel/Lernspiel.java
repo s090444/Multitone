@@ -178,7 +178,6 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				case 49:
 					tasten[0] = true;
 					updatetasten(0, true);
-					check();
 					break;
 				case 50:
 					tasten[1] = true;
@@ -239,7 +238,6 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				case 49:
 					tasten[0] = false;
 					updatetasten(0, false);
-					check();
 					break;
 				case 50:
 					tasten[1] = false;
