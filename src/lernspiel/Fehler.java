@@ -72,7 +72,7 @@ public class Fehler extends JFrame implements SwingConstants {
 		
 		JButton button = new JButton("Hauptmen�");
 		button.setBounds(0, 0, 120, 50);
-        stats.addKeyListener(new KeyListener(){
+        button.addKeyListener(new KeyListener(){
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -103,8 +103,8 @@ public class Fehler extends JFrame implements SwingConstants {
 		
 		rounds.setText("  Eingaben: " + runden);
 		errors.setText("davon falsch: " + fehler);
-		stats.setText("durchschnittl. Antwortzeit: " + Math.round(((durchschnitt)*100) / 100) + " s");
-		prozent.setText("Prozent richtig: " + Math.round(((runden-fehler)*100) / 100) + "%");
+		stats.setText("durchschnittl. Antwortzeit: " + (Math.round(durchschnitt*100) / 100) + " s");
+		prozent.setText("Prozent richtig: " + Math.round((((runden-fehler)*100)/runden) ) + "%");
 		
 		
 		
