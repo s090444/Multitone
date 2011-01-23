@@ -26,11 +26,11 @@ public class Fehler extends JFrame implements SwingConstants {
 	boolean keypress;
 	
 	private static final long serialVersionUID = 2304903219655115269L;
-	private RootMenu root;
+	private RootMenu parent;
 
-	public Fehler(String title, int runden, int fehler, double durchschnitt) {
+	public Fehler(String title, int runden, int fehler, double durchschnitt, RootMenu root) {
 		super(title);
-		
+		parent = root;	
 		
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -56,27 +56,20 @@ public class Fehler extends JFrame implements SwingConstants {
 		stats.setFont(new Font("Arial", 255, 40));
 		stats.setHorizontalAlignment(CENTER);
 		
-		JButton button = new JButton("Hauptmenü");
+		JButton button = new JButton("Hauptmenï¿½");
 		button.setBounds(340, 500, 120, 50);
         button.addKeyListener(new KeyListener(){
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				keypress=true;
 				
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (keypress==true){
-				root.setVisible(true);
-				dispose();
-				}
-				else{
-					
-				}
-				
+				parent.setVisible(true);
+				dispose();				
 			}
 
 			@Override

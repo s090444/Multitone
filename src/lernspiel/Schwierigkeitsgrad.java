@@ -65,16 +65,6 @@ public class Schwierigkeitsgrad extends JFrame
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-
-    	parent.setFlac(e, 1);
-    	
-		if(parent.isFirstKeyPressedflag() == false){
-			System.out.println("Mapp(vor): " + parent.getMap());
-			parent.keyPressed(e);
-			
-			if(parent.getMap() != 0)
-				System.out.println("Mapp(nach): " + parent.getMap());
-		}
 			
     	/** Handle the key pressed event. */
     	/*parent.setFlac(e, 1);
@@ -94,7 +84,16 @@ public class Schwierigkeitsgrad extends JFrame
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-    	parent.setFlac(e, 0);		
+    	//parent.setFlac(e, 0);		
+    	parent.setFlac(e, 1);
+    	
+		if(parent.isFirstKeyPressedflag() == false){
+			System.out.println("Mapp(vor): " + parent.getMap());
+			parent.keyReleased(e);
+			
+			if(parent.getMap() != 0)
+				System.out.println("Mapp(nach): " + parent.getMap());
+		}
 	}
 
 

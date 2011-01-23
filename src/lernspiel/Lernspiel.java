@@ -43,7 +43,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	int zaehler=0;
 	boolean firstKey;
 	
-	int[][] kombis = parent.getMapping();
+	int[][] kombis;
 	Timer timer = new Timer();
 	
 	
@@ -83,8 +83,9 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		super(title);
 		
 		parent = root;
-		parent.dispose();
+		parent.setVisible(false);
 		typingTime = TypingTime;
+		this.kombis = parent.getMapping();
 		
 		
 		
@@ -279,10 +280,8 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					System.err.println("Irgendwas stimmt nicht!");
 					break;
 				}
+				
 
-			}
-
-			public void keyTyped(KeyEvent e) {
 				// text.dispatchEvent(e);
 				/*
 				 * System.out.println(e); eingabe = e.getKeyCode(); switch
@@ -306,13 +305,17 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					
 			        //setVisible(false);
 					durchschnitt=summe / zaehler;
-					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt);
+					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt, parent);
 					Fehler.setVisible(true);
 					//parent.setVisible(true);
 					dispose();
 				} else {
 					
 				}
+
+			}
+
+			public void keyTyped(KeyEvent e) {
 			}
 
 		});
