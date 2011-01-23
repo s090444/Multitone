@@ -151,8 +151,13 @@ public class RootMenu extends JFrame
         
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        
+        String curDir = System.getProperty("user.dir");
+
+        System.out.println("current Directory: " + curDir);
         image = Toolkit.getDefaultToolkit().createImage(directory + "test.png");
         System.out.println(image.getWidth(this));
+        
         
         this.addComponentsToPanel();
         //root.pack();
