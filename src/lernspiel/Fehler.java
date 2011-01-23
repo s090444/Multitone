@@ -14,6 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.KeyAdapter;
 
 public class Fehler extends JFrame implements SwingConstants {
 	
@@ -70,9 +71,9 @@ public class Fehler extends JFrame implements SwingConstants {
 		stats.setFont(new Font("Arial", 255, 40));
 		stats.setHorizontalAlignment(CENTER);
 		
-		JButton button = new JButton("Hauptmen�");
-		button.setBounds(0, 0, 120, 50);
-        button.addKeyListener(new KeyListener(){
+		stats.setFocusable(true);
+		stats.requestFocus();
+        stats.addKeyListener(new KeyListener(){
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -99,7 +100,7 @@ public class Fehler extends JFrame implements SwingConstants {
 		cp.add(errors);
 		cp.add(prozent);
 		cp.add(stats);
-		cp.add(button);
+		
 		
 		rounds.setText("  Eingaben: " + runden);
 		errors.setText("davon falsch: " + fehler);
