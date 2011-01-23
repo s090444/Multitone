@@ -103,7 +103,7 @@ public class Fehler extends JFrame implements SwingConstants {
 		
 		rounds.setText("  Eingaben: " + runden);
 		errors.setText("davon falsch: " + fehler);
-		stats.setText("durchschnittl. Antwortzeit: " + Math.round(((durchschnitt)*100) / 100) + " s");
+		stats.setText("durchschnittl. Antwortzeit: " + (Math.round(durchschnitt*100) / 100) + " s");
 		prozent.setText("Prozent richtig: " + Math.round((((runden-fehler)*100)/runden) ) + "%");
 		
 		
