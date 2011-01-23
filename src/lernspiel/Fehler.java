@@ -22,6 +22,7 @@ public class Fehler extends JFrame implements SwingConstants {
 	 */
 	JLabel rounds = new JLabel("");
 	JLabel errors = new JLabel("");
+	JLabel prozent = new JLabel("");
 	JLabel stats = new JLabel("");
 	boolean keypress;
 	
@@ -44,21 +45,34 @@ public class Fehler extends JFrame implements SwingConstants {
 		Container cp = getContentPane();
 		cp.setLayout(null);
 		
-		rounds.setBounds(0, 0, 400, 300);
+		rounds.setBounds(0, 0, 800, 150);
 		rounds.setOpaque(true);
 		rounds.setBackground(Color.WHITE);
 		rounds.setFont(new Font("Arial", 255, 32));
 		rounds.setHorizontalAlignment(CENTER);
 		
-		stats.setBounds(400, 0, 400, 400);
+		prozent.setBounds(0, 450, 800, 150);
+		prozent.setOpaque(true);
+		prozent.setBackground(Color.WHITE);
+		prozent.setFont(new Font("Arial", 255, 32));
+		prozent.setHorizontalAlignment(CENTER);
+		
+		errors.setBounds(0, 150, 800, 150);
+		errors.setOpaque(true);
+		errors.setBackground(Color.WHITE);
+		errors.setFont(new Font("Arial", 255, 32));
+		errors.setHorizontalAlignment(CENTER);
+		
+		
+		stats.setBounds(0, 300, 800, 150);
 		stats.setOpaque(true);
 		stats.setBackground(Color.WHITE);
 		stats.setFont(new Font("Arial", 255, 40));
 		stats.setHorizontalAlignment(CENTER);
 		
 		JButton button = new JButton("Hauptmen�");
-		button.setBounds(340, 500, 120, 50);
-        button.addKeyListener(new KeyListener(){
+		button.setBounds(0, 0, 120, 50);
+        stats.addKeyListener(new KeyListener(){
 
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -82,11 +96,15 @@ public class Fehler extends JFrame implements SwingConstants {
         
         
 		cp.add(rounds);
+		cp.add(errors);
+		cp.add(prozent);
 		cp.add(stats);
 		cp.add(button);
 		
-		rounds.setText("  Eingaben: " + runden + "\n \n davon falsch: " + fehler);
-		stats.setText("Prozent richtig: " + Math.round(((runden-fehler)*100) / 100) + "%" + "\n \n durchschnittliche Antwortzeit: " + durchschnitt + " s");
+		rounds.setText("  Eingaben: " + runden);
+		errors.setText("davon falsch: " + fehler);
+		stats.setText("durchschnittl. Antwortzeit: " + Math.round(((durchschnitt)*100) / 100) + " s");
+		prozent.setText("Prozent richtig: " + Math.round(((runden-fehler)*100) / 100) + "%");
 		
 		
 		
