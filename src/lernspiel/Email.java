@@ -193,8 +193,8 @@ public class Email extends javax.swing.JFrame {
 	            // Connect only once here
 	            // Transport.send() disconnects after each send
 	            // Usually, no username and password is required for SMTP
-	            bus.connect();
-	           // bus.connect(host, from, "multitone4tw");
+	           // bus.connect();
+	           bus.connect(host, from, "multitone4tw");
 
 	            // Instantiate a message
 	            Message msg = new MimeMessage(session);
