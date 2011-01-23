@@ -9,12 +9,6 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.lang.System;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyAdapter;
 
 public class Fehler extends JFrame implements SwingConstants {
 	
