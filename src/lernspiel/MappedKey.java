@@ -26,6 +26,7 @@ class MappedKey extends TimerTask {
 			parent.setMap(mappedKey);
 			System.out.println("MappedKey: " + parent.getMap());
 			parent.resetFlags();
+			parent.runApplication(mappedKey);
 		} else {
 			parent.setMap((char)0);
 		}

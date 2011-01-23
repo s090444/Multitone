@@ -217,9 +217,6 @@ public class RootMenu extends JFrame
 
 			Timer timer = new Timer();
 			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
-
-			if(this.getMap() != 0)
-				this.runApplication(this.getMap());				
 		}
 
         //System.out.println(e);	
