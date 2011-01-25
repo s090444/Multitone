@@ -171,6 +171,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 	public void setListener() {
 		text.addKeyListener(new KeyListener() {
+			
 			public void keyPressed(KeyEvent e) {
 				System.out.println(e);
 				eingabe = e.getKeyCode();
