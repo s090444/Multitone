@@ -64,22 +64,7 @@ public class Schwierigkeitsgrad extends JFrame
 
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-			
-    	/** Handle the key pressed event. */
-    	/*parent.setFlac(e, 1);
-
-        //System.out.println("(RootM keyPressed) FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
-		if (parent.isFirstKeyPressedflag() == false) {
-			parent.setFirstKeyPressedflag(true);
-	        //System.out.println("FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
-			//System.out.println("Eingabe beginn...");
-
-			Timer timer = new Timer();
-			timer.schedule(new MappedKey(parent, parent.getNumOfKeys(), parent.getNumOfPoss()), parent.getTypingTime());
-				
-		}*/
-		
+	public void keyPressed(KeyEvent e) {		
 	}
 
 	@Override
@@ -89,11 +74,16 @@ public class Schwierigkeitsgrad extends JFrame
     	
 		if(parent.isFirstKeyPressedflag() == false){
 			System.out.println("Mapp(vor): " + parent.getMap());
-			parent.keyReleased(e);
+			Timer timer = new Timer();
+			timer.schedule(new MappedKey(parent, parent.getNumOfKeys(), parent.getNumOfPoss(), "Schwierig"), parent.typingTime);
 			
 			if(parent.getMap() != 0)
-				System.out.println("Mapp(nach): " + parent.getMap());
+				System.out.println("Mapp(nach): " + parent.getMap());	
+
 		}
+
+        System.out.println(e);	
+     
 	}
 
 
