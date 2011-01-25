@@ -7,11 +7,13 @@ class MappedKey extends TimerTask {
 	
 	RootMenu parent;
 	int numOfKeys, numOfPoss;
+	String calledObject;
 	
-	public MappedKey(RootMenu root, int keys, int poss){
+	public MappedKey(RootMenu root, int keys, int poss, String who){
 		parent = root;
 		numOfKeys = keys;
 		numOfPoss = poss;
+		calledObject = who;
 	}
 	
 	public void run() {
@@ -24,7 +26,7 @@ class MappedKey extends TimerTask {
 		parent.setFirstKeyPressedflag(false);		
 		if (mappedKey != 0){
 			parent.setMap(mappedKey);
-			System.out.println("MappedKey: " + parent.getMap());
+			System.out.println("MappedKey: " + parent.getMap() + " called by " + this.calledObject);
 			parent.resetFlags();
 			parent.runApplication(mappedKey);
 		} else {
