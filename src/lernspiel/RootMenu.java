@@ -129,6 +129,31 @@ public class RootMenu extends JFrame
 	public void setMapping(int[][] mapping) {
 		this.mapping = mapping;
 	}
+	
+	
+	//forward
+	private boolean forward=false;
+	
+
+	public boolean isForward() {
+		return forward;
+	}
+
+	public void setForward(boolean forward) {
+		this.forward = forward;
+	}
+	
+	//keyCode
+	private int keyCode=0;
+	
+
+	public int getKeyCode() {
+		return keyCode;
+	}
+
+	public void setKeyCode(int keyCode) {
+		this.keyCode = keyCode;
+	}
 
 	/*
      * Constructor
@@ -163,6 +188,7 @@ public class RootMenu extends JFrame
         //root.pack();
 
         this.setVisible(true);
+        
     }
 
     /**
@@ -174,6 +200,7 @@ public class RootMenu extends JFrame
         SwingUtilities.invokeLater(new Runnable(){
             public void run(){
                 root = new RootMenu();
+                Editor e = new Editor(root);
             }
         });
     }
@@ -185,7 +212,12 @@ public class RootMenu extends JFrame
     public void addComponentsToPanel(){
 
         JPanel panel = new JPanel() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 //System.out.println(image);
@@ -235,6 +267,7 @@ public class RootMenu extends JFrame
 
 			Timer timer = new Timer();
 			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
+			
 		}
 
         //System.out.println(e);	
@@ -274,7 +307,8 @@ public class RootMenu extends JFrame
     public void runApplication(char mappedChar){
     	switch(mappedChar){
     		//case 'h' : new Schwierigkeitsgrad(root); break;
-    		case 'i' : new Lernspiel("Lernspiel", root, 1000); break;
+//    		case 'i' : new Lernspiel("Lernspiel", root, 1000); break;
+    		case 'i' : new Editor(root); break;
     		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
     	}
     }
