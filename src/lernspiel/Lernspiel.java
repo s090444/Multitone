@@ -39,7 +39,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	char letter;
 	int eingabe;
 	double durchschnitt;
-	double summe;
+	double summe=0.0;
 	int zaehler=0;
 	boolean firstKey;
 	
@@ -220,6 +220,8 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 					break;
 				}
+				
+				
 			}
 			
 
@@ -281,6 +283,22 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					break;
 				}
 				
+				if (e.getKeyChar() == 'q') {
+					//System.exit(0);
+					
+			        //setVisible(false);
+					if (zaehler !=0) {
+					durchschnitt=summe / zaehler;
+					}
+					else{}
+					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt, parent);
+					Fehler.setVisible(true);
+					//parent.setVisible(true);
+					dispose();
+				} else {
+					
+				}
+				
 
 				// text.dispatchEvent(e);
 				/*
@@ -300,18 +318,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				 * break; }
 				 */
 
-				if (e.getKeyChar() == 'q') {
-					//System.exit(0);
-					
-			        //setVisible(false);
-					durchschnitt=summe / zaehler;
-					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt, parent);
-					Fehler.setVisible(true);
-					//parent.setVisible(true);
-					dispose();
-				} else {
-					
-				}
+				
 
 			}
 
