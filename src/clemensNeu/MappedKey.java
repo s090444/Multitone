@@ -17,7 +17,6 @@ class MappedKey extends TimerTask {
 
 	public void run() {
 		parent.setFirstKeyPressedflag(false);
-		System.err.println("runMappedKey");
 		mapp();
 	}
 
@@ -65,57 +64,6 @@ class MappedKey extends TimerTask {
 								}
 						}
 					}
-//					if (parent.getMapping()[k][i] != 0) {
-//						try {
-//							// System.out.println("Create Robot");
-//							Robot r = new Robot();
-//							parent.setForward(true);
-//							// System.out.println("r.keyPress");
-//							r.keyPress(parent.getMapping()[k][i]);
-//
-//						} catch (AWTException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-					// System.out.println("k: "+ k);
-					// System.out.println("i " + i);
-					// System.out.println("parent.getMapping[k+1]i: " +
-					// parent.getMapping()[k+1][i]);
-
-//					if (parent.getMapping()[k + 1][i] != 0) {
-//						try {
-//							// System.out.println("Create Robot");
-//							Robot r = new Robot();
-//							parent.setForward(true);
-//							// System.out.println("r.keyPress");
-//							r.keyPress(parent.getMapping()[k + 1][i]);
-//
-//						} catch (AWTException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-//
-//					if (parent.getMapping()[k + 2][i] != 0) {
-//						try {
-//							// System.out.println("Create Robot");
-//							Robot r = new Robot();
-//							parent.setForward(true);
-//							// System.out.println("r.keyPress + ");
-//							r.keyPress(parent.getMapping()[k + 2][i]);
-//
-//							r.keyRelease(parent.getMapping()[k + 2][i]);
-//							if (parent.getMapping()[k + 1][i] != 0)
-//								r.keyRelease(parent.getMapping()[k + 1][i]);
-//							if (parent.getMapping()[k][i] != 0)
-//								r.keyRelease(parent.getMapping()[k][i]);
-//						} catch (AWTException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-
 				} else if (parent.getMapping()[k][i] != parent.getFlag()[k])
 					break;
 			}
