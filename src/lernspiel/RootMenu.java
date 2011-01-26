@@ -307,7 +307,7 @@ public class RootMenu extends JFrame
     public void runApplication(char mappedChar){
     	switch(mappedChar){
     		//case 'h' : new Schwierigkeitsgrad(root); break;
-    		case 'i' : new Lernspiel("Lernspiel", root, 1000); break;
+    		case 'y' : new Lernspiel("Lernspiel", root, 1000); break;
 //    		case 'i' : new Editor(root); break;
     		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
     	}
