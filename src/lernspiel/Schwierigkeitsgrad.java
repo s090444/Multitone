@@ -75,7 +75,7 @@ public class Schwierigkeitsgrad extends JFrame
 		if(parent.isFirstKeyPressedflag() == false){
 			System.out.println("Mapp(vor): " + parent.getMap());
 			Timer timer = new Timer();
-			timer.schedule(new MappedKey(parent, parent.getNumOfKeys(), parent.getNumOfPoss(), "Schwierig"), parent.typingTime);
+			timer.schedule(new MappedKey(parent, "Schwierig"), parent.typingTime);
 			
 			if(parent.getMap() != 0)
 				System.out.println("Mapp(nach): " + parent.getMap());	
