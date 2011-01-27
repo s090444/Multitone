@@ -26,7 +26,8 @@ class MappedKey extends TimerTask {
 
 			System.out.println("MappedKey: " + parent.getMap() + " called by " + this.calledObject);
 			parent.resetFlags();
-			parent.runApplication(mappedKey);
+			parent.newKeyPush(mappedKey);
+			//parent.runApplication(mappedKey);
 		} else {
 			parent.setMap((char)0);
 		}
@@ -35,10 +36,10 @@ class MappedKey extends TimerTask {
 
 	/** check typed keys against mapping-array and return mapped char */
 	public char mapp() {
-		System.out.println("numOfPoss: " + parent.getNumOfPoss());
+		/*System.out.println("numOfPoss: " + parent.getNumOfPoss());
 		System.out.println("numOfKeys: " + parent.getNumOfKeys());
 		System.out.println("Mapping: " + parent.getMapping()[10][0]);
-		System.out.println("flag: " + parent.getFlag()[0]);
+		System.out.println("flag: " + parent.getFlag()[0]);*/
 		
 		for (int i = 0; i < parent.getNumOfPoss(); i++) {
 			for (int k = 0; k < parent.getNumOfKeys() + 1; k++) {
