@@ -143,6 +143,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		zeichen.setOpaque(true);
 		zeichen.setBackground(Color.WHITE);
 		zeichen.setFont(new Font("Arial", 255, 200));
+		zeichen.setBorder(BorderFactory.createLineBorder(Color.black));
 		zeichen.setHorizontalAlignment(CENTER);
 		cp.add(zeichen);
 		// Ende Komponenten
@@ -339,12 +340,14 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			}
 		}
 		if (richtig==true){
-			playsound();
+			
 			getreaction();
 		}
 		else{
+			
 			fehler++;
 			updatezeit("Falsche Eingabe");
+			
 		}
 		runden++;
 
@@ -372,6 +375,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		newletter();
 		updatezeichen();
 		updatetasten();
+		playsound();
 		occtime = System.currentTimeMillis();
 		firstKey=false;
 		for (int i =0; i<10;i++) {
@@ -398,7 +402,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 	public void newletter() {
 		// long random = (System.currentTimeMillis() % 94)+33;
-		long random = (System.currentTimeMillis() % kombis.length);
+		long random = (System.currentTimeMillis() % kombis[0].length);
 		kombi = (int) random;
 		letter = (char) kombis[10][kombi];
 	}
@@ -447,23 +451,31 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	}
 
 	public void updatewertung(String image) { // updatet das Wertungsbild
+		image = "src/Pics/" + image + ".jpeg";
 		wertung.setIcon(new ImageIcon(image));
 	}
 
 	public void updatewertung(double reaction) { // �ndert das Wertungsbild je
 													// nach Reaktionszeit
 		if (reaction < 1.5) {
-			updatewertung("src/Pics/awesome.jpeg");
+			updatewertung("awesome");
+			
 		} else if (reaction < 3) {
-			updatewertung("src/Pics/nice.jpeg");
+			updatewertung("nice");
+			
 		} else {
-			updatewertung("src/Pics/fail.jpeg");
+			updatewertung("fail");
+			
 		}
 
 	}
 	
 	public void playsound(){
 		Sound.playSound((char) kombis[10][kombi]);
+	}
+	public void playsound(String string){
+		
+		
 	}
 
 	public void updatezeit(double time) { // updatet die Zeit

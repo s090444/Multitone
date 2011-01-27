@@ -39,6 +39,7 @@ public class Fehler extends JFrame implements SwingConstants {
 		setLocation(x, y);
 		Container cp = getContentPane();
 		cp.setLayout(null);
+		Sound Sound=new Sound();
 		
 		rounds.setBounds(0, 0, 800, 150);
 		rounds.setOpaque(true);
@@ -101,10 +102,15 @@ public class Fehler extends JFrame implements SwingConstants {
 		stats.setText("durchschnittl. Antwortzeit: " + (Math.round(durchschnitt*100) / 100) + " s");
 		if (runden !=0){
 		prozent.setText("Prozent richtig: " + Math.round((((runden-fehler)*100)/runden) ) + "%");
+		if (runden-fehler==0){
+			Sound.playSound("incredible");
+		}
+		else{}
 		}
 		else{
 			prozent.setText("keine Runde gespielt");	
 		}
+		
 		
 		
 		
