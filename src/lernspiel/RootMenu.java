@@ -25,13 +25,30 @@ import javax.swing.JFrame;
  * @author sakura
  */
 public class RootMenu extends JFrame
-        implements KeyListener{
+        implements KeyListener {
 
     private static final long serialVersionUID = 7465416001464648515L;    
     static RootMenu root;
     String directory = "src/Pics/";
-    Image image = null;
     
+    Image unselected = Toolkit.getDefaultToolkit().getImage(directory + "menu_unselected.png");
+    Image selected = Toolkit.getDefaultToolkit().getImage(directory + "menu_selected.png");
+    
+    Image background = Toolkit.getDefaultToolkit().getImage(directory + "background.JPG");
+    
+    Image lernspiel = Toolkit.getDefaultToolkit().getImage(directory + "lernspiel.png");
+    Image editor = Toolkit.getDefaultToolkit().getImage(directory + "editor.png");
+    Image email = Toolkit.getDefaultToolkit().getImage(directory + "email.png");
+    Image quit = Toolkit.getDefaultToolkit().getImage(directory + "quit.png");
+    
+    Image image1 = null;
+    Image image2 = null;
+    Image image3 = null;
+    Image image4 = null;
+    
+    int menuCounter = 0;
+    
+    JPanel panel;
 
 	/** Configuration */
     
@@ -180,8 +197,7 @@ public class RootMenu extends JFrame
         String curDir = System.getProperty("user.dir");
 
         System.out.println("current Directory: " + curDir);
-        image = Toolkit.getDefaultToolkit().createImage(directory + "test.png");
-        System.out.println(image.getWidth(this));
+        this.resetMenuButtons();
         
         
         this.addComponentsToPanel();
@@ -211,7 +227,7 @@ public class RootMenu extends JFrame
     
     public void addComponentsToPanel(){
 
-        JPanel panel = new JPanel() {
+        panel = new JPanel() {
             /**
 			 * 
 			 */
@@ -220,21 +236,37 @@ public class RootMenu extends JFrame
 			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                //System.out.println(image);
-                g.drawRect(0, 0, getWidth(), getHeight());
+                g.drawImage(background, 0, 0, this);                
+                g.drawImage(image1, 100, 20, 45, 45, this);           
+                g.drawImage(image2, 100, 70, 50, 50, this);           
+                g.drawImage(image3, 100, 120, 50, 50, this);           
+                g.drawImage(image4, 100, 170, 50, 50, this);      
+                
+                g.drawImage(lernspiel, 150, 20, this);           
+                g.drawImage(editor, 150, 70, this);           
+                g.drawImage(email, 150, 120, this);           
+                g.drawImage(quit, 150, 170, this);
             }
         };
 
         panel.setBackground(Color.WHITE);
         
-        JButton button = new JButton("SubWindow");
+  /*      JButton button = new JButton("SubWindow");
         button.addKeyListener(this);
 
-        JLabel label = new JLabel("Starten des Lernspiels mit q,w,e");
+        JLabel label = new JLabel("Starten des Lernspiels mit q,w,e");        
         
         panel.add(button);
-        panel.add(label);
+        panel.add(label);*/
 
+        System.out.println("panel focusable: " + panel.isFocusable());
+        if(panel.isFocusable()){
+        	panel.setFocusable(true);
+        	panel.requestFocusInWindow();
+        }
+        
+        panel.addKeyListener(this);
+        
         this.getContentPane().add(panel);
 
         setTitle("RootMenu");
@@ -245,34 +277,41 @@ public class RootMenu extends JFrame
 
       
     public void keyTyped(KeyEvent e) {
-        //System.out.println(e);
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void keyPressed(KeyEvent e) {
-        //System.out.println("RootWindow: " + e);
-        //throw new UnsupportedOperationException("Not supported yet.");
+    	this.setFlac(e, 1);
     }
 
     public void keyReleased(KeyEvent e) {
-
-    	/** Handle the Released keys event. */
-    	this.setFlac(e, 1);
-
+/*    	
         //System.out.println("(RootM keyPressed) FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
 		if (this.isFirstKeyPressedflag() == false) {
 			this.setFirstKeyPressedflag(true);
+*/	    	
 	        //System.out.println("FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
 			//System.out.println("Eingabe beginn...");
 
-			Timer timer = new Timer();
-			timer.schedule(new MappedKey(root, ""), typingTime);
+	//		Timer timer = new Timer();
+	//		timer.schedule(new MappedKey(root, ""), typingTime);
+			new MappedKey(root, "");
 			
-		}
+		//}
 
         //System.out.println(e);	
         //throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    
+    public void newKeyPush(char newKey){
+    	switch (newKey){
+    		case 'y' : this.moveMenuPoint(); break;
+    		case 'o' : this.runApplication(); break;
+    		
+    		default : System.out.println("ungültige Menüeingabe!!");
+    	}
+    }
+    
     
     public void setFlac(KeyEvent e, int flac){
     	//System.out.println("keyChar: " + e.getKeyChar());
@@ -294,9 +333,39 @@ public class RootMenu extends JFrame
 		}
     }
     
-    public void resetFlags(){
+    /*
+     * bewegt die Menüpunkte farblich durch, indem es zu erst alle Menüpunkte
+     * reseted, anschließend, anhand der menuCounter-Variable, den aktuellen Menüpunkt setzt
+     * und den menuCounter nach oben zählt. 
+     */
+    public void moveMenuPoint(){
+
+       	/*
+       	 * sollte das Menü am Ende angekommen sein, wird der Zähler reseted und der 1. Menüpunkt
+       	 * erscheint wieder (nach dem 4).
+       	 */
+       	menuCounter++;
+       	if(menuCounter > 4)
+       		menuCounter = 1;
+       	
+    	// setzt alle Bilder im Menü wieder auf "unselected"
+    	this.resetMenuButtons();
     	
-    	//this.setMap('~');
+    	// wählt den aktuellen Menüpunkt auf "selected" anhand von menuCounter-Variable
+    	switch (menuCounter) {
+    		case 1 : this.image1 = this.selected; break;
+    		case 2 : this.image2 = this.selected; break;
+    		case 3 : this.image3 = this.selected; break;
+    		case 4 : this.image4 = this.selected; break;
+    		
+    		default : System.out.println("Fehler Menüführung!");
+    	}
+    	
+       	repaint();
+       	
+    }
+    
+    public void resetFlags(){
     	
     	for(int i = 0; i < this.getNumOfKeys(); i++)
     		this.setFlag(i, 0);
@@ -304,18 +373,31 @@ public class RootMenu extends JFrame
     	System.out.println("Flags zurueckgesetzt...");
     }
 
-    public void runApplication(char mappedChar){
-    	switch(mappedChar){
-    		//case 'h' : new Schwierigkeitsgrad(root); break;
-    		case 'y' : new Lernspiel("Lernspiel", root, 1000); break;
-//    		case 'i' : new Editor(root); break;
+    public void resetMenuButtons(){
+    	image1 = unselected;
+    	image2 = unselected;
+    	image3 = unselected;
+    	image4 = unselected;
+    }
+    
+    public void runApplication(){
+    	switch(menuCounter){
+    		case 1 : //new Schwierigkeitsgrad(root);
+    			System.out.println("starte Lernspiel....");
+    			break;
+    			
+    		case 2 : //new Lernspiel("Lernspiel", root, 1000); 
+				System.out.println("starte Editor....");
+				break;
+				
+    		case 3 : //new Editor(root); 
+				System.out.println("starte E-Mailprogramm....");
+				break;
+    		
+    		case 4 : System.exit(EXIT_ON_CLOSE);
+    			break;
+    		
     		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
     	}
-    }
-
-    @Override
-    public void paint(Graphics g){
-            super.paint(g);
-            g.drawImage(image, 0, 0, null);
     }
 }
