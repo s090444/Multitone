@@ -13,9 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 
-import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 
@@ -36,10 +34,10 @@ public class RootMenu extends JFrame
     
     Image background = Toolkit.getDefaultToolkit().getImage(directory + "background.JPG");
     
-    Image lernspiel = Toolkit.getDefaultToolkit().getImage(directory + "lernspiel.png");
-    Image editor = Toolkit.getDefaultToolkit().getImage(directory + "editor.png");
-    Image email = Toolkit.getDefaultToolkit().getImage(directory + "email.png");
-    Image quit = Toolkit.getDefaultToolkit().getImage(directory + "quit.png");
+    Image lernspiel;
+    Image editor;
+    Image email;
+    Image quit;
     
     Image image1 = null;
     Image image2 = null;
@@ -48,6 +46,7 @@ public class RootMenu extends JFrame
     
     int menuCounter = 0;
     
+    int currentMenu = 0;
     JPanel panel;
 
 	/** Configuration */
@@ -178,6 +177,7 @@ public class RootMenu extends JFrame
     public RootMenu(){
         super();
 
+        this.currentMenu = 0;
         System.out.println("Initializiere RootMenu...");
         
         this.setFirstKeyPressedflag(false);
@@ -194,10 +194,11 @@ public class RootMenu extends JFrame
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         
-        String curDir = System.getProperty("user.dir");
-
-        System.out.println("current Directory: " + curDir);
+        //String curDir = System.getProperty("user.dir");
+        //System.out.println("current Directory: " + curDir);
+        
         this.resetMenuButtons();
+        this.rootMenu();
         
         
         this.addComponentsToPanel();
@@ -368,6 +369,7 @@ public class RootMenu extends JFrame
     	}
     	
        	repaint();
+    	System.out.println("currentMenu: " + currentMenu + " menuCounter: " + menuCounter);
        	
     }
     
@@ -387,23 +389,59 @@ public class RootMenu extends JFrame
     }
     
     public void runApplication(){
-    	switch(menuCounter){
-    		case 1 : //new Schwierigkeitsgrad(root);
-    			System.out.println("starte Lernspiel....");
-    			break;
-    			
-    		case 2 : //new Lernspiel("Lernspiel", root, 1000); 
-				System.out.println("starte Editor....");
-				break;
-				
-    		case 3 : //new Editor(root); 
-				System.out.println("starte E-Mailprogramm....");
-				break;
-    		
-    		case 4 : System.exit(EXIT_ON_CLOSE);
-    			break;
-    		
-    		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
+    	if( (currentMenu == 1) && (menuCounter <= 3) ){
+			new Lernspiel("Lernspiel", root, this.menuCounter);
+			System.out.println("starte Lernspiel in Schwierigkeitsgrad " + this.menuCounter + " ...");
+			this.currentMenu = 0;
+			this.menuCounter = 0;
+			this.resetMenuButtons();
+			this.rootMenu();
+    	} else {
+	    	switch(menuCounter){
+	    		case 1 : 	this.difficultyGame();
+	        				System.out.println("starte Schwierigkeitsgrad ...");
+	    			break;
+	    			
+	    		case 2 : 	//new Lernspiel("Lernspiel", root, 1000); 
+							System.out.println("starte Editor....");
+					break;
+					
+	    		case 3 : 	//new Editor(root); 
+							System.out.println("starte E-Mailprogramm....");
+					break;
+	    		
+	    		case 4 : 	if(currentMenu == 0){
+	    						System.exit(EXIT_ON_CLOSE);
+							} else {
+								this.rootMenu();
+								System.out.println("Zurück zum Hauptmenü ...");
+							}    			
+	    			break;
+	    		
+	    		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
+	    	}
     	}
+    }
+    
+    public void difficultyGame(){
+    	this.currentMenu = 1;
+    	
+    	this.lernspiel = Toolkit.getDefaultToolkit().getImage(directory + "schwierigkeitsgrad1.png");
+    	this.editor = Toolkit.getDefaultToolkit().getImage(directory + "schwierigkeitsgrad2.png");
+    	this.email = Toolkit.getDefaultToolkit().getImage(directory + "schwierigkeitsgrad3.png");
+    	this.quit = Toolkit.getDefaultToolkit().getImage(directory + "zurueck.png");
+        
+        repaint();
+    }
+    
+    public void rootMenu(){
+    	this.currentMenu = 0;
+
+    	this.lernspiel = Toolkit.getDefaultToolkit().getImage(directory + "lernspiel.png");
+    	this.editor = Toolkit.getDefaultToolkit().getImage(directory + "editor.png");
+        this.email = Toolkit.getDefaultToolkit().getImage(directory + "email.png");
+        this.quit = Toolkit.getDefaultToolkit().getImage(directory + "quit.png");
+        
+        repaint();
     }
 }
