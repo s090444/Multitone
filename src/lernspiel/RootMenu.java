@@ -277,26 +277,32 @@ public class RootMenu extends JFrame
 
       
     public void keyTyped(KeyEvent e) {
+        //System.out.println(e);
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void keyPressed(KeyEvent e) {
-    	this.setFlac(e, 1);
+        //System.out.println("RootWindow: " + e);
+    	
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void keyReleased(KeyEvent e) {
-/*    	
+
+    	/** Handle the Released keys event. */
+    	this.setFlac(e, 1);
+    	
         //System.out.println("(RootM keyPressed) FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
 		if (this.isFirstKeyPressedflag() == false) {
 			this.setFirstKeyPressedflag(true);
-*/	    	
+	    	
 	        //System.out.println("FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
 			//System.out.println("Eingabe beginn...");
 
-	//		Timer timer = new Timer();
-	//		timer.schedule(new MappedKey(root, ""), typingTime);
-			new MappedKey(root, "");
+			Timer timer = new Timer();
+			timer.schedule(new MappedKey(root, ""), typingTime);
 			
-		//}
+		}
 
         //System.out.println(e);	
         //throw new UnsupportedOperationException("Not supported yet.");
