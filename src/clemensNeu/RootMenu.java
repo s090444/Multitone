@@ -268,7 +268,7 @@ public class RootMenu extends JFrame
 			//System.out.println("Eingabe beginn...");
 
 			Timer timer = new Timer();
-			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
+			timer.schedule(new MappKeyCode(root, this.numOfKeys, this.numOfPoss), typingTime);
 			
 		}
 
