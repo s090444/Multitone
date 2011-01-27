@@ -4,12 +4,12 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.util.TimerTask;
 
-class MappedKey extends TimerTask {
+class MappKeyCode extends TimerTask {
 
 	RootMenu parent;
 	int numOfKeys, numOfPoss;
 
-	public MappedKey(RootMenu root, int keys, int poss) {
+	public MappKeyCode(RootMenu root, int keys, int poss) {
 		parent = root;
 		numOfKeys = keys;
 		numOfPoss = poss;
