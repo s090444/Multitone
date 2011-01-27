@@ -56,7 +56,7 @@ public class RootMenu extends JFrame
      * Typing_time
      */
     
-	final int typingTime = 300;	
+	final int typingTime = 150;	
 
 	public int getTypingTime() {
 		return typingTime;
