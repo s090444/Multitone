@@ -56,7 +56,7 @@ public class RootMenu extends JFrame
      * Typing_time
      */
     
-	final int typingTime = 150;	
+	final int typingTime = 50;	
 
 	public int getTypingTime() {
 		return typingTime;
@@ -283,6 +283,7 @@ public class RootMenu extends JFrame
 
     public void keyPressed(KeyEvent e) {
         //System.out.println("RootWindow: " + e);
+    	this.setFlac(e, 1);
     	
         //throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -290,7 +291,6 @@ public class RootMenu extends JFrame
     public void keyReleased(KeyEvent e) {
 
     	/** Handle the Released keys event. */
-    	this.setFlac(e, 1);
     	
         //System.out.println("(RootM keyPressed) FirstKeyPressedflag gesetzt auf " + this.isFirstKeyPressedflag());
 		if (this.isFirstKeyPressedflag() == false) {
