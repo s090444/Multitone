@@ -19,6 +19,7 @@ public class Fehler extends JFrame implements SwingConstants {
 	JLabel errors = new JLabel("");
 	JLabel prozent = new JLabel("");
 	JLabel stats = new JLabel("");
+	JLabel hinweis = new JLabel("");
 	boolean keypress;
 	
 	private static final long serialVersionUID = 2304903219655115269L;
@@ -41,30 +42,37 @@ public class Fehler extends JFrame implements SwingConstants {
 		cp.setLayout(null);
 	
 		
-		rounds.setBounds(0, 0, 800, 150);
+		rounds.setBounds(0, 0, 400, 150);
 		rounds.setOpaque(true);
 		rounds.setBackground(Color.WHITE);
 		rounds.setFont(new Font("Arial", 255, 32));
 		rounds.setHorizontalAlignment(CENTER);
 		
-		prozent.setBounds(0, 450, 800, 150);
+		prozent.setBounds(0, 300, 800, 150);
 		prozent.setOpaque(true);
 		prozent.setBackground(Color.WHITE);
 		prozent.setFont(new Font("Arial", 255, 32));
 		prozent.setHorizontalAlignment(CENTER);
 		
-		errors.setBounds(0, 150, 800, 150);
+		errors.setBounds(400, 0, 400, 150);
 		errors.setOpaque(true);
 		errors.setBackground(Color.WHITE);
 		errors.setFont(new Font("Arial", 255, 32));
 		errors.setHorizontalAlignment(CENTER);
 		
+		hinweis.setBounds(0,450,800,150);
+		hinweis.setOpaque(true);
+		hinweis.setBackground(Color.WHITE);
+		hinweis.setForeground(Color.RED);
+		hinweis.setFont(new Font("Arial",255,42));
+		hinweis.setHorizontalAlignment(CENTER);
 		
-		stats.setBounds(0, 300, 800, 150);
+		stats.setBounds(0, 150, 800, 150);
 		stats.setOpaque(true);
 		stats.setBackground(Color.WHITE);
 		stats.setFont(new Font("Arial", 255, 40));
 		stats.setHorizontalAlignment(CENTER);
+		
 		
 		stats.setFocusable(true);
 		stats.requestFocus();
@@ -95,6 +103,8 @@ public class Fehler extends JFrame implements SwingConstants {
 		cp.add(errors);
 		cp.add(prozent);
 		cp.add(stats);
+		cp.add(hinweis);
+		
 		
 		Sound.playSound("clap");
 		rounds.setText("  Eingaben: " + runden);
@@ -111,6 +121,7 @@ public class Fehler extends JFrame implements SwingConstants {
 			prozent.setText("keine Runde gespielt");	
 		}
 		
+		hinweis.setText("Beliebige Taste zum Beenden drücken");
 		
 		
 		

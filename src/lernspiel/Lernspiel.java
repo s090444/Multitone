@@ -40,6 +40,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	int runden=0;
 	int kombi;
 	String string;
+	boolean ende=false;
 	char letter;
 	int eingabe;
 	double durchschnitt;
@@ -308,7 +309,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				
 				if ((tasten[0]==true) && (tasten[1]==true) && (tasten[2]==true) && (tasten[3]==true) && (tasten[4]==true)) {
 					//System.exit(0);
-					
+					ende=true;
 			        //setVisible(false);
 					durchschnitt=summe / zaehler;
 					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt, parent);
@@ -575,8 +576,10 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		}
 		public void run() {
 			
-			
+			if(ende==false){
 				check();
+			}
+			else {}
 			
 				
 		}
