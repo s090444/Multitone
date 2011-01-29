@@ -7,6 +7,11 @@ import java.net.MalformedURLException;
 public class Sound extends Applet {
       
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3867379223432272441L;
+
 	public static void playSound(char letter){
 		
 		File file= new File("src/Audio/" + letter+ ".wav");

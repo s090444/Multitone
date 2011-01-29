@@ -7,8 +7,7 @@ package lernspiel;
 //package lernspiel;
 
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+
 import java.awt.image.BufferedImage;
 import java.awt.Dimension;
 import java.awt.*;
@@ -19,6 +18,10 @@ import javax.swing.*;
  */
 class ImageLabel extends JLabel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4786625303435614129L;
 	private BufferedImage image; 
 	 
 	  public void setImage( BufferedImage image ) 

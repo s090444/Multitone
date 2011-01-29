@@ -39,7 +39,7 @@ public class Fehler extends JFrame implements SwingConstants {
 		setLocation(x, y);
 		Container cp = getContentPane();
 		cp.setLayout(null);
-		Sound Sound=new Sound();
+	
 		
 		rounds.setBounds(0, 0, 800, 150);
 		rounds.setOpaque(true);
