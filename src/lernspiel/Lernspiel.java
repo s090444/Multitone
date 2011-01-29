@@ -91,6 +91,10 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		
 		parent = root;
 		parent.setVisible(false);
+		
+		this.kombis = parent.getMapping();
+		
+		
 		switch (difficulty){
 		case 1: typingTime=3000; break;
 		case 2: typingTime=2000; break;
@@ -98,8 +102,10 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		}
 		
 		
-		this.kombis = parent.getMapping();
-		System.out.println(kombis[10][0]);
+		
+		
+		
+		
 		
 	
 		
@@ -189,7 +195,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		text.addKeyListener(new KeyListener() {
 			
 			public void keyPressed(KeyEvent e) {
-				System.out.println(e);
+				
 				eingabe = e.getKeyChar();
 				switch (eingabe) {
 				case 'q':
@@ -263,7 +269,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				else{
 					
 				}
-				System.out.println(e);
+				
 				eingabe = e.getKeyChar();
 				switch (eingabe) {
 				case 'q':
@@ -415,7 +421,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		// long random = (System.currentTimeMillis() % 94)+33;
 		long random = (System.currentTimeMillis() % kombis[0].length);
 		kombi = (int) random;
-		letter = (char) kombis[10][kombi];
+		letter = (((char) kombis[10][kombi]));
 	}
 
 	public void sleep(Integer sleeptime) {
@@ -430,10 +436,10 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 		for (int i = 0; i < 10; i++) {
 			if (kombis[i][kombi] == 1) {
-				createImage("pressit.jpeg");
+				createImage("key_press.jpeg");
 				tastenbild[i].setImage(taste);
 			} else {
-				createImage("pressthisnot.jpeg");
+				createImage("key_dontpress.jpeg");
 				tastenbild[i].setImage(taste);
 			}
 		}
@@ -446,17 +452,26 @@ public class Lernspiel extends JFrame implements SwingConstants {
 														// werden
 		
 		if ((i >= 0) && (i < 10)) {
-			if (pressed == true) {
-				createImage("used.jpeg");
+			if (pressed == true)  {
+				if(kombis[i][kombi] == 1){
+				createImage("right.jpeg");
 				tastenbild[i].setImage(taste);
-				sleep(20);
-			} else {
+				
+				}
+				else{
+					createImage("wrong.jpeg");
+					tastenbild[i].setImage(taste);
+						
+				}
+					
+			} 
+			else {
 				// tastenbild[i].setIcon(new ImageIcon("src/Pics/unused.jpeg"));
 				if (kombis[i][kombi] == 1) {
-					createImage("pressit.jpeg");
+					createImage("key_press.jpeg");
 					tastenbild[i].setImage(taste);
 				} else {
-					createImage("pressthisnot.jpeg");
+					createImage("key_dontpress.jpeg");
 					tastenbild[i].setImage(taste);;
 				}
 			}

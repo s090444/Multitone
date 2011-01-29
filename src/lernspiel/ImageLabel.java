@@ -38,7 +38,7 @@ class ImageLabel extends JLabel {
 	  protected void paintComponent( Graphics g ) 
 	  { 
 	    if ( image != null ) 
-	      g.drawImage( image, 0, 0,400,300, this ); 
+	      g.drawImage( image, 0, 0,image.getWidth(),image.getHeight(), this ); 
 	  } 
 
 }

@@ -8,7 +8,7 @@ public class Sound extends Applet {
       
 	
 	public static void playSound(char letter){
-		System.out.println(letter);
+		
 		File file= new File("src/Audio/" + letter+ ".wav");
 		AudioClip sound = null;
 		try {
@@ -22,7 +22,7 @@ public class Sound extends Applet {
 	}
 	
 	public static void playSound(int letter){
-		System.out.println(letter);
+		
 		File file= new File("src/Audio/" + letter+ ".wav");
 		AudioClip sound = null;
 		try {
@@ -36,7 +36,7 @@ public class Sound extends Applet {
 	}
 	
 	public static void playSound(String letter){
-		System.out.println(letter);
+		
 		File file= new File("src/Audio/" + letter+ ".wav");
 		AudioClip sound = null;
 		try {
