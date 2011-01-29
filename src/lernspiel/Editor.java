@@ -151,8 +151,7 @@ public class Editor extends JFrame implements KeyListener {
 				parent.setFirstKeyPressedflag(true);
 
 				Timer timer = new Timer();
-				timer.schedule(new MappedKey(parent, parent.numOfKeys,
-						parent.numOfPoss), parent.typingTime);
+				timer.schedule(new MappedKey(parent, "editor"), parent.typingTime);
 			}
 			e.consume();
 		}
