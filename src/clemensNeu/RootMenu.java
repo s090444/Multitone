@@ -268,7 +268,7 @@ public class RootMenu extends JFrame
 			//System.out.println("Eingabe beginn...");
 
 			Timer timer = new Timer();
-			timer.schedule(new MappKeyCode(root, this.numOfKeys, this.numOfPoss), typingTime);
+			timer.schedule(new MappedKey(root, this.numOfKeys, this.numOfPoss), typingTime);
 			
 		}
 
@@ -292,7 +292,8 @@ public class RootMenu extends JFrame
 		case 'p': this.setFlag(9, flac); break;
 		
 		default:
-			System.err.println("UngÃ¼ltige Eingabe!");
+			System.err.println("Ungültige Eingabe!");
+			System.out.println("flag: " + flac);
 		}
     }
     

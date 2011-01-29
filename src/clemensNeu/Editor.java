@@ -21,6 +21,7 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.util.Timer;
 
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -47,16 +48,26 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	private JToggleButton jToggleButton4 = null;
 	private JToggleButton jToggleButton5 = null;
 	private JToggleButton jToggleButton6 = null;
-	private JToggleButton jToggleButton10 = null;
-
-	static RootMenu parent;
 	private JButton jButton = null;
 	private JButton jButton1 = null;
+	private JButton jButton2 = null;
+	private JButton jButton3 = null;
+
+	static RootMenu parent;
 
 	private int fontSize = 12;
-	private JButton jButton2 = null;
-	private File file = new File("Editor.save");  //  @jve:decl-index=0:
-	private JButton jButton3 = null;
+	private File file = new File("Editor.save"); // @jve:decl-index=0:
+	private AbstractButton[] buttonArray = new AbstractButton[12];
+	public static boolean forward = false;
+	public static boolean release = false;
+
+	public AbstractButton[] getButtonArray() {
+		return buttonArray;
+	}
+
+	public void setButtonArray(AbstractButton[] aButton) {
+		this.buttonArray = aButton;
+	}
 
 	/**
 	 * This is the default constructor
@@ -107,18 +118,29 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	private JToolBar getJToolBar() {
 		if (jToolBar == null) {
 			jToolBar = new JToolBar();
+			int i = 0;
 			jToolBar.add(getJToggleButton());
+			buttonArray[i++] = getJToggleButton();
 			jToolBar.add(getJToggleButton1());
+			buttonArray[i++] = getJToggleButton1();
 			jToolBar.add(getJToggleButton2());
-			jToolBar.add(getJToggleButton10());
+			buttonArray[i++] = getJToggleButton2();
 			jToolBar.add(getJToggleButton3());
+			buttonArray[i++] = getJToggleButton3();
 			jToolBar.add(getJToggleButton4());
+			buttonArray[i++] = getJToggleButton4();
 			jToolBar.add(getJToggleButton5());
+			buttonArray[i++] = getJToggleButton5();
 			jToolBar.add(getJToggleButton6());
+			buttonArray[i++] = getJToggleButton6();
 			jToolBar.add(getJButton());
+			buttonArray[i++] = getJButton();
 			jToolBar.add(getJButton1());
+			buttonArray[i++] = getJButton1();
 			jToolBar.add(getJButton2());
+			buttonArray[i++] = getJButton2();
 			jToolBar.add(getJButton3());
+			buttonArray[i] = getJButton3();
 		}
 		return jToolBar;
 	}
@@ -174,29 +196,29 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		// }
 	}
 
-//	Handle keyTyped Event
-	
+	// Handle keyTyped Event
+
 	public void keyTyped(KeyEvent e) {
-		
-		//let pass events from Robot()
-		if (parent.isForward() == true) {
-			parent.setForward(false);
+
+		// let pass events from Robot()
+		if (forward) {
+			forward=false;
 		} else {
 			parent.setFlac(e, 1);
 			if (parent.isFirstKeyPressedflag() == false) {
 				parent.setFirstKeyPressedflag(true);
 				Timer timer = new Timer();
-				timer.schedule(new MappKeyCode(parent, parent.numOfKeys,
+				timer.schedule(new MappKeyCode(parent, this, parent.numOfKeys,
 						parent.numOfPoss), parent.typingTime);
 			}
-			//consume event, don't let it pass to application
+			// consume event, don't let it pass to application
 			e.consume();
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-		if (parent.isForward()) {
-			parent.setForward(false);
+		if (release) {
+			release=false;
 			e.consume();
 		} else {
 			parent.setFlac(e, 0);
@@ -252,6 +274,15 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		return jToggleButton2;
 	}
 
+	// unselect all Buttons except of invoking Button
+	private void unselectColorButton(int k) {
+		for (int i = 3; i < 7; i++) {
+			if (buttonArray[i].isSelected() && i != k) {
+				buttonArray[i].doClick();
+			}
+		}
+	}
+
 	/**
 	 * This method initializes jToggleButton3
 	 * 
@@ -261,9 +292,20 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		if (jToggleButton3 == null) {
 			jToggleButton3 = new JToggleButton();
 			jToggleButton3.setText("Rot");
-			Action action = new StyledEditorKit.ForegroundAction("Red",
-					Color.red);
-			jToggleButton3.setAction(action);
+			jToggleButton3.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					if (jToggleButton3.isSelected()) {
+						unselectColorButton(3);
+						new StyledEditorKit.ForegroundAction("Red", Color.red)
+								.actionPerformed(arg0);
+					} else
+						new StyledEditorKit.ForegroundAction("Black",
+								Color.black).actionPerformed(arg0);
+				}
+			});
 		}
 		return jToggleButton3;
 	}
@@ -277,9 +319,20 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		if (jToggleButton4 == null) {
 			jToggleButton4 = new JToggleButton();
 			jToggleButton4.setText("Grün");
-			Action action = new StyledEditorKit.ForegroundAction("Green",
-					Color.green);
-			jToggleButton4.setAction(action);
+			jToggleButton4.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					if (jToggleButton4.isSelected()) {
+						unselectColorButton(4);
+						new StyledEditorKit.ForegroundAction("Green",
+								Color.green).actionPerformed(arg0);
+					} else
+						new StyledEditorKit.ForegroundAction("Black",
+								Color.black).actionPerformed(arg0);
+				}
+			});
 		}
 		return jToggleButton4;
 	}
@@ -293,9 +346,22 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		if (jToggleButton5 == null) {
 			jToggleButton5 = new JToggleButton();
 			jToggleButton5.setText("Blau");
-			Action action = new StyledEditorKit.ForegroundAction("Blue",
-					Color.blue);
-			jToggleButton5.setAction(action);
+			jToggleButton5.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					if (jToggleButton5.isSelected()) {
+						unselectColorButton(5);
+						new StyledEditorKit.ForegroundAction("Blue", Color.blue)
+								.actionPerformed(arg0);
+					}
+
+					else
+						new StyledEditorKit.ForegroundAction("Black",
+								Color.black).actionPerformed(arg0);
+				}
+			});
 		}
 		return jToggleButton5;
 	}
@@ -309,27 +375,22 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		if (jToggleButton6 == null) {
 			jToggleButton6 = new JToggleButton();
 			jToggleButton6.setText("Gelb");
-			Action action = new StyledEditorKit.ForegroundAction("Yellow",
-					Color.yellow);
-			jToggleButton6.setAction(action);
+			jToggleButton6.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					if (jToggleButton6.isSelected()) {
+						unselectColorButton(6);
+						new StyledEditorKit.ForegroundAction("Yellow",
+								Color.yellow).actionPerformed(arg0);
+					} else
+						new StyledEditorKit.ForegroundAction("Black",
+								Color.black).actionPerformed(arg0);
+				}
+			});
 		}
 		return jToggleButton6;
-	}
-
-	/**
-	 * This method initializes jToggleButton10
-	 * 
-	 * @return javax.swing.JToggleButton
-	 */
-	private JToggleButton getJToggleButton10() {
-		if (jToggleButton10 == null) {
-			jToggleButton10 = new JToggleButton();
-			jToggleButton10.setText("Schwarz");
-			Action action = new StyledEditorKit.ForegroundAction("Black",
-					Color.black);
-			jToggleButton10.setAction(action);
-		}
-		return jToggleButton10;
 	}
 
 	/**
@@ -348,7 +409,6 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// TODO Auto-generated method stub
 					if (fontSize <= 22)
 						fontSize += 5;
-					System.out.println(fontSize);
 					new StyledEditorKit.FontSizeAction("Bigger", fontSize)
 							.actionPerformed(e);
 				}
@@ -383,27 +443,28 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	}
 
 	/**
-	 * This method initializes jButton2	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButton2
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButton2() {
 		if (jButton2 == null) {
 			jButton2 = new JButton();
 			jButton2.setText("Speichern");
 			jButton2.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-//					String type = jEditorPane.getContentType();
+					// String type = jEditorPane.getContentType();
 					try {
-						OutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+						OutputStream os = new BufferedOutputStream(
+								new FileOutputStream(file));
 
-					Document doc = jEditorPane.getDocument();
-					int length = doc.getLength();
-					jEditorPane.getEditorKit().write(os, doc, 0, length);
-					os.close();
+						Document doc = jEditorPane.getDocument();
+						int length = doc.getLength();
+						jEditorPane.getEditorKit().write(os, doc, 0, length);
+						os.close();
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -414,8 +475,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 						// TODO Auto-generated catch block
 						e3.printStackTrace();
 					}
-					
-					
+
 				}
 			});
 		}
@@ -423,20 +483,20 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	}
 
 	/**
-	 * This method initializes jButton3	
-	 * 	
-	 * @return javax.swing.JButton	
+	 * This method initializes jButton3
+	 * 
+	 * @return javax.swing.JButton
 	 */
 	private JButton getJButton3() {
 		if (jButton3 == null) {
 			jButton3 = new JButton();
 			jButton3.setText("Laden");
 			jButton3.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-//					// TODO Auto-generated method stub
-					
+					// // TODO Auto-generated method stub
+
 					try {
 						Reader fileRead = new FileReader("Editor.save");
 						jEditorPane.read(fileRead, null);
@@ -447,11 +507,11 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
+
 				}
 			});
 		}
 		return jButton3;
 	}
-	
+
 }

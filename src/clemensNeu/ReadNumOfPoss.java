@@ -15,7 +15,7 @@ public class ReadNumOfPoss {
 		RandomAccessFile f = null;
 		int counter = 0;
 		try{
-			f = new RandomAccessFile("Mapping.txt", "r");
+			f = new RandomAccessFile("MappingKeyCodes.txt", "r");
 			for (String line; (line = f.readLine())!= null;)
 				counter++;
 		}catch (FileNotFoundException e) {
@@ -30,6 +30,7 @@ public class ReadNumOfPoss {
 					e.printStackTrace();
 				}
 		}
+		System.out.println("NomOfPos: "+counter);
 		
 		return counter;
 		
