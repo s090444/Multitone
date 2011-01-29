@@ -78,14 +78,14 @@ public class Fehler extends JFrame implements SwingConstants {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				parent.setVisible(true);
-				dispose();				
+								
 			}
 
 			@Override
 			public void keyTyped(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
+				parent.setVisible(true);
+				dispose();
 			}
         	
         });
@@ -96,7 +96,7 @@ public class Fehler extends JFrame implements SwingConstants {
 		cp.add(prozent);
 		cp.add(stats);
 		
-		
+		Sound.playSound("clap");
 		rounds.setText("  Eingaben: " + runden);
 		errors.setText("davon falsch: " + fehler);
 		stats.setText("durchschnittl. Antwortzeit: " + (Math.round(durchschnitt*100) / 100) + " s");

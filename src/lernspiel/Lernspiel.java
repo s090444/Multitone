@@ -243,18 +243,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					break;
 				}
 				
-				if ((tasten[0]==true) && (tasten[1]==true) && (tasten[2]==true) && (tasten[3]==true) && (tasten[4]==true)) {
-					//System.exit(0);
-					
-			        //setVisible(false);
-					durchschnitt=summe / zaehler;
-					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt, parent);
-					Fehler.setVisible(true);
-					//parent.setVisible(true);
-					dispose();
-				} else {
-					
-				}
+				
 				
 			}
 			
@@ -317,6 +306,19 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					break;
 				}
 				
+				if ((tasten[0]==true) && (tasten[1]==true) && (tasten[2]==true) && (tasten[3]==true) && (tasten[4]==true)) {
+					//System.exit(0);
+					
+			        //setVisible(false);
+					durchschnitt=summe / zaehler;
+					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt, parent);
+					Fehler.setVisible(true);
+					//parent.setVisible(true);
+					dispose();
+				} else {
+					
+				}
+				
 
 				// text.dispatchEvent(e);
 				/*
@@ -362,6 +364,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		}
 		else{
 			fehler++;
+			updatewertung("fail.jpeg");
 			updatezeit("Falsche Eingabe");
 			playsound("wrong");
 		}
@@ -504,11 +507,11 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	public void updatewertung(double reaction) { // ï¿½ndert das Wertungsbild je
 													// nach Reaktionszeit
 		if (reaction < 1.5) {
-			updatewertung("awesome.gif");
+			updatewertung("awesome" + ((int)(kombi %2) + 1) + ".jpeg");
 		} else if (reaction < 3) {
-			updatewertung("awesome.gif");
+			updatewertung("nice.jpeg");
 		} else {
-			updatewertung("awesome.gif");
+			updatewertung("slow.jpeg");
 		}
 
 	}
@@ -542,7 +545,14 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		}
 		else{
 			zeichen.setFont(new Font("Arial", 255, 32));
-			zeichen.setText("Steuerzeichen");
+//			zeichen.setText("Steuerzeichen");
+			switch(kombis[10][kombi]){
+			case 8: zeichen.setText("Rücktaste"); break;
+			case 9: zeichen.setText("Tabulator"); break;
+			case 13: zeichen.setText("Enter"); break;
+			case 27: zeichen.setText("Escape"); break;
+			default: zeichen.setText("Steuerzeichen"); break;
+			}
 		}
 	}
 
