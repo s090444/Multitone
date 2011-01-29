@@ -6,6 +6,7 @@
 package lernspiel;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -13,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
 
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -54,12 +56,19 @@ public class RootMenu extends JFrame
     Image zurueck_unselected = Toolkit.getDefaultToolkit().getImage(directory + "zurueck_unselected.png");
     Image zurueck_selected = Toolkit.getDefaultToolkit().getImage(directory + "zurueck_selected.png");
     
-    Image background = Toolkit.getDefaultToolkit().getImage(directory + "background.JPG");
+    Image background = Toolkit.getDefaultToolkit().getImage(directory + "background.png");
+    
+    Image key_unselected = Toolkit.getDefaultToolkit().getImage(directory + "key_unselected.png");
+    Image key_selected = Toolkit.getDefaultToolkit().getImage(directory + "key_selected.png");
     
     Image lernspiel;
     Image editor;
     Image email;
     Image quit;
+    
+    /*char move_up = 'y';
+    char move_down = 'y';
+    char enter = 'x';*/
     
     // menuCounter ist eins, der erste Menüpunkt schon vorselektiert ist
     int menuCounter = 1;
@@ -255,25 +264,52 @@ public class RootMenu extends JFrame
 			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(background, 0, 0, 768, 576, this);            
+                g.drawImage(background, 0, 0, 800, 576, this); //768           
                 
-                g.drawImage(lernspiel, 275, 70, 220, 55, this);           
-                g.drawImage(editor, 275, 115, 220, 55, this);           
-                g.drawImage(email, 275, 160, 220, 55, this);           
-                g.drawImage(quit, 275, 205, 220, 55, this);
+                // Beschreibung für Move-Down anhand des Key-Icons
+                g.drawImage(key_selected, 20, 150, 20, 20, this);
+                g.drawImage(key_selected, 40, 150, 20, 20, this);
+                g.drawImage(key_selected, 60, 150, 20, 20, this);
+                g.drawImage(key_unselected, 80, 150, 20, 20, this);
+                g.drawImage(key_unselected, 100, 150, 20, 20, this);
+
+                g.drawImage(key_unselected, 130, 150, 20, 20, this);
+                g.drawImage(key_unselected, 150, 150, 20, 20, this);
+                g.drawImage(key_unselected, 170, 150, 20, 20, this);
+                g.drawImage(key_unselected, 190, 150, 20, 20, this);
+                g.drawImage(key_unselected, 210, 150, 20, 20, this);
+
+                // Beschreibung für Bestätigung (Enter) anhand des Key-Icons
+                g.drawImage(key_selected, 20, 230, 20, 20, this);
+                g.drawImage(key_selected, 40, 230, 20, 20, this);
+                g.drawImage(key_unselected, 60, 230, 20, 20, this);
+                g.drawImage(key_unselected, 80, 230, 20, 20, this);
+                g.drawImage(key_unselected, 100, 230, 20, 20, this);
+
+                g.drawImage(key_unselected, 130, 230, 20, 20, this);
+                g.drawImage(key_unselected, 150, 230, 20, 20, this);
+                g.drawImage(key_unselected, 170, 230, 20, 20, this);
+                g.drawImage(key_unselected, 190, 230, 20, 20, this);
+                g.drawImage(key_unselected, 210, 230, 20, 20, this);
+                
+                g.drawImage(lernspiel, 295, 120, 220, 55, this);           
+                g.drawImage(editor, 295, 165, 220, 55, this);           
+                g.drawImage(email, 295, 210, 220, 55, this);           
+                g.drawImage(quit, 295, 275, 220, 55, this);
             }
         };
 
         panel.setBackground(Color.WHITE);
+        panel.setLayout(null);
         
-  /*      JButton button = new JButton("SubWindow");
-        button.addKeyListener(this);
+        final JLabel moveDownDescription = new JLabel("Move Down");
+        moveDownDescription.setBounds(20, 120, 170, 35);        
+        panel.add(moveDownDescription);
 
-        JLabel label = new JLabel("Starten des Lernspiels mit q,w,e");        
+        final JLabel enterDescription = new JLabel("Enter");
+        enterDescription.setBounds(20, 200, 170, 35);        
+        panel.add(enterDescription);
         
-        panel.add(button);
-        panel.add(label);*/
-
         System.out.println("panel focusable: " + panel.isFocusable());
         if(panel.isFocusable()){
         	panel.setFocusable(true);
@@ -322,11 +358,11 @@ public class RootMenu extends JFrame
         //System.out.println(e);	
         //throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+    char move_down;
     
     public void newKeyPush(char newKey){
     	switch (newKey){
-    		case 'y' : this.moveMenuPoint(); break;
+    		case 'y' : this.moveMenuPointDown(); break;
     		case 'o' : this.runApplication(); break;
     		
     		default : System.out.println("ungültige Menüeingabe!!");
@@ -359,7 +395,7 @@ public class RootMenu extends JFrame
      * reseted, anschließend, anhand der menuCounter-Variable, den aktuellen Menüpunkt setzt
      * und den menuCounter nach oben zählt. 
      */
-    public void moveMenuPoint(){
+    public void moveMenuPointDown(){
 
        	/*
        	 * sollte das Menü am Ende angekommen sein, wird der Zähler reseted und der 1. Menüpunkt
@@ -440,11 +476,15 @@ public class RootMenu extends JFrame
     
     public void runApplication(){
     	if( (currentMenu == 1) && (menuCounter <= 3) ){
+    					
 			new Lernspiel("Lernspiel", root, this.menuCounter);
 			System.out.println("starte Lernspiel in Schwierigkeitsgrad " + this.menuCounter + " ...");
+
 			this.currentMenu = 0;
 			this.menuCounter = 1;
 			this.rootMenu();
+			this.drawNewPosition();
+			
     	} else {
 	    	switch(menuCounter){
 	    		case 1 : 	this.difficultyGame();
