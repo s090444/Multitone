@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 public class Sound extends Applet {
       
 	
-	public void playSound(char letter){
+	public static void playSound(char letter){
 		System.out.println(letter);
 		File file= new File("src/Audio/" + letter+ ".wav");
 		AudioClip sound = null;
@@ -21,7 +21,7 @@ public class Sound extends Applet {
 		sound.play();
 	}
 	
-	public void playSound(int letter){
+	public static void playSound(int letter){
 		System.out.println(letter);
 		File file= new File("src/Audio/" + letter+ ".wav");
 		AudioClip sound = null;
@@ -35,7 +35,7 @@ public class Sound extends Applet {
 		sound.play();
 	}
 	
-	public void playSound(String letter){
+	public static void playSound(String letter){
 		System.out.println(letter);
 		File file= new File("src/Audio/" + letter+ ".wav");
 		AudioClip sound = null;

@@ -73,7 +73,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			new ImageLabel(),
 			new ImageLabel(),
 			new ImageLabel() };
-	Sound Sound = new Sound();
+	//Sound Sound = new Sound();
 	JLabel zeit = new JLabel("");
 	JLabel zeichen = new JLabel("");
 	JTextField text = new JTextField();
