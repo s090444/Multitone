@@ -29,8 +29,30 @@ public class RootMenu extends JFrame
     static RootMenu root;
     String directory = "src/Pics/";
     
-    Image unselected = Toolkit.getDefaultToolkit().getImage(directory + "menu_unselected.png");
-    Image selected = Toolkit.getDefaultToolkit().getImage(directory + "menu_selected.png");
+    Image lernspiel_unselected = Toolkit.getDefaultToolkit().getImage(directory + "lernspiel_unselected.png");
+    Image lernspiel_selected = Toolkit.getDefaultToolkit().getImage(directory + "lernspiel_selected.png");
+    
+    Image texteditor_unselected = Toolkit.getDefaultToolkit().getImage(directory + "texteditor_unselected.png");
+    Image texteditor_selected = Toolkit.getDefaultToolkit().getImage(directory + "texteditor_selected.png");
+    
+    Image email_unselected = Toolkit.getDefaultToolkit().getImage(directory + "email_unselected.png");
+    Image email_selected = Toolkit.getDefaultToolkit().getImage(directory + "email_selected.png");
+    
+    Image quit_unselected = Toolkit.getDefaultToolkit().getImage(directory + "quit_unselected.png");
+    Image quit_selected = Toolkit.getDefaultToolkit().getImage(directory + "quit_selected.png");
+
+
+	Image level1_unselected = Toolkit.getDefaultToolkit().getImage(directory + "level1_unselected.png");
+	Image level1_selected = Toolkit.getDefaultToolkit().getImage(directory + "level1_selected.png");
+	
+	Image level2_unselected = Toolkit.getDefaultToolkit().getImage(directory + "level2_unselected.png");
+	Image level2_selected = Toolkit.getDefaultToolkit().getImage(directory + "level2_selected.png");
+	
+	Image level3_unselected = Toolkit.getDefaultToolkit().getImage(directory + "level3_unselected.png");
+	Image level3_selected = Toolkit.getDefaultToolkit().getImage(directory + "level3_selected.png");
+    
+    Image zurueck_unselected = Toolkit.getDefaultToolkit().getImage(directory + "zurueck_unselected.png");
+    Image zurueck_selected = Toolkit.getDefaultToolkit().getImage(directory + "zurueck_selected.png");
     
     Image background = Toolkit.getDefaultToolkit().getImage(directory + "background.JPG");
     
@@ -39,12 +61,8 @@ public class RootMenu extends JFrame
     Image email;
     Image quit;
     
-    Image image1 = null;
-    Image image2 = null;
-    Image image3 = null;
-    Image image4 = null;
-    
-    int menuCounter = 0;
+    // menuCounter ist eins, der erste Menüpunkt schon vorselektiert ist
+    int menuCounter = 1;
     
     int currentMenu = 0;
     JPanel panel;
@@ -197,13 +215,13 @@ public class RootMenu extends JFrame
         //String curDir = System.getProperty("user.dir");
         //System.out.println("current Directory: " + curDir);
         
-        this.resetMenuButtons();
         this.rootMenu();
-        
+        this.drawNewPosition();
         
         this.addComponentsToPanel();
         //root.pack();
 
+        this.setResizable(false);
         this.setVisible(true);
         
     }
@@ -237,16 +255,12 @@ public class RootMenu extends JFrame
 			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(background, 0, 0, this);                
-                g.drawImage(image1, 100, 20, 45, 45, this);           
-                g.drawImage(image2, 100, 70, 50, 50, this);           
-                g.drawImage(image3, 100, 120, 50, 50, this);           
-                g.drawImage(image4, 100, 170, 50, 50, this);      
+                g.drawImage(background, 0, 0, 768, 576, this);            
                 
-                g.drawImage(lernspiel, 150, 20, this);           
-                g.drawImage(editor, 150, 70, this);           
-                g.drawImage(email, 150, 120, this);           
-                g.drawImage(quit, 150, 170, this);
+                g.drawImage(lernspiel, 275, 70, 220, 55, this);           
+                g.drawImage(editor, 275, 115, 220, 55, this);           
+                g.drawImage(email, 275, 160, 220, 55, this);           
+                g.drawImage(quit, 275, 205, 220, 55, this);
             }
         };
 
@@ -354,23 +368,42 @@ public class RootMenu extends JFrame
        	menuCounter++;
        	if(menuCounter > 4)
        		menuCounter = 1;
-       	
+       	this.drawNewPosition();
     	// setzt alle Bilder im Menü wieder auf "unselected"
-    	this.resetMenuButtons();
     	
+       	
+    }
+    
+    public void drawNewPosition(){
+
     	// wählt den aktuellen Menüpunkt auf "selected" anhand von menuCounter-Variable
-    	switch (menuCounter) {
-    		case 1 : this.image1 = this.selected; break;
-    		case 2 : this.image2 = this.selected; break;
-    		case 3 : this.image3 = this.selected; break;
-    		case 4 : this.image4 = this.selected; break;
-    		
-    		default : System.out.println("Fehler Menüführung!");
-    	}
+    	if(currentMenu == 0){
+        	this.rootMenu();
+        	
+			switch (menuCounter) {
+				case 1 : this.lernspiel = this.lernspiel_selected; break;
+				case 2 : this.editor = this.texteditor_selected; break;
+				case 3 : this.email = this.email_selected; break;
+				case 4 : this.quit = this.quit_selected; break;
+				
+				default : System.out.println("Fehler Menüführung!");
+			}
+	    } else {
+	    	this.difficultyGame();
+	    	
+			switch (menuCounter) {
+				case 1 : this.lernspiel = this.level1_selected; break;
+				case 2 : this.editor = this.level2_selected; break;
+				case 3 : this.email = this.level3_selected; break;
+				case 4 : this.quit = this.zurueck_selected; break;
+				
+				default : System.out.println("Fehler Menüführung!");
+			}
+	    }
     	
        	repaint();
     	System.out.println("currentMenu: " + currentMenu + " menuCounter: " + menuCounter);
-       	
+    	
     }
     
     public void resetFlags(){
@@ -380,25 +413,42 @@ public class RootMenu extends JFrame
     	
     	System.out.println("Flags zurueckgesetzt...");
     }
-
-    public void resetMenuButtons(){
-    	image1 = unselected;
-    	image2 = unselected;
-    	image3 = unselected;
-    	image4 = unselected;
+    
+    public void difficultyGame(){
+    	this.currentMenu = 1;
+    	
+    	this.lernspiel = level1_unselected;
+    	this.editor = level2_unselected;
+    	this.email = level3_unselected;
+    	this.quit = zurueck_unselected;
+        
+        repaint();
     }
+    
+    public void rootMenu(){
+    	this.currentMenu = 0;
+
+    	this.lernspiel = lernspiel_unselected;
+    	this.editor = texteditor_unselected;
+        this.email = email_unselected;
+        this.quit = quit_unselected;
+        
+        repaint();
+    }
+    
+
     
     public void runApplication(){
     	if( (currentMenu == 1) && (menuCounter <= 3) ){
 			new Lernspiel("Lernspiel", root, this.menuCounter);
 			System.out.println("starte Lernspiel in Schwierigkeitsgrad " + this.menuCounter + " ...");
 			this.currentMenu = 0;
-			this.menuCounter = 0;
-			this.resetMenuButtons();
+			this.menuCounter = 1;
 			this.rootMenu();
     	} else {
 	    	switch(menuCounter){
 	    		case 1 : 	this.difficultyGame();
+	    					this.drawNewPosition();	    					
 	        				System.out.println("starte Schwierigkeitsgrad ...");
 	    			break;
 	    			
@@ -423,25 +473,4 @@ public class RootMenu extends JFrame
     	}
     }
     
-    public void difficultyGame(){
-    	this.currentMenu = 1;
-    	
-    	this.lernspiel = Toolkit.getDefaultToolkit().getImage(directory + "schwierigkeitsgrad1.png");
-    	this.editor = Toolkit.getDefaultToolkit().getImage(directory + "schwierigkeitsgrad2.png");
-    	this.email = Toolkit.getDefaultToolkit().getImage(directory + "schwierigkeitsgrad3.png");
-    	this.quit = Toolkit.getDefaultToolkit().getImage(directory + "zurueck.png");
-        
-        repaint();
-    }
-    
-    public void rootMenu(){
-    	this.currentMenu = 0;
-
-    	this.lernspiel = Toolkit.getDefaultToolkit().getImage(directory + "lernspiel.png");
-    	this.editor = Toolkit.getDefaultToolkit().getImage(directory + "editor.png");
-        this.email = Toolkit.getDefaultToolkit().getImage(directory + "email.png");
-        this.quit = Toolkit.getDefaultToolkit().getImage(directory + "quit.png");
-        
-        repaint();
-    }
 }
