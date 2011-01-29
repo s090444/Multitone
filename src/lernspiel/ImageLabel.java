@@ -8,25 +8,37 @@ package lernspiel;
 
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JComponent;
+import java.awt.image.BufferedImage;
+import java.awt.Dimension;
+import java.awt.*;
+import javax.swing.*;
 /**
  *
  * @author Excalipoor
  */
 class ImageLabel extends JLabel {
 
-  public ImageLabel(String img) {
-    this(new ImageIcon(img));
-  }
-
-  public ImageLabel(ImageIcon icon) {
-    setIcon(icon);
-    // setMargin(new Insets(0,0,0,0));
-    setIconTextGap(0);
-    // setBorderPainted(false);
-    setBorder(null);
-    setText(null);
-    setSize(400, 300);
-  }
+	private BufferedImage image; 
+	 
+	  public void setImage( BufferedImage image ) 
+	  { 
+	    this.image = image; 
+	    setPreferredSize( new Dimension(image.getWidth(), image.getHeight()) ); 
+	    repaint(); 
+	    invalidate(); 
+	  }
+	  
+//	  public void setImage(String image){
+//		  setIcon(new ImageIcon("src/Pics/" + image));
+//		  System.out.println("src/Pics/" + image);
+//	  }
+	 
+	  @Override 
+	  protected void paintComponent( Graphics g ) 
+	  { 
+	    if ( image != null ) 
+	      g.drawImage( image, 0, 0,400,300, this ); 
+	  } 
 
 }
