@@ -292,7 +292,7 @@ public class RootMenu extends JFrame
 		case 'p': this.setFlag(9, flac); break;
 		
 		default:
-			System.err.println("Ungültige Eingabe!");
+			System.err.println("Ungültige Eingabe! " + e.getKeyChar());
 			System.out.println("flag: " + flac);
 		}
     }

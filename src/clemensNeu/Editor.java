@@ -175,25 +175,6 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 
 	public void keyPressed(KeyEvent e) {
 
-		//
-		// System.out.println("isForward: "+parent.isForward());
-		// System.out.println("keyCode: " + parent.getKeyCode());
-		// System.out.println("keycode from Robot: " + e.getKeyCode());
-		//
-		// if (parent.isForward() == true) {
-		// parent.setForward(false);
-		// } else {
-		// parent.setFlac(e, 1);
-		// System.out.println("setFlag" + e.getKeyChar());
-		// if (parent.isFirstKeyPressedflag() == false) {
-		// parent.setFirstKeyPressedflag(true);
-		//
-		// Timer timer = new Timer();
-		// timer.schedule(new MappedKey(parent, parent.numOfKeys,
-		// parent.numOfPoss), parent.typingTime);
-		// }
-		// e.consume();
-		// }
 	}
 
 	// Handle keyTyped Event
@@ -203,6 +184,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		// let pass events from Robot()
 		if (forward) {
 			forward=false;
+			Sound.playSound((int)e.getKeyChar());
 		} else {
 			parent.setFlac(e, 1);
 			if (parent.isFirstKeyPressedflag() == false) {
@@ -215,7 +197,8 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 			e.consume();
 		}
 	}
-
+	
+	//Handle keyReleased Event
 	public void keyReleased(KeyEvent e) {
 		if (release) {
 			release=false;
@@ -235,7 +218,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 			jToggleButton = new JToggleButton();
 			jToggleButton.setText("Fett");
 			Action action = new StyledEditorKit.BoldAction();
-			action.putValue(Action.NAME, "Bold");
+			action.putValue(Action.NAME, "Fett");
 			jToggleButton.setAction(action);
 
 		}
@@ -252,7 +235,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 			jToggleButton1 = new JToggleButton();
 			jToggleButton1.setText("Kursiv");
 			Action action = new StyledEditorKit.ItalicAction();
-			action.putValue(Action.NAME, "Italic");
+			action.putValue(Action.NAME, "Kursiv");
 			jToggleButton1.setAction(action);
 		}
 		return jToggleButton1;
@@ -268,7 +251,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 			jToggleButton2 = new JToggleButton();
 			jToggleButton2.setText("Unterstrichen");
 			Action action = new StyledEditorKit.UnderlineAction();
-			action.putValue(Action.NAME, "Underline");
+			action.putValue(Action.NAME, "Unterstrichen");
 			jToggleButton2.setAction(action);
 		}
 		return jToggleButton2;
