@@ -1,16 +1,37 @@
 	package lernspiel;
 
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.swing.WindowConstants;
 
 
 public class Email extends javax.swing.JFrame {
 
 
-
-
+	static RootMenu parent;
+	public Email(String title,RootMenu root){
+	super(title);
+	
+	parent = root;
+	parent.setVisible(false);
+	
+	setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+	int frameWidth = 800;
+	int frameHeight = 600;
+	setSize(frameWidth, frameHeight);
+	Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+	int x = (d.width - getSize().width) / 2;
+	int y = (d.height - getSize().height) / 2;
+	setLocation(x, y);
+	initComponents();
+	setResizable(false);
+	setAlwaysOnTop(true);
+	setVisible(true);
+	}
 
 	/**
 	 *

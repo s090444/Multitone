@@ -568,7 +568,7 @@ public class RootMenu extends JFrame
 						System.out.println("starte Editor...");
 				break;
 				
-    		case 3 : 	//new email(root); 
+    		case 3 : 	new Email("Email",root); 
 						System.out.println("starte E-Mailprogramm...");
 				break;
 				
