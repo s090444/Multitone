@@ -56,7 +56,7 @@ class MappKeyCode extends TimerTask {
 									if (parent.getMapping()[k + n][i] != 0)
 										try {
 											Robot r = new Robot();
-											Editor.forward=true;
+											parent.forward=true;
 											r.keyPress(parent.getMapping()[k
 													+ n][i]);
 										} catch (AWTException e) {
@@ -65,7 +65,7 @@ class MappKeyCode extends TimerTask {
 								} else if (parent.getMapping()[k + n][i] != 0)
 									try {
 										Robot r = new Robot();
-										Editor.release=true;
+										parent.release=true;
 										r.keyRelease(parent.getMapping()[k + n][i]);
 									} catch (AWTException e) {
 
