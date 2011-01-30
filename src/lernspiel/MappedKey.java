@@ -42,8 +42,8 @@ class MappedKey extends TimerTask {
 		System.out.println("flag: " + parent.getFlag()[0]);*/
 		
 		for (int i = 0; i < parent.getNumOfPoss(); i++) {
-			for (int k = 0; k < parent.getNumOfKeys() + 1; k++) {
-				if (k == parent.getNumOfKeys()){
+			for (int k = 0; k < parent.getNumOfKeys() -3; k++) {
+				if (k == parent.getNumOfKeys()-4){
 					return (char) parent.getMapping()[k][i];
 				}
 				else if (parent.getMapping()[k][i] != parent.getFlag()[k])

@@ -42,16 +42,16 @@ class MappKeyCode extends TimerTask {
 //		System.out.println();
 
 		for (int i = 0; i < numOfPoss; i++) {
-			for (int k = 0; k < numOfKeys - 2; k++) {
-				if (k == numOfKeys - 3) {
+			for (int k = 0; k < numOfKeys - 3; k++) {
+				if (k == numOfKeys - 4) {
 					// System.out.println("if k == numOfKeys-1");
 //					System.out.println("parent.getMapping[k][i]: "
 //							+ parent.getMapping()[k][i]);
-					if (parent.getMapping()[k][i] == 1)
-						activeEditorButton(k + 1, i);
+					if (parent.getMapping()[k+1][i] == 1)
+						activeEditorButton(k + 2, i);
 					else {
 						for (int m = 0; m < 2; m++) {
-							for (int n = 0; n < 4; n++) {
+							for (int n = 1; n < 5; n++) {
 								if (m == 0) {
 									if (parent.getMapping()[k + n][i] != 0)
 										try {

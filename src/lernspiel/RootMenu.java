@@ -97,7 +97,7 @@ public class RootMenu extends JFrame
 	 * numOfKeys
 	 */
 	
-	final int numOfKeys = 10;
+	final int numOfKeys = 14;
 
 	public int getNumOfKeys() {
 		return numOfKeys;
