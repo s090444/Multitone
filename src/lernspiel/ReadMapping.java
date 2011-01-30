@@ -31,6 +31,7 @@ public class ReadMapping {
 						int index = line.indexOf(';');
 						mapping[k][i] = Integer.parseInt(line.substring(0,
 								index));
+						//System.out.println("mapped[" + k + "][" + i + "]: " + mapping[k][i]);
 						line = line.substring(index + 1);
 					}
 					break;

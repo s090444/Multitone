@@ -20,6 +20,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 
+import com.sun.mail.util.ASCIIUtility;
+
 
 /**
  *
@@ -272,8 +274,8 @@ public class RootMenu extends JFrame
         			Image keyImage;
         			int zeile, spalte, pos_x, pos_y, pos_x_start, maxKeyPP, keyDis_x, keyDis_y, key_begin, key_end;
         			
-        			key_begin = 0;
-        			key_end = 5;
+        			key_begin = 35;
+        			key_end = 40;
         			
         			maxKeyPP = 5;
         			pos_y = 130;
@@ -281,15 +283,13 @@ public class RootMenu extends JFrame
         			
         			keyDis_x = 20;
         			keyDis_y = 40;
-        			
         			g.drawString("Tastenbelegung " + key_begin + " - " + key_end, 330, 120);
-        			
-        			for (zeile = 0; zeile < maxKeyPP; zeile++) {
-        				
+        			for (zeile = key_begin; zeile < (key_begin + maxKeyPP); zeile++) {
+
         				pos_x = pos_x_start;
 						
-        				for (spalte = 0; spalte < numOfKeys; spalte++) {
-        						//System.out.print(mapping[spalte][zeile]);
+        				for (spalte = 0; spalte < 10; spalte++) {
+        						System.out.println("(" + spalte + "/" + zeile + "):" + mapping[spalte][zeile]);
         						        		                
         						if (mapping[spalte][zeile] == 1) {
         							keyImage = key_selected;
@@ -298,22 +298,19 @@ public class RootMenu extends JFrame
 	                			}
         						
         		                g.drawImage(keyImage, pos_x, pos_y, 20, 20, this);
-        		                System.out.println("x " + pos_x + " y " + pos_y);
+        		                //System.out.println("x " + pos_x + " y " + pos_y);
         		                
         		                pos_x = pos_x + keyDis_x;
 
         		                if(pos_x == (pos_x_start + (keyDis_x * 5)))
         		                	pos_x = pos_x + 10;
-        		                
+
         				}
         				
-						g.drawString(Character.toString((char)mapping[spalte][13]), (pos_x + 10), (pos_y + 13));
-						
-						System.out.println();
+						g.drawString(Character.toString((char)mapping[numOfKeys][zeile]), (pos_x + 10), (pos_y + 13));
 						
         				pos_y = pos_y + keyDis_y;
         				
-        				//System.out.println("\t" + mapping[14][zeile]);
         				//System.out.println();
         			}
                 			
