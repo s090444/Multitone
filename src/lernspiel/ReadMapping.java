@@ -24,7 +24,7 @@ public class ReadMapping {
 		RandomAccessFile f = null;
 		
 		try {
-			f = new RandomAccessFile("Mapping_final.txt", "r");
+			f = new RandomAccessFile("Mapping.txt", "r");
 			for (int i = 0; i < numOfPoss; i++) {
 				for (String line; (line = f.readLine()) != null;) {
 					for (int k = 0; k < numOfKeys + 1; k++) {
