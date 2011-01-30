@@ -35,6 +35,10 @@ public class RootMenu extends JFrame
 
 	/** Configuration */
     
+    public boolean forward = false;
+    public boolean release = false;
+    
+    
     /*
      * Typing_time
      */
@@ -128,19 +132,6 @@ public class RootMenu extends JFrame
 
 	public void setMapping(int[][] mapping) {
 		this.mapping = mapping;
-	}
-	
-	
-	//forward
-	private boolean forward=false;
-	
-
-	public boolean isForward() {
-		return forward;
-	}
-
-	public void setForward(boolean forward) {
-		this.forward = forward;
 	}
 	
 	
