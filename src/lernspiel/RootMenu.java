@@ -136,6 +136,7 @@ public class RootMenu extends JFrame
 		this.firstKeyPressedflag = firstKeyPressedflag;
 	}
 	
+	
 	/*
 	 * map
 	 */
@@ -179,17 +180,9 @@ public class RootMenu extends JFrame
 	}
 	
 	
-	//forward
-	private boolean forward=false;
-	
-
-	public boolean isForward() {
-		return forward;
-	}
-
-	public void setForward(boolean forward) {
-		this.forward = forward;
-	}
+	//define if keyEvent is consumed or let through
+	public boolean forward=false;
+    public boolean release = false;
 	
 	//keyCode
 	private int keyCode=0;
@@ -571,7 +564,7 @@ public class RootMenu extends JFrame
         				System.out.println("starte Schwierigkeitsgrad ...");
     			break;
     			
-    		case 2 : 	//new editor("editor", root, 1000); 
+    		case 2 : 	new Editor(root); 
 						System.out.println("starte Editor...");
 				break;
 				
