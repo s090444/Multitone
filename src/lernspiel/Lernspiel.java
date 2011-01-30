@@ -458,12 +458,12 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		if ((i >= 0) && (i < 10)) {
 			if (pressed == true)  {
 				if(kombis[i][kombi] == 1){
-				createImage("right.jpeg");
+				createImage("key_green.png");
 				tastenbild[i].setImage(taste);
 				
 				}
 				else{
-					createImage("wrong.jpeg");
+					createImage("key_red.png");
 					tastenbild[i].setImage(taste);
 						
 				}
