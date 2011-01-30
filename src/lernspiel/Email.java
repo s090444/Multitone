@@ -282,7 +282,9 @@ public class Email extends javax.swing.JFrame {
 	    }                                        
 
 	     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-	        System.exit(0);
+	    	 dispose();
+	    	 parent.setVisible(true);
+	    	 
 	     }
 
 	     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
