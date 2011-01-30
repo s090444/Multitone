@@ -306,13 +306,14 @@ public class RootMenu extends JFrame
         		                	pos_x = pos_x + 10;
         		                
         				}
-
-						g.drawString("s", (pos_x + 10), (pos_y + 13));
+        				
+						g.drawString(Character.toString((char)mapping[spalte][13]), (pos_x + 10), (pos_y + 13));
+						
 						System.out.println();
 						
         				pos_y = pos_y + keyDis_y;
         				
-        				//System.out.println("\t" + mapping[10][zeile]);
+        				//System.out.println("\t" + mapping[14][zeile]);
         				//System.out.println();
         			}
                 			
