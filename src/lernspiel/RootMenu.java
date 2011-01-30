@@ -7,6 +7,7 @@ package lernspiel;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -40,6 +41,9 @@ public class RootMenu extends JFrame
     Image email_unselected = Toolkit.getDefaultToolkit().getImage(directory + "email_unselected.png");
     Image email_selected = Toolkit.getDefaultToolkit().getImage(directory + "email_selected.png");
     
+    Image tastenbelegung_unselected = Toolkit.getDefaultToolkit().getImage(directory + "tastenbelegung_unselected.png");
+    Image tastenbelegung_selected = Toolkit.getDefaultToolkit().getImage(directory + "tastenbelegung_selected.png");
+    
     Image quit_unselected = Toolkit.getDefaultToolkit().getImage(directory + "quit_unselected.png");
     Image quit_selected = Toolkit.getDefaultToolkit().getImage(directory + "quit_selected.png");
 
@@ -64,6 +68,7 @@ public class RootMenu extends JFrame
     Image lernspiel;
     Image editor;
     Image email;
+    Image tastenbelegung;
     Image quit;
     
     /*char move_up = 'y';
@@ -265,8 +270,72 @@ public class RootMenu extends JFrame
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(background, 0, 0, 800, 576, this); //768           
-                
-                // Beschreibung für Move-Down anhand des Key-Icons
+                                
+                if(currentMenu == 2){
+
+                	Font font = new Font("Sans", Font.BOLD,  14);
+                	g.setFont(font);
+                	
+        			Image keyImage;
+        			int zeile, spalte, pos_x, pos_y, pos_x_start, maxKeyPP, keyDis_x, keyDis_y, key_begin, key_end;
+        			
+        			key_begin = 0;
+        			key_end = 5;
+        			
+        			maxKeyPP = 5;
+        			pos_y = 130;
+        			pos_x_start = 300;
+        			
+        			keyDis_x = 20;
+        			keyDis_y = 40;
+        			
+        			g.drawString("Tastenbelegung " + key_begin + " - " + key_end, 330, 120);
+        			
+        			for (zeile = 0; zeile < maxKeyPP; zeile++) {
+        				
+        				pos_x = pos_x_start;
+						
+        				for (spalte = 0; spalte < numOfKeys; spalte++) {
+        						//System.out.print(mapping[spalte][zeile]);
+        						        		                
+        						if (mapping[spalte][zeile] == 1) {
+        							keyImage = key_selected;
+	                			} else {
+	                				keyImage = key_unselected;
+	                			}
+        						
+        		                g.drawImage(keyImage, pos_x, pos_y, 20, 20, this);
+        		                System.out.println("x " + pos_x + " y " + pos_y);
+        		                
+        		                pos_x = pos_x + keyDis_x;
+
+        		                if(pos_x == (pos_x_start + (keyDis_x * 5)))
+        		                	pos_x = pos_x + 10;
+        		                
+        				}
+
+						g.drawString("s", (pos_x + 10), (pos_y + 13));
+						System.out.println();
+						
+        				pos_y = pos_y + keyDis_y;
+        				
+        				//System.out.println("\t" + mapping[10][zeile]);
+        				//System.out.println();
+        			}
+                			
+                } else {                
+	                
+	                g.drawImage(lernspiel, 295, 90, 220, 55, this);           
+	                g.drawImage(editor, 295, 135, 220, 55, this);           
+	                g.drawImage(email, 295, 180, 220, 55, this);
+	                
+	                if(currentMenu == 0)
+	                	g.drawImage(tastenbelegung, 295, 225, 220, 55, this);
+	                
+	                g.drawImage(quit, 295, 290, 220, 55, this);
+                }            	
+
+                // Beschreibung für Move-Down anhand des Key-Icons                
                 g.drawImage(key_selected, 20, 150, 20, 20, this);
                 g.drawImage(key_selected, 40, 150, 20, 20, this);
                 g.drawImage(key_selected, 60, 150, 20, 20, this);
@@ -292,23 +361,25 @@ public class RootMenu extends JFrame
                 g.drawImage(key_unselected, 190, 230, 20, 20, this);
                 g.drawImage(key_unselected, 210, 230, 20, 20, this);
                 
-                g.drawImage(lernspiel, 295, 120, 220, 55, this);           
-                g.drawImage(editor, 295, 165, 220, 55, this);           
-                g.drawImage(email, 295, 210, 220, 55, this);           
-                g.drawImage(quit, 295, 275, 220, 55, this);
-            }
+			}
         };
 
         panel.setBackground(Color.WHITE);
         panel.setLayout(null);
         
-        final JLabel moveDownDescription = new JLabel("Move Down");
-        moveDownDescription.setBounds(20, 120, 170, 35);        
-        panel.add(moveDownDescription);
-
-        final JLabel enterDescription = new JLabel("Enter");
-        enterDescription.setBounds(20, 200, 170, 35);        
-        panel.add(enterDescription);
+        if(currentMenu != 2){
+	        final JLabel moveDownDescription = new JLabel("Move Down");
+	        moveDownDescription.setBounds(20, 120, 170, 35);        
+	        panel.add(moveDownDescription);
+	
+	        final JLabel enterDescription = new JLabel("Enter");
+	        enterDescription.setBounds(20, 200, 170, 35);        
+	        panel.add(enterDescription);
+        } else {
+        	final JLabel anyKey = new JLabel("Press any Key to go back ...");
+        	anyKey.setBounds(20, 120, 170, 35);
+        	panel.add(anyKey);
+        }
         
         System.out.println("panel focusable: " + panel.isFocusable());
         if(panel.isFocusable()){
@@ -336,6 +407,7 @@ public class RootMenu extends JFrame
         //System.out.println("RootWindow: " + e);
     	this.setFlac(e, 1);
     	
+    	
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -358,9 +430,10 @@ public class RootMenu extends JFrame
         //System.out.println(e);	
         //throw new UnsupportedOperationException("Not supported yet.");
     }
-    char move_down;
+    
     
     public void newKeyPush(char newKey){
+    	System.out.println("mappedKey: " + newKey + "(curM: " + currentMenu + " men: " + menuCounter);
     	switch (newKey){
     		case 'y' : this.moveMenuPointDown(); break;
     		case 'o' : this.runApplication(); break;
@@ -402,7 +475,8 @@ public class RootMenu extends JFrame
        	 * erscheint wieder (nach dem 4).
        	 */
        	menuCounter++;
-       	if(menuCounter > 4)
+       	if( ( 	(currentMenu == 0) && (menuCounter > 5) ) ||
+       		(	(currentMenu == 1) && (menuCounter > 4) ) ) 
        		menuCounter = 1;
        	this.drawNewPosition();
     	// setzt alle Bilder im Menü wieder auf "unselected"
@@ -413,29 +487,40 @@ public class RootMenu extends JFrame
     public void drawNewPosition(){
 
     	// wählt den aktuellen Menüpunkt auf "selected" anhand von menuCounter-Variable
-    	if(currentMenu == 0){
-        	this.rootMenu();
-        	
-			switch (menuCounter) {
-				case 1 : this.lernspiel = this.lernspiel_selected; break;
-				case 2 : this.editor = this.texteditor_selected; break;
-				case 3 : this.email = this.email_selected; break;
-				case 4 : this.quit = this.quit_selected; break;
-				
-				default : System.out.println("Fehler Menüführung!");
-			}
-	    } else {
-	    	this.difficultyGame();
+    	switch (currentMenu){
+	    	case 0: 	    		
+
+	        	this.rootMenu();
+	        	
+				switch (menuCounter) {
+					case 1 : this.lernspiel = this.lernspiel_selected; break;
+					case 2 : this.editor = this.texteditor_selected; break;
+					case 3 : this.email = this.email_selected; break;
+					case 4 : this.tastenbelegung = this.tastenbelegung_selected; break;
+					case 5 : this.quit = this.quit_selected; break;
+					
+					default : System.out.println("Fehler Menüführung!");
+				}
+	    		
+	    		break;
 	    	
-			switch (menuCounter) {
-				case 1 : this.lernspiel = this.level1_selected; break;
-				case 2 : this.editor = this.level2_selected; break;
-				case 3 : this.email = this.level3_selected; break;
-				case 4 : this.quit = this.zurueck_selected; break;
-				
-				default : System.out.println("Fehler Menüführung!");
-			}
-	    }
+	    	case 1 : 
+	    		
+	    		this.difficultyGame();
+		    	
+				switch (menuCounter) {
+					case 1 : this.lernspiel = this.level1_selected; break;
+					case 2 : this.editor = this.level2_selected; break;
+					case 3 : this.email = this.level3_selected; break;
+					case 4 : this.quit = this.zurueck_selected; break;
+					
+					default : System.out.println("Fehler Menüführung!");
+				}
+	    		
+	    		break;
+	    		
+	    	default : System.out.println();
+    	}
     	
        	repaint();
     	System.out.println("currentMenu: " + currentMenu + " menuCounter: " + menuCounter);
@@ -467,6 +552,7 @@ public class RootMenu extends JFrame
     	this.lernspiel = lernspiel_unselected;
     	this.editor = texteditor_unselected;
         this.email = email_unselected;
+        this.tastenbelegung = tastenbelegung_unselected;
         this.quit = quit_unselected;
         
         repaint();
@@ -475,42 +561,67 @@ public class RootMenu extends JFrame
 
     
     public void runApplication(){
-    	if( (currentMenu == 1) && (menuCounter <= 3) ){
-    					
-			new Lernspiel("Lernspiel", root, this.menuCounter);
-			System.out.println("starte Lernspiel in Schwierigkeitsgrad " + this.menuCounter + " ...");
+    	
+    	switch(currentMenu){
+    	case 0 : 
+    		
+    		switch(menuCounter){
+    		case 1 : 	this.difficultyGame();
+    					this.drawNewPosition();	    					
+        				System.out.println("starte Schwierigkeitsgrad ...");
+    			break;
+    			
+    		case 2 : 	//new editor("editor", root, 1000); 
+						System.out.println("starte Editor...");
+				break;
+				
+    		case 3 : 	//new email(root); 
+						System.out.println("starte E-Mailprogramm...");
+				break;
+				
+    		case 4 : 	// Tastenbelegung
+    					this.currentMenu = 2;
+						repaint();   			
+						System.out.println("starte Tastenbelegung...");
+    						
+				break;
+    		
+    		case 5 : 	System.exit(EXIT_ON_CLOSE);
+				break;
+    		
+    		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
+    	}
+	
+    		
+    		break;
+    		
+    	case 1 : 
+    		
+    		if(menuCounter <= 3){
+				new Lernspiel("Lernspiel", root, this.menuCounter);
+				System.out.println("starte Lernspiel in Schwierigkeitsgrad " + this.menuCounter + " ...");
+	   		}
+
+			this.currentMenu = 0;
+			this.menuCounter = 1;
+			this.rootMenu();
+			this.drawNewPosition();    		
+    		
+    		break;
+    		
+    	case 2 : 
 
 			this.currentMenu = 0;
 			this.menuCounter = 1;
 			this.rootMenu();
 			this.drawNewPosition();
+    		
+			System.out.println("zurück zum Hauptmenü...");
 			
-    	} else {
-	    	switch(menuCounter){
-	    		case 1 : 	this.difficultyGame();
-	    					this.drawNewPosition();	    					
-	        				System.out.println("starte Schwierigkeitsgrad ...");
-	    			break;
-	    			
-	    		case 2 : 	//new Lernspiel("Lernspiel", root, 1000); 
-							System.out.println("starte Editor....");
-					break;
-					
-	    		case 3 : 	//new Editor(root); 
-							System.out.println("starte E-Mailprogramm....");
-					break;
-	    		
-	    		case 4 : 	if(currentMenu == 0){
-	    						System.exit(EXIT_ON_CLOSE);
-							} else {
-								this.rootMenu();
-								System.out.println("Zurück zum Hauptmenü ...");
-							}    			
-	    			break;
-	    		
-	    		default : System.out.println("ungueltige Tasteneingabe zur Bedienung des Menues!"); 
-	    	}
+    		break;
+    		
+    	default : System.out.println("ungültiges Menü!");
     	}
     }
-    
+        
 }
