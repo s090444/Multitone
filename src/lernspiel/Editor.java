@@ -33,6 +33,7 @@ import javax.swing.JToolBar;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.StyledEditorKit;
+import javax.swing.text.rtf.RTFEditorKit;
 
 public class Editor extends JFrame implements KeyListener, Serializable {
 
@@ -78,6 +79,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		parent.setVisible(false);
 		initialize();
 		pack();
+		jEditorPane.setFocusable(true);
 		jEditorPane.requestFocusInWindow();
 
 		this.setVisible(true);
@@ -153,6 +155,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	private JScrollPane getJScrollPane() {
 		if (jScrollPane == null) {
 			jScrollPane = new JScrollPane();
+			jScrollPane.setBorder(null);
 			jScrollPane.setViewportView(getJEditorPane());
 		}
 		return jScrollPane;
@@ -166,7 +169,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	private JEditorPane getJEditorPane() {
 		if (jEditorPane == null) {
 			jEditorPane = new JEditorPane();
-			jEditorPane.setContentType("text/html");
+			jEditorPane.setContentType("text/rtf");
 			jEditorPane.setPreferredSize(new Dimension(781, 527));
 			jEditorPane.addKeyListener(this);
 		}
@@ -174,7 +177,11 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	}
 
 	public void keyPressed(KeyEvent e) {
-
+		if (parent.forward) {
+//			parent.forward = false;
+			System.out.println(e.getKeyCode());
+		}
+//			e.consume();
 	}
 
 	// Handle keyTyped Event
@@ -191,7 +198,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 				parent.setFirstKeyPressedflag(true);
 				Timer timer = new Timer();
 				timer.schedule(new MappKeyCode(parent, this, parent.numOfKeys,
-						parent.numOfPoss), parent.typingTime);
+						parent.numOfPoss), parent.typingTime+200);
 			}
 			// consume event, don't let it pass to application
 			e.consume();
@@ -515,13 +522,28 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// // TODO Auto-generated method stub
 
 					try {
-						Reader fileRead = new FileReader("Editor.save");
-						jEditorPane.read(fileRead, null);
+//						Reader fileRead = new FileReader("Editor.save");
+//						jEditorPane.read(fileRead, null);
+//						Document doc = jEditorPane.getDocument();
+//				        doc.putProperty(Document.StreamDescriptionProperty, null);
+//						jEditorPane.setPage("file:Editor.save");
+						
+						FileInputStream fis= new FileInputStream(file);
+jEditorPane.setText("");
+						jEditorPane.getEditorKit().read(fis, jEditorPane.getDocument(), 0);
+						jEditorPane.setCaretPosition(jEditorPane.getDocument().getLength()-1);
+			
 						Sound.playSound("Laden");
+						fis.close();
+						
+						
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (BadLocationException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}

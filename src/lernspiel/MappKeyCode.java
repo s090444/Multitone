@@ -45,8 +45,6 @@ class MappKeyCode extends TimerTask {
 			for (int k = 0; k < numOfKeys - 3; k++) {
 				if (k == numOfKeys - 4) {
 					// System.out.println("if k == numOfKeys-1");
-//					System.out.println("parent.getMapping[k][i]: "
-//							+ parent.getMapping()[k][i]);
 					if (parent.getMapping()[k+1][i] == 1)
 						activeEditorButton(k + 2, i);
 					else {
@@ -56,6 +54,8 @@ class MappKeyCode extends TimerTask {
 									if (parent.getMapping()[k + n][i] != 0)
 										try {
 											Robot r = new Robot();
+											System.out.println("Pressed KeyCode: "+parent.getMapping()[k
+													+ n][i]);
 											parent.forward=true;
 											r.keyPress(parent.getMapping()[k
 													+ n][i]);

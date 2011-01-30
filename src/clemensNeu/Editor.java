@@ -180,22 +180,23 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	// Handle keyTyped Event
 
 	public void keyTyped(KeyEvent e) {
-
-		// let pass events from Robot()
-		if (parent.forward) {
-			parent.forward = false;
-			Sound.playSound((int) e.getKeyChar());
-		} else {
-			parent.setFlac(e, 1);
-			if (parent.isFirstKeyPressedflag() == false) {
-				parent.setFirstKeyPressedflag(true);
-				Timer timer = new Timer();
-				timer.schedule(new MappKeyCode(parent, this, parent.numOfKeys,
-						parent.numOfPoss), parent.typingTime);
-			}
-			// consume event, don't let it pass to application
-			e.consume();
-		}
+System.out.println(e.getKeyCode());
+//		// let pass events from Robot()
+//		if (parent.forward) {
+//			parent.forward = false;
+//			System.out.println(e.getKeyCode());
+//			Sound.playSound((int) e.getKeyChar());
+//		} else {
+//			parent.setFlac(e, 1);
+//			if (parent.isFirstKeyPressedflag() == false) {
+//				parent.setFirstKeyPressedflag(true);
+//				Timer timer = new Timer();
+//				timer.schedule(new MappKeyCode(parent, this, parent.numOfKeys,
+//						parent.numOfPoss), parent.typingTime);
+//			}
+//			// consume event, don't let it pass to application
+//			e.consume();
+//		}
 	}
 
 	// Handle keyReleased Event
