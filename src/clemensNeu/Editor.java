@@ -182,9 +182,9 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	public void keyTyped(KeyEvent e) {
 
 		// let pass events from Robot()
-		if (forward) {
-			forward=false;
-			Sound.playSound((int)e.getKeyChar());
+		if (parent.forward) {
+			parent.forward = false;
+			Sound.playSound((int) e.getKeyChar());
 		} else {
 			parent.setFlac(e, 1);
 			if (parent.isFirstKeyPressedflag() == false) {
@@ -197,11 +197,11 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 			e.consume();
 		}
 	}
-	
-	//Handle keyReleased Event
+
+	// Handle keyReleased Event
 	public void keyReleased(KeyEvent e) {
-		if (release) {
-			release=false;
+		if (parent.release) {
+			parent.release = false;
 			e.consume();
 		} else {
 			parent.setFlac(e, 0);
@@ -217,9 +217,16 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		if (jToggleButton == null) {
 			jToggleButton = new JToggleButton();
 			jToggleButton.setText("Fett");
-			Action action = new StyledEditorKit.BoldAction();
-			action.putValue(Action.NAME, "Fett");
-			jToggleButton.setAction(action);
+			jToggleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					Sound.playSound("Fett");
+					new StyledEditorKit.BoldAction().actionPerformed(e);
+
+				}
+			});
 
 		}
 		return jToggleButton;
@@ -234,9 +241,16 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		if (jToggleButton1 == null) {
 			jToggleButton1 = new JToggleButton();
 			jToggleButton1.setText("Kursiv");
-			Action action = new StyledEditorKit.ItalicAction();
-			action.putValue(Action.NAME, "Kursiv");
-			jToggleButton1.setAction(action);
+
+			jToggleButton1.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					Sound.playSound("Kursiv");
+					new StyledEditorKit.ItalicAction().actionPerformed(e);
+				}
+			});
 		}
 		return jToggleButton1;
 	}
@@ -250,9 +264,15 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 		if (jToggleButton2 == null) {
 			jToggleButton2 = new JToggleButton();
 			jToggleButton2.setText("Unterstrichen");
-			Action action = new StyledEditorKit.UnderlineAction();
-			action.putValue(Action.NAME, "Unterstrichen");
-			jToggleButton2.setAction(action);
+			jToggleButton2.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					Sound.playSound("Unterstrichen");
+					new StyledEditorKit.UnderlineAction().actionPerformed(e);
+				}
+			});
 		}
 		return jToggleButton2;
 	}
@@ -261,7 +281,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	private void unselectColorButton(int k) {
 		for (int i = 3; i < 7; i++) {
 			if (buttonArray[i].isSelected() && i != k) {
-				buttonArray[i].doClick();
+				buttonArray[i].setSelected(false);
 			}
 		}
 	}
@@ -282,12 +302,16 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// TODO Auto-generated method stub
 					if (jToggleButton3.isSelected()) {
 						unselectColorButton(3);
+						Sound.playSound("Rot");
 						new StyledEditorKit.ForegroundAction("Red", Color.red)
 								.actionPerformed(arg0);
-					} else
+					} else{
+						Sound.playSound("Schwarz");
 						new StyledEditorKit.ForegroundAction("Black",
 								Color.black).actionPerformed(arg0);
+					}
 				}
+					
 			});
 		}
 		return jToggleButton3;
@@ -309,11 +333,14 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// TODO Auto-generated method stub
 					if (jToggleButton4.isSelected()) {
 						unselectColorButton(4);
+						Sound.playSound("Gruen");
 						new StyledEditorKit.ForegroundAction("Green",
 								Color.green).actionPerformed(arg0);
-					} else
+					} else{
+						Sound.playSound("Schwarz");
 						new StyledEditorKit.ForegroundAction("Black",
 								Color.black).actionPerformed(arg0);
+					}
 				}
 			});
 		}
@@ -336,13 +363,14 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// TODO Auto-generated method stub
 					if (jToggleButton5.isSelected()) {
 						unselectColorButton(5);
+						Sound.playSound("Blau");
 						new StyledEditorKit.ForegroundAction("Blue", Color.blue)
 								.actionPerformed(arg0);
-					}
-
-					else
-						new StyledEditorKit.ForegroundAction("Black",
-								Color.black).actionPerformed(arg0);
+					} else{
+							Sound.playSound("Schwarz");
+							new StyledEditorKit.ForegroundAction("Black",
+									Color.black).actionPerformed(arg0);
+						}
 				}
 			});
 		}
@@ -365,11 +393,14 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// TODO Auto-generated method stub
 					if (jToggleButton6.isSelected()) {
 						unselectColorButton(6);
+						Sound.playSound("Gelb");
 						new StyledEditorKit.ForegroundAction("Yellow",
 								Color.yellow).actionPerformed(arg0);
-					} else
+					} else{
+						Sound.playSound("Schwarz");
 						new StyledEditorKit.ForegroundAction("Black",
 								Color.black).actionPerformed(arg0);
+					}
 				}
 			});
 		}
@@ -390,6 +421,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
+					Sound.playSound("Groesser");
 					if (fontSize <= 22)
 						fontSize += 5;
 					new StyledEditorKit.FontSizeAction("Bigger", fontSize)
@@ -414,6 +446,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
+					Sound.playSound("Kleiner");
 					if (fontSize >= 12)
 						fontSize -= 5;
 					new StyledEditorKit.FontSizeAction("Smaller", fontSize)
@@ -448,6 +481,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 						int length = doc.getLength();
 						jEditorPane.getEditorKit().write(os, doc, 0, length);
 						os.close();
+						Sound.playSound("Speichern");
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -483,6 +517,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					try {
 						Reader fileRead = new FileReader("Editor.save");
 						jEditorPane.read(fileRead, null);
+						Sound.playSound("Laden");
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
