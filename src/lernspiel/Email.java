@@ -61,6 +61,7 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 
 	        jPanel1 = new javax.swing.JPanel();
 	        jTextField1 = new javax.swing.JTextField();
+	        jTextField1.addKeyListener(this);
 	        jLabel1 = new javax.swing.JLabel();
 	        jLabel2 = new javax.swing.JLabel();
 	        jTextField2 = new javax.swing.JTextField();
@@ -329,6 +330,8 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	    private javax.swing.JTextField jTextField3;
 	    private javax.swing.JTextPane jTextPane1;
 	    // End of variables declaration
+	  
+	    
 	    public void keyPressed(KeyEvent e) {
 			if (parent.forward) {
 //				parent.forward = false;
