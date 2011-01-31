@@ -65,11 +65,14 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	        jLabel1 = new javax.swing.JLabel();
 	        jLabel2 = new javax.swing.JLabel();
 	        jTextField2 = new javax.swing.JTextField();
+	        jTextField2.addKeyListener(this);
 	        jLabel3 = new javax.swing.JLabel();
 	        jTextField3 = new javax.swing.JTextField();
+	        jTextField3.addKeyListener(this);
 	        jPanel2 = new javax.swing.JPanel();
 	        jScrollPane1 = new javax.swing.JScrollPane();
 	        jTextPane1 = new javax.swing.JTextPane();
+	        jTextPane1.addKeyListener(this);
 	        jButton1 = new javax.swing.JButton();
 	        jButton2 = new javax.swing.JButton();
 	        jButton3 = new javax.swing.JButton();
