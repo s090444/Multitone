@@ -6,7 +6,6 @@
 package lernspiel;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -19,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
-
-import com.sun.mail.util.ASCIIUtility;
 
 /**
  * 
@@ -307,8 +304,8 @@ public class RootMenu extends JFrame implements KeyListener {
 						pos_x = pos_x_start;
 
 						for (spalte = 0; spalte < 10; spalte++) {
-							System.out.println("(" + spalte + "/" + zeile
-									+ "):" + mapping[spalte][zeile]);
+							/*System.out.println("(" + spalte + "/" + zeile
+									+ "):" + mapping[spalte][zeile]);*/
 
 							if (mapping[spalte][zeile] == 1) {
 								keyImage = key_selected;
