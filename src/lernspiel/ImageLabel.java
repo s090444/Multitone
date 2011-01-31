@@ -1,20 +1,13 @@
 package lernspiel;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-//package lernspiel;
-
-
 
 import java.awt.image.BufferedImage;
 import java.awt.Dimension;
 import java.awt.*;
 import javax.swing.*;
+
 /**
- *
- * @author Excalipoor
+ * Label specialized to display images
+ * @author Kevin Articus
  */
 class ImageLabel extends JLabel {
 
@@ -24,6 +17,10 @@ class ImageLabel extends JLabel {
 	private static final long serialVersionUID = 4786625303435614129L;
 	private BufferedImage image; 
 	 
+	/**
+	 * displays the {@link BufferedImage} in the {@link ImageLabel}
+	 * @param image {@link BufferedImage} to be displayed in the {@link ImageLabel}
+	 */
 	  public void setImage( BufferedImage image ) 
 	  { 
 	    this.image = image; 
@@ -32,11 +29,10 @@ class ImageLabel extends JLabel {
 	    invalidate(); 
 	  }
 	  
-//	  public void setImage(String image){
-//		  setIcon(new ImageIcon("src/Pics/" + image));
-//		  System.out.println("src/Pics/" + image);
-//	  }
 	 
+	  /**
+	   * draws the image
+	   */
 	  @Override 
 	  protected void paintComponent( Graphics g ) 
 	  { 

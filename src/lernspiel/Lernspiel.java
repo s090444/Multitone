@@ -1,10 +1,5 @@
 package lernspiel;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-//package lernspiel;
 import java.awt.Container;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,10 +19,10 @@ import java.io.IOException;
 
 /**
  * 
- * Beschreibung
+ * game helping to learn the combinations used by the MultiTouch-System
  * 
- * @version 2.0 vom 22.01.2011
- * @author
+ * @version 3.0 by 30-01-2011
+ * @author Kevin Articus
  */
 
 public class Lernspiel extends JFrame implements SwingConstants {
@@ -117,7 +112,9 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	BufferedImage evaluationPic;
 	
 	/**
-	 * Timer used for entering (gives user a short time after releasing the first key to release other pressed keys)
+	 * Timer used for input (gives user a short time after releasing 
+	 * the first key to release other pressed keys)
+	 * in milli-seconds
 	 */
 	Timer typingTimer = new Timer();
 	
@@ -228,7 +225,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		}
 			
 		//initialize frame
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		int frameWidth = 800;
 		int frameHeight = 600;
 		setSize(frameWidth, frameHeight);
@@ -291,7 +288,6 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		symbolLabel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.red));
 		symbolLabel.setHorizontalAlignment(CENTER);
 		cp.add(symbolLabel);
-		
 		
 		
 		//shows hint for user how to end the game
@@ -457,25 +453,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					//end-boolean sets true
 					end=true;
 			        
-					// calculate average reaction time
-					average=sum / (rounds-errors);
-					
-					//call the stats-window, and 
-					Fehler Fehler = new Fehler("Statistik",rounds,errors,average, parent);
-					Fehler.setVisible(true);
-					
-					/**
-					 * end all running timers
-					 */
-					typingTimer.cancel();
-					RoundTimer.cancel();
-					
-					/**
-					 * close window
-					 */
-					dispose();
-				} else {
-					
+				} else {	
 				}
 			}
 			
@@ -487,7 +465,9 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	}
 
 	
-	//check if entered combination is correct
+	/**
+	 * check if entered combination is correct
+	 */
 	public void check() {
 		//"expect" a correct result
 		correct = true;
@@ -623,6 +603,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			
 		}
 		symbol = (((char) combis[10][combi]));
+		
 	}
 
 	/**
@@ -636,6 +617,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		} catch (InterruptedException e) {
 		}
 	}
+	
 
 	/**
 	 * update key images according to the desired combination
@@ -693,7 +675,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	
 	/**
 	 * creates images for the key images
-	 * @param image
+	 * @param image defines the file name of the image (NOTE: this also has to include the file ending e.g. "image.jpg")
 	 */
 	public void createImage(String image){
 		try {
@@ -704,7 +686,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	}
 
 	/**
-	 * updates the evaluation label
+	 * updates the label {@link evaluation}
 	 * @param image defines the picture to be used
 	 */
 	public void updateEvaluation(String image){ 
@@ -722,8 +704,8 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	 * updates the evaluation label according to the reaction
 	 * @param reaction
 	 */
-	public void updateEvaluation(double reaction) { // �ndert das Wertungsbild je
-													// nach Reaktionszeit
+	public void updateEvaluation(double reaction) { 
+		
 		if (reaction < 1.5) {
 			updateEvaluation("awesome" + ((int)(combi %2) + 1) + ".jpeg");
 		} else if (reaction < 3) {
@@ -739,6 +721,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	 */
 	public void playsound(){
 		Sound.playSound(combis[10][combi]);
+		
 	}
 	
 	/**
@@ -785,33 +768,73 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			}
 		}
 	}
-
+	
+	
 	/**
-	 * 
+	 * end the game and switch to stats-window
+	 */
+	public void endGame(){
+		// calculate average reaction time
+		average=sum / (rounds-errors);
+		
+		//call the stats-window
+		Fehler Fehler = new Fehler("Statistik",rounds,errors,average, parent);
+		Fehler.setVisible(true);
+		
+		/**
+		 * close window
+		 */
+		dispose();
+	}
+	
+	/**
+	 * close window and end the running timers
+	 */
+	@Override
+	public void dispose() {
+		
+		typingTimer.cancel();
+		RoundTimer.cancel();
+		   super.dispose();
+		}
+
+	
+	/**
+	 * Timer-Class to run {@link check()} after the specified {@link typingTime}
 	 * @author Kevin Articus
 	 *
 	 */
-
-	public class Checker extends TimerTask{ //Timer-Class to run check() after the typing Time
+	public class Checker extends TimerTask{ 
 
 		
 		public void run() {
 			if (end==false){
 				check();
 			}
+			else{
+				endGame();
+			}
 			
 		}
 		
 	}
 	
-	public class Next extends TimerTask{ //Timer Class to run check() after automatic round-end has been reached
+	
+	/**
+	 * Timer Class to run {@link check()} after automatic round-end has been reached
+	 * @author Kevin Articus
+	 *
+	 */
+	public class Next extends TimerTask{ 
 		
 		public void run() {
 			if (end==false){
 			check();
 			timeLabel.setText("zu langsam");
 			}
-			else{}
+			else{
+				endGame();
+			}
 		}
 	}
 	
