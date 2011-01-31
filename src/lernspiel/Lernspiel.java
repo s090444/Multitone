@@ -46,6 +46,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	double durchschnitt;
 	double summe;
 	int zaehler=0;
+	boolean richtig;
 	boolean firstKey;
 	boolean firstRound = true;
 	BufferedImage taste;
@@ -95,7 +96,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		
 		this.kombis = parent.getMapping();
 		
-		
+		//typingTime=parent.typingTime;
 		switch (difficulty){
 		case 1: typingTime=3000; break;
 		case 2: typingTime=2000; break;
@@ -179,6 +180,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		//countdown();
 
 		newround();
+		
 
 		// wertung.revalidate();
 
@@ -307,7 +309,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 					break;
 				}
 				
-				if ((tasten[0]==true) && (tasten[1]==true) && (tasten[2]==true) && (tasten[3]==true) && (tasten[4]==true)) {
+				if ((tasten[0]==true) && (tasten[1]==true) && (tasten[2]==true) && (tasten[3]==true) && (tasten[4]==true) && (tasten[5]==false) && (tasten[6]==false) && (tasten[7]==false) && (tasten[8]==false) && (tasten[9]==false)) {
 					//System.exit(0);
 					ende=true;
 			        //setVisible(false);
@@ -348,7 +350,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	}
 
 	public void check() {
-		boolean richtig = true;
+		richtig = true;
 		for (int i = 0; i < 10; i++) {
 			if (((kombis[i][kombi] == 0) && (tasten[i] == false))
 					|| (kombis[i][kombi] == 1) && (tasten[i] == true)) {
@@ -397,7 +399,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		newletter();
 		updatezeichen();
 		updatetasten();
-		occtime = System.currentTimeMillis();
+		occtime = System.currentTimeMillis();		
 		firstKey=false;
 		for (int i =0; i<10;i++) {
 		tasten[i] = false;
@@ -422,9 +424,18 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	}*/
 	
 	public void newletter() {
-		// long random = (System.currentTimeMillis() % 94)+33;
-		long random = (System.currentTimeMillis() % kombis[0].length);
+		int length=kombis[0].length;
+		long random = (System.currentTimeMillis() % (length-1));
 		kombi = (int) random;
+		while(kombis[10][kombi]==0){
+			if ((kombi+1) > (length-1)){
+				kombi=0;
+			}
+			else{
+				kombi++;
+			}
+			
+		}
 		letter = (((char) kombis[10][kombi]));
 	}
 
@@ -541,7 +552,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 
 	public void updatezeichen() { // updatet das Zeichen, dass eingegeben werden
 									// soll
-		if(kombis[10][kombi]>31){
+		if(kombis[10][kombi]>32){
 		zeichen.setText(letter + "");
 		}
 		else{
@@ -552,6 +563,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			case 9: zeichen.setText("Tabulator"); break;
 			case 13: zeichen.setText("Enter"); break;
 			case 27: zeichen.setText("Escape"); break;
+			case 32: zeichen.setText("Leerzeichen"); break;
 			default: zeichen.setText("Steuerzeichen"); break;
 			}
 		}
@@ -584,6 +596,8 @@ public class Lernspiel extends JFrame implements SwingConstants {
 				
 		}
 	}
+	
+
 	
 	
 	
