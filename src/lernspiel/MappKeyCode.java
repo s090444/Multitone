@@ -10,12 +10,14 @@ class MappKeyCode extends TimerTask {
 	Editor editor;
 	Email email;
 	int numOfKeys, numOfPoss;
+	boolean isEditor=false;
 
 	public MappKeyCode(RootMenu root, Editor e, int keys, int poss) {
 		parent = root;
 		editor = e;
 		numOfKeys = keys;
 		numOfPoss = poss;
+		isEditor = true;
 	}
 	
 	public MappKeyCode(RootMenu root, Email e, int keys, int poss) {
@@ -53,7 +55,7 @@ class MappKeyCode extends TimerTask {
 			for (int k = 0; k < numOfKeys - 3; k++) {
 				if (k == numOfKeys - 4) {
 					// System.out.println("if k == numOfKeys-1");
-					if (parent.getMapping()[k+1][i] == 1)
+					if (parent.getMapping()[k+1][i] == 1 && isEditor)
 						activeEditorButton(k + 2, i);
 					else {
 						for (int m = 0; m < 2; m++) {
