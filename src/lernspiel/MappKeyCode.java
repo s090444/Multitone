@@ -8,11 +8,19 @@ class MappKeyCode extends TimerTask {
 
 	RootMenu parent;
 	Editor editor;
+	Email email;
 	int numOfKeys, numOfPoss;
 
 	public MappKeyCode(RootMenu root, Editor e, int keys, int poss) {
 		parent = root;
 		editor = e;
+		numOfKeys = keys;
+		numOfPoss = poss;
+	}
+	
+	public MappKeyCode(RootMenu root, Email e, int keys, int poss) {
+		parent = root;
+		email = e;
 		numOfKeys = keys;
 		numOfPoss = poss;
 	}
