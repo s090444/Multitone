@@ -138,7 +138,6 @@ public class Fehler extends JFrame implements SwingConstants {
 		if (runden !=0){
 		prozent.setText("Prozent richtig: " + Math.round((((runden-fehler)*100)/runden) ) + "%");
 		if (runden-fehler==0){
-			Sound.playSound("incredible");
 		}
 		else{}
 		}
