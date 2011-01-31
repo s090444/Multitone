@@ -3,10 +3,12 @@ package lernspiel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.ColorModel;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -32,6 +34,9 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.rtf.RTFEditorKit;
 
@@ -58,7 +63,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 
 	private int fontSize = 12;
 	private File file = new File("Editor.save"); // @jve:decl-index=0:
-	private AbstractButton[] buttonArray = new AbstractButton[12];
+	private AbstractButton[] buttonArray = new AbstractButton[11];
 	public static boolean forward = false;
 	public static boolean release = false;
 
@@ -92,6 +97,10 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 	 */
 	private void initialize() {
 		this.setSize(800, 600);
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (d.width - getSize().width) / 2;
+		int y = (d.height - getSize().height) / 2;
+		setLocation(x, y);
 		this.setContentPane(getJContentPane());
 		this.setTitle("Editor");
 
@@ -178,10 +187,10 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 
 	public void keyPressed(KeyEvent e) {
 		if (parent.forward) {
-//			parent.forward = false;
+			// parent.forward = false;
 			System.out.println(e.getKeyCode());
 		}
-//			e.consume();
+		// e.consume();
 	}
 
 	// Handle keyTyped Event
@@ -198,7 +207,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 				parent.setFirstKeyPressedflag(true);
 				Timer timer = new Timer();
 				timer.schedule(new MappKeyCode(parent, this, parent.numOfKeys,
-						parent.numOfPoss), parent.typingTime+200);
+						parent.numOfPoss), parent.typingTime + 200);
 			}
 			// consume event, don't let it pass to application
 			e.consume();
@@ -231,6 +240,9 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// TODO Auto-generated method stub
 					Sound.playSound("Fett");
 					new StyledEditorKit.BoldAction().actionPerformed(e);
+
+					// new StyledEditorKit.BoldAction().
+					// System.out.println(new StyledEditorKit.BoldAction().);
 
 				}
 			});
@@ -292,6 +304,14 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 			}
 		}
 	}
+	
+	private void unselectAllButton(){
+		for (int i = 0; i < 11; i++) {
+	
+				buttonArray[i].setSelected(false);
+			
+		}
+	}
 
 	/**
 	 * This method initializes jToggleButton3
@@ -312,13 +332,13 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 						Sound.playSound("Rot");
 						new StyledEditorKit.ForegroundAction("Red", Color.red)
 								.actionPerformed(arg0);
-					} else{
+					} else {
 						Sound.playSound("Schwarz");
 						new StyledEditorKit.ForegroundAction("Black",
 								Color.black).actionPerformed(arg0);
 					}
 				}
-					
+
 			});
 		}
 		return jToggleButton3;
@@ -343,7 +363,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 						Sound.playSound("Gruen");
 						new StyledEditorKit.ForegroundAction("Green",
 								Color.green).actionPerformed(arg0);
-					} else{
+					} else {
 						Sound.playSound("Schwarz");
 						new StyledEditorKit.ForegroundAction("Black",
 								Color.black).actionPerformed(arg0);
@@ -373,11 +393,11 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 						Sound.playSound("Blau");
 						new StyledEditorKit.ForegroundAction("Blue", Color.blue)
 								.actionPerformed(arg0);
-					} else{
-							Sound.playSound("Schwarz");
-							new StyledEditorKit.ForegroundAction("Black",
-									Color.black).actionPerformed(arg0);
-						}
+					} else {
+						Sound.playSound("Schwarz");
+						new StyledEditorKit.ForegroundAction("Black",
+								Color.black).actionPerformed(arg0);
+					}
 				}
 			});
 		}
@@ -403,7 +423,7 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 						Sound.playSound("Gelb");
 						new StyledEditorKit.ForegroundAction("Yellow",
 								Color.yellow).actionPerformed(arg0);
-					} else{
+					} else {
 						Sound.playSound("Schwarz");
 						new StyledEditorKit.ForegroundAction("Black",
 								Color.black).actionPerformed(arg0);
@@ -522,21 +542,32 @@ public class Editor extends JFrame implements KeyListener, Serializable {
 					// // TODO Auto-generated method stub
 
 					try {
-//						Reader fileRead = new FileReader("Editor.save");
-//						jEditorPane.read(fileRead, null);
-//						Document doc = jEditorPane.getDocument();
-//				        doc.putProperty(Document.StreamDescriptionProperty, null);
-//						jEditorPane.setPage("file:Editor.save");
-						
-						FileInputStream fis= new FileInputStream(file);
-jEditorPane.setText("");
-						jEditorPane.getEditorKit().read(fis, jEditorPane.getDocument(), 0);
-						jEditorPane.setCaretPosition(jEditorPane.getDocument().getLength()-1);
-			
-						Sound.playSound("Laden");
+						// Reader fileRead = new FileReader("Editor.save");
+						// jEditorPane.read(fileRead, null);
+						// Document doc = jEditorPane.getDocument();
+						// doc.putProperty(Document.StreamDescriptionProperty,
+						// null);
+						// jEditorPane.setPage("file:Editor.save");
+
+						FileInputStream fis = new FileInputStream(file);
+						jEditorPane.setText("");
+						jEditorPane.getEditorKit().read(fis,
+								jEditorPane.getDocument(), 0);
 						fis.close();
-						
-						
+						jEditorPane.setCaretPosition(jEditorPane.getDocument()
+								.getLength() - 1);
+
+						Sound.playSound("Laden");
+						SimpleAttributeSet sas = new SimpleAttributeSet();
+						StyleConstants.setBold(sas, false);
+						StyleConstants.setUnderline(sas, false);
+						StyleConstants.setItalic(sas, false);
+						StyleConstants.setForeground(sas,Color.black );
+						unselectAllButton();
+						jEditorPane.getDocument().insertString(
+								jEditorPane.getDocument().getLength()-1, " ", sas);
+
+
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

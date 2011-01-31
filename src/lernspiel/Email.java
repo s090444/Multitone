@@ -3,15 +3,22 @@
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.swing.WindowConstants;
 
 
-public class Email extends javax.swing.JFrame {
+public class Email extends javax.swing.JFrame implements KeyListener{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5408820050346164753L;
 	static RootMenu parent;
 	public Email(String title,RootMenu root){
 	super(title);
@@ -54,14 +61,18 @@ public class Email extends javax.swing.JFrame {
 
 	        jPanel1 = new javax.swing.JPanel();
 	        jTextField1 = new javax.swing.JTextField();
+	        jTextField1.addKeyListener(this);
 	        jLabel1 = new javax.swing.JLabel();
 	        jLabel2 = new javax.swing.JLabel();
 	        jTextField2 = new javax.swing.JTextField();
+	        jTextField2.addKeyListener(this);
 	        jLabel3 = new javax.swing.JLabel();
 	        jTextField3 = new javax.swing.JTextField();
+	        jTextField3.addKeyListener(this);
 	        jPanel2 = new javax.swing.JPanel();
 	        jScrollPane1 = new javax.swing.JScrollPane();
 	        jTextPane1 = new javax.swing.JTextPane();
+	        jTextPane1.addKeyListener(this);
 	        jButton1 = new javax.swing.JButton();
 	        jButton2 = new javax.swing.JButton();
 	        jButton3 = new javax.swing.JButton();
@@ -322,6 +333,46 @@ public class Email extends javax.swing.JFrame {
 	    private javax.swing.JTextField jTextField3;
 	    private javax.swing.JTextPane jTextPane1;
 	    // End of variables declaration
+	  
+	    
+	    public void keyPressed(KeyEvent e) {
+			if (parent.forward) {
+//				parent.forward = false;
+				System.out.println(e.getKeyCode());
+			}
+//				e.consume();
+		}
+
+		// Handle keyTyped Event
+
+		public void keyTyped(KeyEvent e) {
+
+			// let pass events from Robot()
+			if (parent.forward) {
+				parent.forward = false;
+				Sound.playSound((int) e.getKeyChar());
+			} else {
+				parent.setFlac(e, 1);
+				if (parent.isFirstKeyPressedflag() == false) {
+					parent.setFirstKeyPressedflag(true);
+					Timer timer = new Timer();
+					timer.schedule(new MappKeyCode(parent, this, parent.numOfKeys,
+							parent.numOfPoss), parent.typingTime+200);
+				}
+				// consume event, don't let it pass to application
+				e.consume();
+			}
+		}
+
+		// Handle keyReleased Event
+		public void keyReleased(KeyEvent e) {
+			if (parent.release) {
+				parent.release = false;
+				e.consume();
+			} else {
+				parent.setFlac(e, 0);
+			}
+		}
 
 	}
 
