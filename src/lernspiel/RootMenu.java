@@ -194,7 +194,11 @@ public class RootMenu extends JFrame implements KeyListener {
 		this.mapping = mapping;
 	}
 
-	// define if keyEvent is consumed or let through
+	/* 
+	 * define if keyEvent is consumed or let through
+	 * used in Editor.java and Email.java
+	 */
+	
 	public boolean forward = false;
 	public boolean release = false;
 
