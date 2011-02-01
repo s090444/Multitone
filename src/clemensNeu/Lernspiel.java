@@ -434,7 +434,7 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			}
 
 		} else {
-			System.out.println("Seltsamer Fehler !!!  " + i + "  " + pressed);
+			System.out.println("Seltsamer Stats !!!  " + i + "  " + pressed);
 		}
 	}
 
