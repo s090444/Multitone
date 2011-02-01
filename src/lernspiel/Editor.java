@@ -3,6 +3,8 @@ package lernspiel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
@@ -53,6 +56,8 @@ public class Editor extends JFrame implements KeyListener {
 	private JButton jButtonSmaller = null;
 	private JButton jButtonSave = null;
 	private JButton jButtonLoad = null;
+	private JPanel jPanel1 = null;
+	private JPanel jPanel = null;
 
 	static RootMenu parent;
 
@@ -143,6 +148,7 @@ public class Editor extends JFrame implements KeyListener {
 	private JToolBar getJToolBar() {
 		if (jToolBar == null) {
 			jToolBar = new JToolBar();
+			jToolBar.setFloatable(false);
 			int i = 0;
 
 			/*
@@ -170,6 +176,8 @@ public class Editor extends JFrame implements KeyListener {
 			jToolBar.add(getJButtonSave());
 			buttonArray[i++] = getJButtonSave();
 			jToolBar.add(getJButtonLoad());
+			jToolBar.add(getJPanel1());
+			jToolBar.add(getJPanel());
 			buttonArray[i] = getJButtonLoad();
 		}
 		return jToolBar;
@@ -627,4 +635,63 @@ public class Editor extends JFrame implements KeyListener {
 		return jButtonLoad;
 	}
 
-}
+	/**
+	 * This method initializes jPanel1	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getJPanel1() {
+		if (jPanel1 == null) {
+
+			jPanel1 = new JPanel();
+			final JLabel moveDownDescription = new JLabel("Exit: ");
+			jPanel1.setPreferredSize(new Dimension(35, 28));
+			jPanel1.add(moveDownDescription, moveDownDescription.getName());
+		}
+		return jPanel1;
+	}
+
+	/**
+	 * This method initializes jPanel
+	 * Contains mapping pictures for exit	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getJPanel() {
+		if (jPanel == null) {
+			jPanel = new JPanel(){
+			@Override
+			protected void paintComponent(Graphics g){
+				super.paintComponent(g);
+				String directory = "src/Pics/";
+				Image key_unselected = Toolkit.getDefaultToolkit().getImage(
+						directory + "key_unselected.png");
+				Image key_selected = Toolkit.getDefaultToolkit().getImage(
+						directory + "key_selected.png");
+				
+				g.drawImage(key_unselected, 5, 5, 20, 20, this);
+				g.drawImage(key_unselected, 25, 5, 20, 20, this);
+				g.drawImage(key_unselected, 45, 5, 20, 20, this);
+				g.drawImage(key_unselected, 65, 5, 20, 20, this);
+				g.drawImage(key_unselected, 85, 5, 20, 20, this);
+				
+				g.drawImage(key_selected, 110, 5, 20, 20, this);
+				g.drawImage(key_unselected, 130, 5, 20, 20, this);
+				g.drawImage(key_unselected, 150, 5, 20, 20, this);
+				g.drawImage(key_unselected, 170, 5, 20, 20, this);
+				g.drawImage(key_selected, 190, 5, 20, 20, this);
+	
+			}
+			};
+			
+			jPanel.setPreferredSize(new Dimension(220, 28));
+			jPanel.setBounds(600, 1, 220, 28);
+		}
+		return jPanel;
+	}
+
+
+	
+	
+
+} 
