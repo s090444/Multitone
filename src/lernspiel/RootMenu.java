@@ -40,6 +40,11 @@ import javax.swing.JFrame;
  * 		Eine Move-Up Funktionalität, die in reverser Form die Funktionalität von Move-Down hat, also dem Anwender
  * 		erlaubt, das Menü von unten nach oben durchzulaufen.
  * 
+ * TODO: Check, ob Mapping.txt vorhanden ist
+ * 		
+ * 		Es sollte in einer Routine überprüft werden, ob die Mapping vorhanden ist.
+ * 		Falls ja, kann das Programm normal geladen werden, falls nein, sollte dieses verhindert werden.
+ * 
  **/
 public class RootMenu extends JFrame implements KeyListener {
 	
@@ -163,24 +168,23 @@ public class RootMenu extends JFrame implements KeyListener {
 		return typingTime;
 	}
 
-	/*
-	 * numOfKeys
-	 */
-
+	
+	/**
+	 * 	numOfKeys ist die Anzahl der ansteuerbaren Tasten des Gamepads
+	 * 
+	 * 	numOfKeys wird in ReadMpping benötigt
+	 **/
 	final int numOfKeys = 14;
 
 	public int getNumOfKeys() {
 		return numOfKeys;
 	}
 
-	/** global variables **/
-
-	String s = new String();
-
-	/*
-	 * numOfPoss
-	 */
-
+	
+	/**
+	 *	numOfPoss ist die Anzahl der aus der Mapping.txt ausgelesenen
+	 *	möglichen Tastenkombinationen, die für das Mapping hinterlegt werden.
+	 **/
 	int numOfPoss = 0;
 
 	public int getNumOfPoss() {
@@ -190,11 +194,14 @@ public class RootMenu extends JFrame implements KeyListener {
 	public void setNumOfPoss(int numOfPoss) {
 		this.numOfPoss = numOfPoss;
 	}
+	
 
-	/*
-	 * firstkeyPressedflag
-	 */
-
+	/**
+	 *	firstkeyPressedflag ist die boolsche Variable, die bei dem ersten KeyEvent gesetzt wird
+	 *	um die folgenden Tasten abzufangen.
+	 *
+	 *	Genaueres unter der Methode KeyReleased
+	 **/
 	private boolean firstKeyPressedflag;
 
 	public boolean isFirstKeyPressedflag() {
@@ -204,25 +211,13 @@ public class RootMenu extends JFrame implements KeyListener {
 	public void setFirstKeyPressedflag(boolean firstKeyPressedflag) {
 		this.firstKeyPressedflag = firstKeyPressedflag;
 	}
-
-	/*
-	 * map
+	
+	
+	/**
+	 * 	Flags dienen zur Erfassung von gedrückten Tasten des Benutzers. Sie werden bei einem Release-Event 
+	 * 	in das Flag als "gedrückt" markiert und können später durch die Klasse Mapping weiterverarbeitet
+	 * 	werden.
 	 */
-
-	char map = 0;
-
-	public char getMap() {
-		return map;
-	}
-
-	public void setMap(char map) {
-		this.map = map;
-	}
-
-	/*
-	 * Flag
-	 */
-
 	int flag[] = new int[numOfKeys];
 
 	public int[] getFlag() {
@@ -233,10 +228,11 @@ public class RootMenu extends JFrame implements KeyListener {
 		this.flag[field] = flac;
 	}
 
-	/*
-	 * Mapping
+	
+	/**
+	 *	Mapping speichert das in der Mapping.txt kodierte Mapping in ein 2 Dimensionales Array
+	 *	und stellt dieses durch Getter/Setter Methode für andere Klassen zur Verfügung.
 	 */
-
 	private int mapping[][];
 
 	public int[][] getMapping() {
@@ -247,15 +243,10 @@ public class RootMenu extends JFrame implements KeyListener {
 		this.mapping = mapping;
 	}
 
-	/* 
-	 * define if keyEvent is consumed or let through
-	 * used in Editor.java and Email.java
-	 */
-	
-	public boolean forward = false;
-	public boolean release = false;
 
-	// keyCode
+	// TODO For next CodeEvaluation		NEED TO BE CHECKED!!!! If still needed
+	
+	// keyCode							NEED TO BE CHECKED!!!! If still needed
 	private int keyCode = 0;
 
 	public int getKeyCode() {
@@ -266,48 +257,111 @@ public class RootMenu extends JFrame implements KeyListener {
 		this.keyCode = keyCode;
 	}
 
+
+
+	
+	// map								NEED TO BE CHECKED!!!! If still needed
+	char map = 0;
+
+	public char getMap() {
+		return map;
+	}
+
+	public void setMap(char map) {
+		this.map = map;
+	}	
+	
+	
 	/*
-	 * Constructor
+	 * Variablen, für andere Klassen bereit gestellt werden
+	 * TODO -> Abhängigkeiten klären
+	 */
+
+	
+	/** 
+	 * define if keyEvent is consumed or let through
+	 * used in Editor.java and Email.java
+	 */
+	public boolean forward = false;
+	public boolean release = false;
+	
+	String s = new String();
+	
+	
+	
+	/**
+	 * 	Constructor RootMenu
+	 * 
+	 * 	Der Konstruktor wird aus der Main-Klasse, die das JavaProgramm aufruft, direkt initialisiert.
+	 * 	
+	 * 	Im Konstruktor laufen nach der Initialisierung folgende Prozesse ab:
+	 * 		- Zurücksetzen aller Umgebungsvariablen des RootMenu's
+	 * 				Um ggf. alte Stände wieder auf einen definierten Startwert zu bringen.
+	 * 		- Einlesen der Zeilenzahl (Kombinationsmöglichkeiten) der Mapping.txt
+	 * 		- Einlesen des Mappings aus der Mapping.txt
+	 * 		- Initialisieren der GUI-Variablen
+	 * 
 	 */
 	public RootMenu() {
 		super();
 
-		this.currentMenu = 0;
+		/*
+		 * Initialisiere RootMenu - Variablen
+		 */
 		System.out.println("Initializiere RootMenu...");
-
+		this.currentMenu = 0;
+		this.menuCounter = 1;
 		this.setFirstKeyPressedflag(false);
-		System.out.println("FirstKeyPressedflag gesetzt auf "
-				+ this.isFirstKeyPressedflag());
 
-		ReadNumOfPoss readNum = new ReadNumOfPoss();
-		this.numOfPoss = readNum.readNumOfPoss();
+		
+		/*
+		 * Einlesen der Kombinationsmöglichkeiten
+		 */
 		System.out.println("Read numbers of Possibilities (out of file): "
 				+ this.numOfPoss);
+		ReadNumOfPoss readNum = new ReadNumOfPoss();
+		this.numOfPoss = readNum.readNumOfPoss();
 
+		
+		/*
+		 * Einlesen des Mappings in die 2Dimensionale Array-Variable Mapping
+		 */
 		ReadMapping readMapp = new ReadMapping(this.numOfKeys, this.numOfPoss);
 		this.setMapping(readMapp.readMapping());
 		System.out.println("Einlesen des Mappings. Erste Mapping[0][0] ist : "
 				+ this.mapping[0][0]);
 
+		
+		/*
+		 * GUI - Initialisierung
+		 */
+		
+		// Verhalten bei Fensterschließen
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// String curDir = System.getProperty("user.dir");
-		// System.out.println("current Directory: " + curDir);
-
+		// Initialisiere RootMenu
 		this.rootMenu();
+		
+		// Initialisiere Menu-Button (Zeichne den roten Button an der aktuellen Position)
+		// Bei Initialisierung ist die Position 1 -> Lernspiel
 		this.drawNewPosition();
 
+		// Zeichne die Komponenten auf das Panle
 		this.addComponentsToPanel();
-		// root.pack();
-
+	
+		// Verhindere die Größenänderung des Fensters
 		this.setResizable(false);
+		
+		// Mach das Bild sichtbar
 		this.setVisible(true);
 
 	}
 
+	
 	/**
-	 * @param args
-	 *            the command line arguments
+	 * 	Main - Methode
+	 * 
+	 * 	Initialisierung des RootMenus
 	 */
 	public static void main(String[] args) {
 		// TODO code application logic here
@@ -319,10 +373,12 @@ public class RootMenu extends JFrame implements KeyListener {
 		});
 	}
 
-	/*
-	 * GUI
+	/**
+	 *	addComponentsToPanel()
+	 *
+	 *	fügt die grafischen und RootMenu spezifischen Komponenten auf das Panel.
+	 *	
 	 */
-
 	public void addComponentsToPanel() {
 
 		panel = new JPanel() {
@@ -331,28 +387,64 @@ public class RootMenu extends JFrame implements KeyListener {
 			 */
 			private static final long serialVersionUID = 1L;
 
+			/**
+			 *	Paintcomponents
+			 *	
+			 *	zeichnet die 3 Menüstrukturen:
+			 *		- RootMenü (currentMenu = 0)
+			 *		- Lernspiel - Schwierigkeitsgrad - Menü (currentMenu = 1)
+			 *		- Mapping - Visualisierung (currentMenu = 2)
+			 *
+			 *	Zusätzlich initialisiert es das Panel und zeichnet die Labels auf das Panel
+			 *
+			 */
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
+				
+				/*
+				 * Hintergrundbild für die drei Menüstrukturen
+				 */
 				g.drawImage(background, 0, 0, 800, 576, this); // 768
 
+				
+				/*
+				 * Zeichnet die Menüstruktur "Mapping - Visualisierung)
+				 */
 				if (currentMenu == 2) {
 
+					/*
+					 * Variablen initialisierung
+					 * 	- Vorberietung um das Mapping auszulesen und auf die 
+					 * 		10 Button umzuschreiben
+					 * 		für jede 1 (aktiver Button) wird ein aktiver Button gezeichnet
+					 * 		für jede 0 (nicht aktiver Button / nicht geflagt) wird ein ergrauter Button gemalt
+					 * 
+					 * 		Besonderheit hierbei ist, dass das Array in [Spalten][Zeilen] ausgelesen werden muss auf Grund
+					 * 		der Gruppenkonvention.
+					 */
 					Font font = new Font("Sans", Font.BOLD, 14);
 					g.setFont(font);
 
 					Image keyImage;
 					int zeile, spalte, pos_x, pos_y, pos_x_start, maxKeyPP, keyDis_x, keyDis_y, key_begin, key_end;
 
+					// key_begin: Zeile, aber der das Array mit auslesen beginnen soll
 					key_begin = 35;
+					// key_end: Zeile, bis wohin das Array ausgelesen werden soll
 					key_end = 40;
 
+					// die maximale Anzahl von Keys, die auf einer Seite angezeigt werden sollen
 					maxKeyPP = 5;
+					
+					// grafische Ausrichtung der Tasten durch x / y - Kooridnaten
 					pos_y = 130;
 					pos_x_start = 300;
 
 					keyDis_x = 20;
 					keyDis_y = 40;
+					
+					// Überschrift
 					g.drawString("Tastenbelegung " + key_begin + " - "
 							+ key_end, 330, 120);
 					for (zeile = key_begin; zeile < (key_begin + maxKeyPP); zeile++) {
@@ -360,9 +452,7 @@ public class RootMenu extends JFrame implements KeyListener {
 						pos_x = pos_x_start;
 
 						for (spalte = 0; spalte < 10; spalte++) {
-							/*System.out.println("(" + spalte + "/" + zeile
-									+ "):" + mapping[spalte][zeile]);*/
-
+					
 							if (mapping[spalte][zeile] == 1) {
 								keyImage = key_selected;
 							} else {
@@ -370,8 +460,7 @@ public class RootMenu extends JFrame implements KeyListener {
 							}
 
 							g.drawImage(keyImage, pos_x, pos_y, 20, 20, this);
-							// System.out.println("x " + pos_x + " y " + pos_y);
-
+					
 							pos_x = pos_x + keyDis_x;
 
 							if (pos_x == (pos_x_start + (keyDis_x * 5)))
@@ -432,6 +521,7 @@ public class RootMenu extends JFrame implements KeyListener {
 		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
 
+		// für das RootMenu und das Lernspiel - Menu müssen zusätzlich noch die Move- Down button aktiv gehalten werden
 		if (currentMenu != 2) {
 			final JLabel moveDownDescription = new JLabel("Move Down");
 			moveDownDescription.setBounds(20, 120, 170, 35);
@@ -463,15 +553,10 @@ public class RootMenu extends JFrame implements KeyListener {
 	}
 
 	public void keyTyped(KeyEvent e) {
-		// System.out.println(e);
-		// throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public void keyPressed(KeyEvent e) {
-		// System.out.println("RootWindow: " + e);
 		this.setFlag(e, 1);
-
-		// throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -512,9 +597,21 @@ public class RootMenu extends JFrame implements KeyListener {
 		}
 	}
 
+	/**
+	 * 	setFlag
+	 * 
+	 * 	notiert die aktuell released Keys der Benutzereingabe in einem Array
+	 * 	wobei erlaubte flag-notationen 0 und 1 sind und 0 dabei den 
+	 * 	reset-zustand darstellt und 1 den Zustand für eine gedrückte Benutzereingabe
+	 * 
+	 * @param e
+	 * @param flag
+	 */
 	public void setFlag(KeyEvent e, int flag) {
-		// System.out.println("keyChar: " + e.getKeyChar());
-
+		
+		/*
+		 * e ist der gedrückte Charakter als KeyCharakter
+		 */
 		switch (e.getKeyChar()) {
 		case 'q':
 			this.setFlag(0, flag);
@@ -638,6 +735,12 @@ public class RootMenu extends JFrame implements KeyListener {
 
 	}
 
+	/**
+	 *	resetFlags()
+	 *	
+	 *	setzt alle durch den Benutzer gedrückten eingaben wieder auf 
+	 *	0 zurück, um so für die nächsten Eingaben bereit zu sein.
+	 */
 	public void resetFlags() {
 
 		for (int i = 0; i < this.getNumOfKeys(); i++)
@@ -646,6 +749,9 @@ public class RootMenu extends JFrame implements KeyListener {
 		System.out.println("Flags zurueckgesetzt...");
 	}
 
+	/**
+	 *	grafische Resetfunktion für das Lernspiel 
+	 */
 	public void difficultyGame() {
 		this.currentMenu = 1;
 
@@ -657,6 +763,9 @@ public class RootMenu extends JFrame implements KeyListener {
 		repaint();
 	}
 
+	/**
+	 * grafische Resetfunktion für das Rootmenu
+	 */
 	public void rootMenu() {
 		this.currentMenu = 0;
 
@@ -669,6 +778,13 @@ public class RootMenu extends JFrame implements KeyListener {
 		repaint();
 	}
 
+	/**
+	 * runApplication
+	 * 	
+	 * 	startet in Abhängigkeit des aktuellen Menüpunkts und Menüstruktur
+	 * 	die hinterlegten Anwendungen
+	 * 
+	 */
 	public void runApplication() {
 
 		switch (currentMenu) {
