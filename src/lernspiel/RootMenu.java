@@ -157,7 +157,7 @@ public class RootMenu extends JFrame implements KeyListener {
 	 * 
 	 * 	Diese Variable wird für andere Programme als Getter-Methode bereitgestellt.
 	 **/
-	final private int typingTime = 50;
+	final int typingTime = 50;
 
 	public int getTypingTime() {
 		return typingTime;
