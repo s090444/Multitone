@@ -36,8 +36,12 @@ class ImageLabel extends JLabel {
 	  @Override 
 	  protected void paintComponent( Graphics g ) 
 	  { 
-	    if ( image != null ) 
+	    if ( image != null ) {
 	      g.drawImage( image, 0, 0,image.getWidth(),image.getHeight(), this ); 
+	    }
+	    else {
+	    	System.out.println("Bild konnte nicht geladen werden");
+	    }
 	  } 
 
 }

@@ -157,7 +157,7 @@ public class RootMenu extends JFrame implements KeyListener {
 	 * 
 	 * 	Diese Variable wird für andere Programme als Getter-Methode bereitgestellt.
 	 **/
-	final private int typingTime = 50;
+	final int typingTime = 50;
 
 	public int getTypingTime() {
 		return typingTime;
@@ -470,7 +470,7 @@ public class RootMenu extends JFrame implements KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		// System.out.println("RootWindow: " + e);
-		this.setFlac(e, 1);
+		this.setFlag(e, 1);
 
 		// throw new UnsupportedOperationException("Not supported yet.");
 	}
@@ -513,39 +513,39 @@ public class RootMenu extends JFrame implements KeyListener {
 		}
 	}
 
-	public void setFlac(KeyEvent e, int flac) {
+	public void setFlag(KeyEvent e, int flag) {
 		// System.out.println("keyChar: " + e.getKeyChar());
 
 		switch (e.getKeyChar()) {
 		case 'q':
-			this.setFlag(0, flac);
+			this.setFlag(0, flag);
 			break;
 		case 'w':
-			this.setFlag(1, flac);
+			this.setFlag(1, flag);
 			break;
 		case 'e':
-			this.setFlag(2, flac);
+			this.setFlag(2, flag);
 			break;
 		case 'r':
-			this.setFlag(3, flac);
+			this.setFlag(3, flag);
 			break;
 		case 'v':
-			this.setFlag(4, flac);
+			this.setFlag(4, flag);
 			break;
 		case 'n':
-			this.setFlag(5, flac);
+			this.setFlag(5, flag);
 			break;
 		case 'u':
-			this.setFlag(6, flac);
+			this.setFlag(6, flag);
 			break;
 		case 'i':
-			this.setFlag(7, flac);
+			this.setFlag(7, flag);
 			break;
 		case 'o':
-			this.setFlag(8, flac);
+			this.setFlag(8, flag);
 			break;
 		case 'p':
-			this.setFlag(9, flac);
+			this.setFlag(9, flag);
 			break;
 
 		default:

@@ -26,7 +26,7 @@ public class Sound extends Applet {
 		try {
 			sound = Applet.newAudioClip(file.toURI().toURL());
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			System.out.println("Sounddatei nicht gefunden:" + "src/Audio/" + letter + ".wav");
 		}
 		
 		sound.play();
@@ -43,7 +43,7 @@ public class Sound extends Applet {
 		try {
 			sound = Applet.newAudioClip(file.toURI().toURL());
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			System.out.println("Sounddatei nicht gefunden:" + "src/Audio/" + letter + ".wav");
 		}
 		
 		sound.play();
@@ -60,7 +60,7 @@ public class Sound extends Applet {
 		try {
 			sound = Applet.newAudioClip(file.toURI().toURL());
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			System.out.println("Sounddatei nicht gefunden:" + "src/Audio/" + string + ".wav");
 		}
 		
 		sound.play();

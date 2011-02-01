@@ -373,7 +373,7 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 				parent.forward = false;
 				Sound.playSound((int) e.getKeyChar());
 			} else {
-				parent.setFlac(e, 1);
+				parent.setFlag(e, 1);
 				if (parent.isFirstKeyPressedflag() == false) {
 					parent.setFirstKeyPressedflag(true);
 					Timer timer = new Timer();
@@ -394,7 +394,7 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 				parent.release = false;
 				e.consume();
 			} else {
-				parent.setFlac(e, 0);
+				parent.setFlag(e, 0);
 			}
 		}
 		
