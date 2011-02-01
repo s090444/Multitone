@@ -20,15 +20,52 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 
 /**
+ *  
+ * @author 		Christian Jelitte	<christian.jelitte@gmx.net>
+ * @version		0.8 beta
+ * @since		2011.0131
  * 
- * @author sakura
- */
+ * Rootmenü ist der Einstieg in das MultiTouch-Programm, entwickelt von Multitone,
+ * einem StudentenProjekt.
+ * 
+ * 
+ * TODO: MappingVisualisierung (optional)
+ * 			
+ * 		Zur Zeit ist das Mapping fest auf den Bereich von 35-40 eingestellt, da noch keine
+ * 		Move-Up / Move-Down - Funktionalität eingebaut ist.
+ * 		Zusätzlich muss berücksichtigt werden, wennn das Mapping am Ende des mappings angelangt ist.
+ * 
+ * TODO: Move-UP (optional)
+ * 	
+ * 		Eine Move-Up Funktionalität, die in reverser Form die Funktionalität von Move-Down hat, also dem Anwender
+ * 		erlaubt, das Menü von unten nach oben durchzulaufen.
+ * 
+ **/
 public class RootMenu extends JFrame implements KeyListener {
-
+	
 	private static final long serialVersionUID = 7465416001464648515L;
 	static RootMenu root;
+
+	/**
+	 * 	directory - Verweist auf das Bilderverzeichnis
+	 */	
 	String directory = "src/Pics/";
 
+	/**
+	 * Menü-Button bilder werden geladen
+	 * 
+	 * Das Menü besteht aus folgenden Punkten:
+	 * 	- Lernspiel (in 3 Schwierigkeitsstufen)
+	 *  - Texteditor
+	 *  - E-Mailprogramm
+	 *  - Mapping-Übersicht
+	 *  Jeder Button ist in angewählter Form (selected) und nicht-angewählter Form (unselected)
+	 *  vorhanden.
+	 *  
+	 *  Zusätzlich werden noch die Keyboard-Bilder geladen, die es in der
+	 *  angewählten und abgewählten Form gibt.
+	 * 	
+	 **/
 	Image lernspiel_unselected = Toolkit.getDefaultToolkit().getImage(
 			directory + "lernspiel_unselected.png");
 	Image lernspiel_selected = Toolkit.getDefaultToolkit().getImage(
@@ -82,29 +119,45 @@ public class RootMenu extends JFrame implements KeyListener {
 	Image key_selected = Toolkit.getDefaultToolkit().getImage(
 			directory + "key_selected.png");
 
+	/**
+	 * Globlae Variablen zum Zeichnen des Menüs.
+	 * 
+	 * Sie werden benötigt, um mit Hilfe der Key-Listener außerhalb der Paint-Methode die Bilder von
+	 * select auf unselected bzw. andersherum zu setzen.
+	 **/
 	Image lernspiel;
 	Image editor;
 	Image email;
 	Image tastenbelegung;
 	Image quit;
 
-	/*
-	 * char move_up = 'y'; char move_down = 'y'; char enter = 'x';
-	 */
-
-	// menuCounter ist eins, der erste Menüpunkt schon vorselektiert ist
+	/**
+	 *  menuCounter ist der aktive Menüpunkt, der zur Zeit selected ist.
+	 *  
+	 *  menuCounter ist mit eins initialisiert, da der erste Menüpunkt schon vorselektiert 
+	 *  sein soll ist.
+	 **/
 	int menuCounter = 1;
 
-	int currentMenu = 0;
+	/**
+	 * 	currentMenu ist die aktuelle MenüOberfläche. Zur Zeit gibt es 3:
+	 * 	
+	 * 	0: 	RootMenü mit den Punkten (Lernspiel, Texteditor, e-Mail, Mapping, Quit)
+	 * 	1: 	Lernspiel-Menü mit den Punkten (Level 1, Level 2, Level 3, Zurück)
+	 * 	2:	Mapping (hier wird das aktuelle Mapping aus der Text-Datei gelesen und für den 
+	 * 			Anwender sichtbar gemacht.
+	 * 
+	 *	Das currentMenu wird mit 0 für das RootMenü initialisiert.
+	 **/
+	private int currentMenu = 0;
 	JPanel panel;
 
-	/** Configuration */
-
-	/*
-	 * Typing_time
-	 */
-
-	final int typingTime = 50;
+	/**
+	 *	Typing_time ist die Zeit, die der Benutzer für seine Eingaben hat (Release Keys) hat in MilliSeks.
+	 * 
+	 * 	Diese Variable wird für andere Programme als Getter-Methode bereitgestellt.
+	 **/
+	final private int typingTime = 50;
 
 	public int getTypingTime() {
 		return typingTime;
