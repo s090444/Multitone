@@ -315,7 +315,6 @@ public class RootMenu extends JFrame implements KeyListener {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				root = new RootMenu();
-				// Editor e = new Editor(root);
 			}
 		});
 	}

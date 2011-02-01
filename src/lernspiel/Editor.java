@@ -229,7 +229,7 @@ public class Editor extends JFrame implements KeyListener {
 				parent.setFirstKeyPressedflag(true);
 				Timer timer = new Timer();
 				timer.schedule(new MappKeyCode(parent, parent.numOfKeys,
-						parent.numOfPoss), parent.typingTime);
+						parent.numOfPoss), 200);
 			}
 
 			// consume events, don't let it pass to application
