@@ -1,15 +1,23 @@
 	package lernspiel;
 
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 
 import javax.mail.*;
 import javax.mail.internet.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
+
 
 
 public class Email extends javax.swing.JFrame implements KeyListener{
@@ -74,8 +82,11 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	        jTextPane1 = new javax.swing.JTextPane();
 	        jTextPane1.addKeyListener(this);
 	        jButton1 = new javax.swing.JButton();
+	        jButton1.addKeyListener(this);
 	        jButton2 = new javax.swing.JButton();
+	        jButton2.addKeyListener(this);
 	        jButton3 = new javax.swing.JButton();
+	        jButton3.addKeyListener(this);
 
 	        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -276,6 +287,10 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	                if (!(ex instanceof MessagingException)) break;
 	                else mex = (MessagingException)ex;
 	            }
+	            
+	           
+
+
 	        }
 
 
@@ -309,14 +324,14 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	    /**
 	    * @param args the command line arguments
 	    */
-	    public static void main(String args[]) {
-	        java.awt.EventQueue.invokeLater(new Runnable() {
-	            public void run() {
-	                new Email().setVisible(true);
-	            }
-	        });
-
-	}
+//	    public static void main(String args[]) {
+//	        java.awt.EventQueue.invokeLater(new Runnable() {
+//	            public void run() {
+//	                new Email().setVisible(true);
+//	            }
+//	        });
+//
+//	}
 
 	    // Variables declaration - do not modify
 	    private javax.swing.JButton jButton1;
@@ -336,17 +351,23 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	  
 	    
 	    public void keyPressed(KeyEvent e) {
-			if (parent.forward) {
-//				parent.forward = false;
-				System.out.println(e.getKeyCode());
-			}
-//				e.consume();
-		}
+	    	
+	    	if (e.getKeyCode()== 27){
+	    		parent.setVisible(true);
+				dispose();
+
+	    	}
+	    	
+	    	
+	    	
+	    	System.out.println(e.getKeyCode());
+	    }
 
 		// Handle keyTyped Event
 
 		public void keyTyped(KeyEvent e) {
-
+			
+			
 			// let pass events from Robot()
 			if (parent.forward) {
 				parent.forward = false;
@@ -357,15 +378,18 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 					parent.setFirstKeyPressedflag(true);
 					Timer timer = new Timer();
 					timer.schedule(new MappKeyCode(parent, this, parent.numOfKeys,
-							parent.numOfPoss), parent.typingTime+200);
+							parent.numOfPoss), parent.getTypingTime()+200);
 				}
 				// consume event, don't let it pass to application
+				
 				e.consume();
 			}
 		}
 
 		// Handle keyReleased Event
 		public void keyReleased(KeyEvent e) {
+			if (e.getKeyCode()== 154){
+				getFocusOwner().transferFocus();}
 			if (parent.release) {
 				parent.release = false;
 				e.consume();
@@ -373,7 +397,10 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 				parent.setFlac(e, 0);
 			}
 		}
-
+		
+		
+		
+		
 	}
 
 	
