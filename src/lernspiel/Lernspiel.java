@@ -296,8 +296,8 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		//adds the KeyListener to text field
 		setListener();
 		
-		/**
-		 * redraws the frame, so that lacks because of loading the components don't result in empty spaces
+		/*
+		 * repaints, so that lacks because of loading the components don't result in empty spaces
 		 */
 		repaint();
 
