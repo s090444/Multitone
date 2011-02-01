@@ -10,6 +10,11 @@ import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * This Window shows the stats reached in the game
+ * @author Kevin Articus
+ *
+ */
 public class Fehler extends JFrame implements SwingConstants {
 	
 	/**
@@ -25,11 +30,21 @@ public class Fehler extends JFrame implements SwingConstants {
 	private static final long serialVersionUID = 2304903219655115269L;
 	private RootMenu parent;
 
+	/**
+	 * initialize window
+	 * @param title sets the window-title
+	 * @param runden amount of rounds played
+	 * @param fehler amount of mistakes done
+	 * @param durchschnitt average reaction time
+	 * @param root parent window
+	 */
 	public Fehler(String title, int runden, int fehler, double durchschnitt, RootMenu root) {
 		super(title);
 		parent = root;	
 		
-		
+		/*
+		 * initialize frame
+		 */
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		int frameWidth = 800;
 		int frameHeight = 600;
@@ -41,7 +56,9 @@ public class Fehler extends JFrame implements SwingConstants {
 		Container cp = getContentPane();
 		cp.setLayout(null);
 	
-		
+		/*
+		 * initialize components
+		 */
 		rounds.setBounds(0, 0, 400, 150);
 		rounds.setOpaque(true);
 		rounds.setBackground(Color.WHITE);
@@ -76,11 +93,15 @@ public class Fehler extends JFrame implements SwingConstants {
 		
 		stats.setFocusable(true);
 		stats.requestFocus();
+		
+		/*
+		 * set Listener
+		 */
         stats.addKeyListener(new KeyListener(){
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
@@ -91,21 +112,25 @@ public class Fehler extends JFrame implements SwingConstants {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
+			
 				parent.setVisible(true);
 				dispose();
 			}
         	
         });
         
-        
+        /*
+         * add components
+         */
 		cp.add(rounds);
 		cp.add(errors);
 		cp.add(prozent);
 		cp.add(stats);
 		cp.add(hinweis);
 		
-		
+		/*
+		 * set text of components
+		 */
 		Sound.playSound("clap");
 		rounds.setText("  Eingaben: " + runden);
 		errors.setText("davon falsch: " + fehler);
@@ -113,7 +138,6 @@ public class Fehler extends JFrame implements SwingConstants {
 		if (runden !=0){
 		prozent.setText("Prozent richtig: " + Math.round((((runden-fehler)*100)/runden) ) + "%");
 		if (runden-fehler==0){
-			Sound.playSound("incredible");
 		}
 		else{}
 		}

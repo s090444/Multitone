@@ -1,10 +1,5 @@
 package lernspiel;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-//package lernspiel;
 import java.awt.Container;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,12 +16,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+
 /**
  * 
- * Beschreibung
+ * game helping to learn the combinations used by the MultiTouch-System
  * 
- * @version 2.0 vom 22.01.2011
- * @author
+ * @version 3.0 by 30-01-2011
+ * @author Kevin Articus
  */
 
 public class Lernspiel extends JFrame implements SwingConstants {
@@ -34,38 +30,124 @@ public class Lernspiel extends JFrame implements SwingConstants {
 	
     private static final long serialVersionUID = 4361337321071606387L;
 	
+    
+    /**
+     * defines the System-time, when something was entered
+     */
 	long time;
+	
+	/**
+	 * defines the System-time, when a letter/sign to enter has appeared
+	 */
 	long occtime;
-	int fehler =0;
-	int runden=0;
-	int kombi;
-	String string;
-	boolean ende=false;
-	char letter;
-	int eingabe;
-	double durchschnitt;
-	double summe;
-	int zaehler=0;
-	boolean richtig;
+	
+	/**
+	 * defines the amounts of mistakes done entering
+	 */
+	int errors =0;
+	
+	/**
+	 * defines the amount of rounds played
+	 */
+	int rounds=0;
+	
+	/**
+	 * defines the position current combination in the combination-array
+	 */
+	int combi;
+	
+	/**
+	 * set to true, when the game is going to end
+	 */
+	boolean end=false;
+	
+	/**
+	 * represents the current symbol to enter
+	 */
+	char symbol;
+	
+	/**
+	 * defines the key pressed by the player
+	 */
+	int input;
+	
+	/**
+	 * defines the average reaction time of the current player
+	 */
+	double average;
+	
+	/**
+	 * defines the sum of the reaction times of all rounds played
+	 */
+	double sum=0.0;
+	
+	/**
+	 * defines the maximum time for a round before a new round is started(dependent of the difficulty)
+	 */
+	int endTime;
+	
+	/**
+	 * is true, when the combination entered fits the desired combination
+	 */
+	boolean correct;
+	
+	/**
+	 * is true, if the first key of a combination was already released
+	 */
 	boolean firstKey;
+	
+	/**
+	 * is true, if this is the first round played
+	 */
 	boolean firstRound = true;
-	BufferedImage taste;
-	BufferedImage bewertung;
 	
-	int[][] kombis;
-	Timer timer = new Timer();
+	/**
+	 * Image of the keys
+	 */
+	BufferedImage keyPic;
 	
+	/**
+	 * Image shown for evaluation
+	 */
+	BufferedImage evaluationPic;
 	
+	/**
+	 * Timer used for input (gives user a short time after releasing 
+	 * the first key to release other pressed keys)
+	 * in milli-seconds
+	 */
+	Timer typingTimer = new Timer();
 	
+	/**
+	 * defines the time for the user to release all keys after the first released
+	 */
+	int typingTime;
 	
-	boolean[] tasten = { false, false, false, false, false, false, false,
+	/**
+	 * Timer for a new round to start if the user does not enter something in a given time
+	 */
+	Timer RoundTimer = new Timer();
+	
+	/**
+	 * array of all possible combinations
+	 */
+	int[][] combis;
+	
+	/**
+	 * represents the 10 keys (true, if this key was pressed in this combination)
+	 */
+	boolean[] keys = { false, false, false, false, false, false, false,
 			false, false, false };
 
-	long maximum = 100; // Anzahl aller Tastenkombinationen
-	int zufall;
-	// private JLabel wertung = new JLabel(bwertung);
-	ImageLabel wertung = new ImageLabel();
-	ImageLabel tastenbild[] = { new ImageLabel(),
+	/**
+	 * Label for showing the evaluation image
+	 */
+	ImageLabel evaluation = new ImageLabel();
+	
+	/**
+	 * Labels for showing each of the 10 keys
+	 */
+	ImageLabel keyLabel[] = { new ImageLabel(),
 			new ImageLabel(),
 			new ImageLabel(),
 			new ImageLabel(),
@@ -75,43 +157,75 @@ public class Lernspiel extends JFrame implements SwingConstants {
 			new ImageLabel(),
 			new ImageLabel(),
 			new ImageLabel() };
-	//Sound Sound = new Sound();
-	JLabel zeit = new JLabel("");
-	JLabel zeichen = new JLabel("");
+	
+	/**
+	 * Label for showing the time needed to enter a combination
+	 */
+	JLabel timeLabel = new JLabel("");
+	
+	/**
+	 * Label for showing the current symbol to enter
+	 */
+	JLabel symbolLabel = new JLabel("");
+	
+	/**
+	 * used to catch all keystrokes (user will not see this)
+	 */
 	JTextField text = new JTextField();
+	
+	/**
+	 * description of the first 5 keys
+	 */
 	JLabel row1 = new JLabel("Tastenreihe 1");
+	
+	/**
+	 * description of the second 5 keys
+	 */
 	JLabel row2 = new JLabel("Tastenreihe 2");
 
-	// Ende Attribute
-
+	
+	/**
+	 * RootMenu is the parent of Lernspiel
+	 */
 	static RootMenu parent;
-	int typingTime;
+	
+
+	
+
 	
 	public Lernspiel(String title, RootMenu root, int difficulty) {
-		// Frame-Initialisierung
+		
 		super(title);
 		
 		parent = root;
+		
+		//hide the main menu
 		parent.setVisible(false);
 		
-		this.kombis = parent.getMapping();
+		// get the mappings, save it into kombis
+		this.combis = parent.getMapping();
 		
-		//typingTime=parent.typingTime;
+		/*
+		 * uncomment the following to use the typingTime of the main menu
+		 * typingTime=parent.typingTime;
+		 */
+		
+		//set typingTime to custom value
+		typingTime=500;
+		
+		
+		
+		
+		//set endTime depending on the difficulty
 		switch (difficulty){
-		case 1: typingTime=3000; break;
-		case 2: typingTime=2000; break;
-		case 3: typingTime=1000; break;
+		case 1: endTime=10000; break;
+		case 2: endTime=5000; break;
+		case 3: endTime=3000; break;
+		default: endTime=5000; break;
 		}
-		
-		
-		
-		
-		
-		
-		
-	
-		
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			
+		//initialize frame
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		int frameWidth = 800;
 		int frameHeight = 600;
 		setSize(frameWidth, frameHeight);
@@ -121,24 +235,31 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		setLocation(x, y);
 		Container cp = getContentPane();
 		cp.setLayout(null);
-		// Anfang Komponenten
-
+		setResizable(false);
+		setAlwaysOnTop(true);
+		setVisible(true);
+		
+		
+		
+		//initialize components
 		text.setBounds(0, 0, 400, 0);
 		cp.add(text);
-		wertung.setBounds(0, 0, 400, 300);
-		wertung.setBackground(Color.WHITE);
-		cp.add(wertung);
+		evaluation.setBounds(0, 0, 400, 300);
+		evaluation.setBackground(Color.WHITE);
+		cp.add(evaluation);
 
-		for (int i = 0; i < 5; i++) { // faengt obere Tastenreihe hinzu
-			tastenbild[i].setBounds(400 + 80 * i, 0, 80, 80);
-			tastenbild[i].setBackground(Color.WHITE);
-			cp.add(tastenbild[i]);
+		//upper key-row
+		for (int i = 0; i < 5; i++) { 
+			keyLabel[i].setBounds(400 + 80 * i, 0, 80, 80);
+			keyLabel[i].setBackground(Color.WHITE);
+			cp.add(keyLabel[i]);
 
 		}
-		for (int i = 5; i < 10; i++) { // fuegt untere Tastenreihe hinzu
-			tastenbild[i].setBounds(400 + (80 * (i - 5)), 150, 80, 80);
-			tastenbild[i].setBackground(Color.WHITE);
-			cp.add(tastenbild[i]);
+		//lower key-row
+		for (int i = 5; i < 10; i++) { 
+			keyLabel[i].setBounds(400 + (80 * (i - 5)), 150, 80, 80);
+			keyLabel[i].setBackground(Color.WHITE);
+			cp.add(keyLabel[i]);
 		}
 		row1.setBounds(400, 80, 400, 70);
 		row1.setOpaque(true);
@@ -154,194 +275,188 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		row2.setHorizontalAlignment(CENTER);
 		cp.add(row2);
 
-		zeit.setBounds(0, 300, 400, 300);
-		zeit.setOpaque(true);
-		zeit.setBackground(Color.WHITE);
-		zeit.setFont(new Font("Arial", 255, 32));
-		zeit.setHorizontalAlignment(CENTER);
-		cp.add(zeit);
-		zeichen.setBounds(400, 300, 395, 272);
-		zeichen.setOpaque(true);
-		zeichen.setBackground(Color.WHITE);
-		zeichen.setFont(new Font("Arial", 255, 200));
-		zeichen.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.red));
-		zeichen.setHorizontalAlignment(CENTER);
-		cp.add(zeichen);
-		// Ende Komponenten
+		timeLabel.setBounds(0, 300, 400, 300);
+		timeLabel.setOpaque(true);
+		timeLabel.setBackground(Color.WHITE);
+		timeLabel.setFont(new Font("Arial", 255, 32));
+		timeLabel.setHorizontalAlignment(CENTER);
+		cp.add(timeLabel);
+		symbolLabel.setBounds(400, 300, 395, 272);
+		symbolLabel.setOpaque(true);
+		symbolLabel.setBackground(Color.WHITE);
+		symbolLabel.setFont(new Font("Arial", 255, 200));
+		symbolLabel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.red));
+		symbolLabel.setHorizontalAlignment(CENTER);
+		cp.add(symbolLabel);
 		
-		updatewertung("beenden.jpeg");
+		
+		//shows hint for user how to end the game
+		updateEvaluation("beenden.jpeg");
 
+		//adds the KeyListener to text field
 		setListener();
 
-		setResizable(false);
-		setAlwaysOnTop(true);
-		setVisible(true);
-
-		//countdown();
-
+		//start the first round
 		newround();
 		
 
-		// wertung.revalidate();
 
 	}
 
-	// Anfang Methoden
-	// Ende Methoden
+	//beginning of methods
 
-	/*
-	 * public void update() { wwertung= "src/Pics/fail.jpeg";
-	 * Lernspiel.wertung.revalidate(); }
-	 */
-
+	
+	//add and initialize KeyListener
 	public void setListener() {
+		
+		/**
+		 * add KeyListener to the text-field
+		 */
 		text.addKeyListener(new KeyListener() {
 			
+			/**
+			 * action if a key is pressed
+			 */
 			public void keyPressed(KeyEvent e) {
 				
-				eingabe = e.getKeyChar();
-				switch (eingabe) {
+				//get the current key pressed
+				//depending on which key is pressed, update the image of the according key
+				//and set the according boolean value to true
+				input = e.getKeyChar();
+				switch (input) {
 				case 'q':
-					tasten[0] = true;
-					updatetasten(0, true);
+					keys[0] = true;
+					updateKeys(0, true);
 					break;
 				case 'w':
-					tasten[1] = true;
-					updatetasten(1, true);
+					keys[1] = true;
+					updateKeys(1, true);
 					break;
 				case 'e':
-					tasten[2] = true;
-					updatetasten(2, true);
+					keys[2] = true;
+					updateKeys(2, true);
 					break;
 				case 'r':
-					tasten[3] = true;
-					updatetasten(3, true);
+					keys[3] = true;
+					updateKeys(3, true);
 					break;
 				case 'v':
-					tasten[4] = true;
-					updatetasten(4, true);
+					keys[4] = true;
+					updateKeys(4, true);
 					break;
 				case 'n':
-					tasten[5] = true;
-					updatetasten(5, true);
+					keys[5] = true;
+					updateKeys(5, true);
 					break;
 				case 'u':
-					tasten[6] = true;
-					updatetasten(6, true);
+					keys[6] = true;
+					updateKeys(6, true);
 					break;
 				case 'i':
-				    tasten[7] = true;
-					updatetasten(7, true);
+				    keys[7] = true;
+					updateKeys(7, true);
 					break;
 				case 'o':
-		        	tasten[8] = true;
-					updatetasten(8, true);
+		        	keys[8] = true;
+					updateKeys(8, true);
 					break;
 				case 'p':
-			     	tasten[9] = true;
-					updatetasten(9, true);
+			     	keys[9] = true;
+					updateKeys(9, true);
 					break;
 				default:
 
 					break;
-				}
-				
-				
-				
+				}	
 			}
 			
 
+			//action if a key is released
 			public void keyReleased(KeyEvent e) {
-				// text.dispatchEvent(e);
+					
+				
+				//if the no key of the combination was released yet, 
+				//set it to true to state that the first one is now released
 				if (firstKey==false) {
 					firstKey=true;
-					timer.schedule(new Checker(),typingTime);
+					
+					//end the timer of the round-length, because now a combination is entered
+					RoundTimer.cancel();
+					
+					//start the timer for releasing the left keys
+					typingTimer.schedule(new Checker(), typingTime);
+					
+					//set the reaction time to the current system time
 					time = System.currentTimeMillis();
 				}
 				else{
 					
 				}
 				
-				eingabe = e.getKeyChar();
-				switch (eingabe) {
+				
+				//check the input
+				//update the image and set the keys for this combination to true
+				//like in KeyReleased()
+				input = e.getKeyChar();
+				switch (input) {
 				case 'q':
-					tasten[0] = true;
-					updatetasten(0, false);
+					keys[0] = true;
+					updateKeys(0, false);
 					break;
 				case 'w':
-					tasten[1] = true;
-					updatetasten(1, false);
+					keys[1] = true;
+					updateKeys(1, false);
 					break;
 				case 'e':
-					tasten[2] = true;
-					updatetasten(2, false);
+					keys[2] = true;
+					updateKeys(2, false);
 					break;
 				case 'r':
-					tasten[3] = true;
-					updatetasten(3, false);
+					keys[3] = true;
+					updateKeys(3, false);
 					break;
 				case 'v':
-					tasten[4] = true;
-					updatetasten(4, false);
+					keys[4] = true;
+					updateKeys(4, false);
 					break;
 				case 'n':
-					tasten[5] = true;
-					updatetasten(5, false);
+					keys[5] = true;
+					updateKeys(5, false);
 					break;
 				case 'u':
-					tasten[6] = true;
-					updatetasten(6, false);
+					keys[6] = true;
+					updateKeys(6, false);
 					break;
 				case 'i':
-					tasten[7] = true;
-					updatetasten(7, false);
+					keys[7] = true;
+					updateKeys(7, false);
 					break;
 				case 'o':
-					tasten[8] = true;
-					updatetasten(8, false);
+					keys[8] = true;
+					updateKeys(8, false);
 					break;
 				case 'p':
-					tasten[9] = true;
-					updatetasten(9, false);
+					keys[9] = true;
+					updateKeys(9, false);
 					break;
 				default:
 
 					break;
 				}
 				
-				if ((tasten[0]==true) && (tasten[1]==true) && (tasten[2]==true) && (tasten[3]==true) && (tasten[4]==true) && (tasten[5]==false) && (tasten[6]==false) && (tasten[7]==false) && (tasten[8]==false) && (tasten[9]==false)) {
-					//System.exit(0);
-					ende=true;
-			        //setVisible(false);
-					durchschnitt=summe / zaehler;
-					Fehler Fehler = new Fehler("Statistik",runden,fehler,durchschnitt, parent);
-					Fehler.setVisible(true);
-					//parent.setVisible(true);
-					dispose();
-				} else {
-					
-				}
 				
-
-				// text.dispatchEvent(e);
-				/*
-				 * System.out.println(e); eingabe = e.getKeyCode(); switch
-				 * (eingabe) { case 49: tasten[0] = true; updatetasten(0, true);
-				 * break; case 50: tasten[1] = true; updatetasten(1, true);
-				 * break; case 51: tasten[2] = true; updatetasten(2, true);
-				 * break; case 52: tasten[3] = true; updatetasten(3, true);
-				 * break; case 53: tasten[4] = true; updatetasten(4, true);
-				 * break; case 54: tasten[5] = true; updatetasten(5, true);
-				 * break; case 55: tasten[6] = true; updatetasten(6, true);
-				 * break; case 56: tasten[7] = true; updatetasten(7, true);
-				 * break; case 57: tasten[8] = true; updatetasten(8, true);
-				 * break; case 48: tasten[9] = true; updatetasten(9, true);
-				 * break; default:
-				 * 
-				 * break; }
-				 */
-
+				
+				
+				//if only the first 5 Keys were pressed, end the game and show the stats-window
+				if ((keys[0]==true) && (keys[1]==true) && (keys[2]==true) && (keys[3]==true) && (keys[4]==true) && (keys[5]==false) && (keys[6]==false) && (keys[7]==false) && (keys[8]==false) && (keys[9]==false)) {
+					
+					//end-boolean sets true
+					end=true;
+			        
+				} else {	
+				}
 			}
+			
 
 			public void keyTyped(KeyEvent e) {
 			}
@@ -349,96 +464,152 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		});
 	}
 
+	
+	/**
+	 * check if entered combination is correct
+	 */
 	public void check() {
-		richtig = true;
+		//"expect" a correct result
+		correct = true;
+		
+		//if any key doesn't fit the desired combination, set the correct-boolean to false
 		for (int i = 0; i < 10; i++) {
-			if (((kombis[i][kombi] == 0) && (tasten[i] == false))
-					|| (kombis[i][kombi] == 1) && (tasten[i] == true)) {
+			if (((combis[i][combi] == 0) && (keys[i] == false))
+					|| (combis[i][combi] == 1) && (keys[i] == true)) {
 
 			} else {
-				richtig = false;
+				correct = false;
 			}
 		}
-		if (richtig==true){
+		
+		//if correct, play the according symbol-sound and an applause-sound
+		//get the reaction time (includes updating the evaluation image)
+		if (correct==true){
 			playsound();
 			sleep(500);
 			playsound("clap");
 			getreaction();
 		}
+		
+		//if wrong, increase errors and update labels and play a sound
 		else{
-			fehler++;
-			updatewertung("fail.jpeg");
-			updatezeit("Falsche Eingabe");
+			errors++;
+			updateEvaluation("fail.jpeg");
+			updateTime("Falsche Eingabe");
 			playsound("wrong");
 		}
-		runden++;
-
-			
-			newround();
-			
-
 		
+		/*
+		 * increase rounds
+		 */
+		rounds++;
+
+		/*
+		 * if this was the first round, the next one isn't anymore (kind of logical)
+		 */
+		if(firstRound==true){
+			firstRound=false;
+			
+		}else{}
+			
+		//start new round
+			newround();	
 	}
 
+	
+	/**
+	 * get the reaction time (time needed to make an input)
+	 */
+	
 	public void getreaction() {
 		
+		/**
+		 * reaction time=current time - time, when the symbol occured
+		 */
 		double reaction = (Math.round((time - occtime) * 10) / 10000.0);
-		if (zaehler==0){
-			summe=reaction;
-		}
-		else{
-		  summe=summe+reaction;	
-		}
-		zaehler++;
-		updatezeit(reaction);
-		updatewertung(reaction);
+				
+		  sum=sum+reaction;	
+		
+		/**
+		 * update the time-label (show the reaction time)
+		 */
+		updateTime(reaction);
+		
+		/**
+		 * update the evaluation image(according to reaction time)
+		 */
+		updateEvaluation(reaction);
 	}
-
+	
+	
+	/**
+	 * start new round
+	 */
 	public void newround() {
-		zeichen.setFont(new Font("Arial", 255, 200));
-		newletter();
-		updatezeichen();
-		updatetasten();
-		occtime = System.currentTimeMillis();		
+		/**
+		 * set Font
+		 */
+		symbolLabel.setFont(new Font("Arial", 255, 200));
+		
+		/*
+		 * choose new symbol and according combination to enter
+		 * update the related images
+		 */
+		
+		newSymbol();
+		updateSymbol();
+		updateKeys();
+		
+		/*
+		 * start timer and set occurence time of the desired symbol
+		 */
+		RoundTimer=new Timer();
+		RoundTimer.schedule(new Next(), endTime);
+		occtime = System.currentTimeMillis();
+		
+		/*
+		 * reset firstKey-Flag and all keys
+		 */
 		firstKey=false;
 		for (int i =0; i<10;i++) {
-		tasten[i] = false;
+		keys[i] = false;
 		}
 
 	}
 
- /*	public void countdown() {
-		for (time=3;time>0;time--){
-		timer.schedule(new Checker(), 1000);
-	}
-		firstRound=false;
-	}*/
-
-
-
-	/*public void countdown() {
-		for (time=3;time>0;time--){
-		timer.schedule(new Checker(), 1000);
-	}
-		firstRound=false;
-	}*/
 	
-	public void newletter() {
-		int length=kombis[0].length;
+	/**
+	 * sets new Symbol
+	 */
+	public void newSymbol() {
+		
+		/*
+		 * select random combination in the combination-array by using system time
+		 */
+		int length=combis[0].length;
 		long random = (System.currentTimeMillis() % (length-1));
-		kombi = (int) random;
-		while(kombis[10][kombi]==0){
-			if ((kombi+1) > (length-1)){
-				kombi=0;
+		combi = (int) random;
+		
+		/*
+		 * don't use symbols with ascii-code 0 (used by other classes for navigation)
+		 */
+		while(combis[10][combi]==0){
+			if ((combi+1) > (length-1)){
+				combi=0;
 			}
 			else{
-				kombi++;
+				combi++;
 			}
 			
 		}
-		letter = (((char) kombis[10][kombi]));
+		symbol = (((char) combis[10][combi]));
+		
 	}
 
+	/**
+	 * sleep for [sleeptime] milliseconds
+	 * @param sleeptime
+	 */
 	public void sleep(Integer sleeptime) {
 		try {
 
@@ -446,159 +617,228 @@ public class Lernspiel extends JFrame implements SwingConstants {
 		} catch (InterruptedException e) {
 		}
 	}
+	
 
-	public void updatetasten() { // updatet das Tastenbild-Feld komplett
+	/**
+	 * update key images according to the desired combination
+	 */
+	public void updateKeys() { 
 
 		for (int i = 0; i < 10; i++) {
-			if (kombis[i][kombi] == 1) {
+			if (combis[i][combi] == 1) {
 				createImage("key_press.jpeg");
-				tastenbild[i].setImage(taste);
+				keyLabel[i].setImage(keyPic);
 			} else {
 				createImage("key_dontpress.jpeg");
-				tastenbild[i].setImage(taste);
+				keyLabel[i].setImage(keyPic);
 			}
 		}
 
 	}
 
-	public void updatetasten(int i, boolean pressed) { // ï¿½ndert das Bild, je
-														// nachdem welche Tasten
-														// im Moment gedrï¿½ckt
-														// werden
+	/**
+	 * updates a certain key-image when this key is pressed or release
+	 * different images are used if this key is pressed or not and if it shall be pressed or not
+	 * @param i defines which key is to be updated
+	 * @param pressed defines if this key is pressed
+	 */
+	public void updateKeys(int i, boolean pressed) { 
 		
 		if ((i >= 0) && (i < 10)) {
 			if (pressed == true)  {
-				if(kombis[i][kombi] == 1){
+				if(combis[i][combi] == 1){
 				createImage("key_green.png");
-				tastenbild[i].setImage(taste);
+				keyLabel[i].setImage(keyPic);
 				
 				}
 				else{
 					createImage("key_red.png");
-					tastenbild[i].setImage(taste);
+					keyLabel[i].setImage(keyPic);
 						
 				}
 					
 			} 
 			else {
-				// tastenbild[i].setIcon(new ImageIcon("src/Pics/unused.jpeg"));
-				if (kombis[i][kombi] == 1) {
+				if (combis[i][combi] == 1) {
 					createImage("key_press.jpeg");
-					tastenbild[i].setImage(taste);
+					keyLabel[i].setImage(keyPic);
 				} else {
 					createImage("key_dontpress.jpeg");
-					tastenbild[i].setImage(taste);;
+					keyLabel[i].setImage(keyPic);;
 				}
 			}
 
 		} else {
-			System.out.println("Seltsamer Fehler !!!  " + i + "  " + pressed);
+			System.out.println("Ein Fehler ist aufgetreten" + i + "  " + pressed);
 		}
 	}
 	
+	/**
+	 * creates images for the key images
+	 * @param image defines the file name of the image (NOTE: this also has to include the file ending e.g. "image.jpg")
+	 */
 	public void createImage(String image){
 		try {
-			taste = ImageIO.read( new File("src/Pics/" + image) );
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			keyPic = ImageIO.read( new File("src/Pics/" + image) );
+		} catch (IOException e) {		
 			System.out.println("Datei nicht gefunden");
 		}
 	}
 
-	public void updatewertung(String image){ // updatet das Wertungsbild
+	/**
+	 * updates the label {@link evaluation}
+	 * @param image defines the picture to be used
+	 */
+	public void updateEvaluation(String image){ 
 		try {
-			bewertung = ImageIO.read( new File("src/Pics/" + image) );
+			evaluationPic = ImageIO.read( new File("src/Pics/" + image) );
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Datei nicht gefunden");
 		}
 		
-		wertung.setImage(bewertung);
+		evaluation.setImage(evaluationPic);
 	}
 
-	public void updatewertung(double reaction) { // ï¿½ndert das Wertungsbild je
-													// nach Reaktionszeit
+	
+	/**
+	 * updates the evaluation label according to the reaction
+	 * @param reaction
+	 */
+	public void updateEvaluation(double reaction) { 
+		
 		if (reaction < 1.5) {
-			updatewertung("awesome" + ((int)(kombi %2) + 1) + ".jpeg");
+			updateEvaluation("awesome" + ((int)(combi %2) + 1) + ".jpeg");
 		} else if (reaction < 3) {
-			updatewertung("nice.jpeg");
+			updateEvaluation("nice.jpeg");
 		} else {
-			updatewertung("slow.jpeg");
+			updateEvaluation("slow.jpeg");
 		}
 
 	}
 	
+	/**
+	 * plays the current desired symbol as a sound
+	 */
 	public void playsound(){
-		Sound.playSound(kombis[10][kombi]);
+		Sound.playSound(combis[10][combi]);
+		
 	}
 	
+	/**
+	 * plays a certain sound
+	 * @param string defines the name of the soundfile
+	 */
 	public void playsound(String string){
 		Sound.playSound(string);
 	}
-
-	public void updatezeit(double time) { // updatet die Zeit
-
-		zeit.setText("Reaktionszeit: " + time + " s");
-	}
-
-	public void updatezeit(int time) { // updatet die Zeit
-
-		zeit.setText(time + "");
-	}
 	
-	public void updatezeit(String string){
-		zeit.setText(string);
+	/**
+	 * updates the time-label according to the reaction time
+	 * @param time
+	 */
+	public void updateTime(double time) { 
+
+		timeLabel.setText("Reaktionszeit: " + time + " s");
 	}
 
-	public void updatezeichen() { // updatet das Zeichen, dass eingegeben werden
-									// soll
-		if(kombis[10][kombi]>32){
-		zeichen.setText(letter + "");
+	/**
+	 * updates the time label with the given string
+	 * @param string
+	 */
+	public void updateTime(String string){
+		timeLabel.setText(string);
+	}
+
+	/**
+	 * updates the symbol in the symbol label with the desired symbol
+	 */
+	public void updateSymbol() { 
+		if(combis[10][combi]>32){
+		symbolLabel.setText(symbol + "");
 		}
 		else{
-			zeichen.setFont(new Font("Arial", 255, 32));
-//			zeichen.setText("Steuerzeichen");
-			switch(kombis[10][kombi]){
-			case 8: zeichen.setText("Rücktaste"); break;
-			case 9: zeichen.setText("Tabulator"); break;
-			case 13: zeichen.setText("Enter"); break;
-			case 27: zeichen.setText("Escape"); break;
-			case 32: zeichen.setText("Leerzeichen"); break;
-			default: zeichen.setText("Steuerzeichen"); break;
+			symbolLabel.setFont(new Font("Arial", 255, 32));
+			switch(combis[10][combi]){
+			case 8: symbolLabel.setText("Rücktaste"); break;
+			case 9: symbolLabel.setText("Tabulator"); break;
+			case 13: symbolLabel.setText("Enter"); break;
+			case 27: symbolLabel.setText("Escape"); break;
+			case 32: symbolLabel.setText("Leerzeichen"); break;
+			default: symbolLabel.setText("Steuerzeichen"); break;
 			}
 		}
 	}
-
-	public String kombipfad() { // legacy method
-		return "src/Pics/" + letter + ".jpeg";
-	}
-
 	
-	/* Starten des Programms in das RootMenu ausgelagert 
-	 * Instanziierung des Lernspiels
+	
+	/**
+	 * end the game and switch to stats-window
 	 */
-	/*public static void main(String[] args) {
-		new Lernspiel("Lernspiel");
-
-	}*/
+	public void endGame(){
+		// calculate average reaction time
+		average=sum / (rounds-errors);
+		
+		//call the stats-window
+		Fehler Fehler = new Fehler("Statistik",rounds,errors,average, parent);
+		Fehler.setVisible(true);
+		
+		/**
+		 * close window
+		 */
+		dispose();
+	}
 	
-	public class Checker extends TimerTask{
-		public Checker(){
-			
+	/**
+	 * close window and end the running timers
+	 */
+	@Override
+	public void dispose() {
+		
+		typingTimer.cancel();
+		RoundTimer.cancel();
+		   super.dispose();
 		}
+
+	
+	/**
+	 * Timer-Class to run {@link check()} after the specified {@link typingTime}
+	 * @author Kevin Articus
+	 *
+	 */
+	public class Checker extends TimerTask{ 
+
+		
 		public void run() {
-			
-			if(ende==false){
+			if (end==false){
 				check();
 			}
-			else {}
+			else{
+				endGame();
+			}
 			
-				
+		}
+		
+	}
+	
+	
+	/**
+	 * Timer Class to run {@link check()} after automatic round-end has been reached
+	 * @author Kevin Articus
+	 *
+	 */
+	public class Next extends TimerTask{ 
+		
+		public void run() {
+			if (end==false){
+			check();
+			timeLabel.setText("zu langsam");
+			}
+			else{
+				endGame();
+			}
 		}
 	}
 	
+	
 
 	
-	
-	
-}
+	}

@@ -7,14 +7,12 @@ import java.util.TimerTask;
 class MappKeyCode extends TimerTask {
 
 	RootMenu parent;
-	Editor editor;
 	Email email;
 	int numOfKeys, numOfPoss;
 	boolean isEditor=false;
 
-	public MappKeyCode(RootMenu root, Editor e, int keys, int poss) {
+	public MappKeyCode(RootMenu root, int keys, int poss) {
 		parent = root;
-		editor = e;
 		numOfKeys = keys;
 		numOfPoss = poss;
 		isEditor = true;
@@ -38,23 +36,10 @@ class MappKeyCode extends TimerTask {
 	 * @throws AWTException
 	 */
 	public void mapp() {
-		/*
-		 * System.out.println("numOfPoss: " + numOfPoss);
-		 * System.out.println("numOfKeys: " + numOfKeys);
-		 * System.out.println("Mapping: " + parent.getMapping()[10][0]);
-		 * System.out.println("flag: " + parent.getFlag()[0]);
-		 */
-
-//		System.out.println("runMapp()");
-//		for (int i = 0; i < 10; i++) {
-//			System.out.print(parent.getFlag()[i]);
-//		}
-//		System.out.println();
 
 		for (int i = 0; i < numOfPoss; i++) {
 			for (int k = 0; k < numOfKeys - 3; k++) {
 				if (k == numOfKeys - 4) {
-					// System.out.println("if k == numOfKeys-1");
 					if (parent.getMapping()[k+1][i] == 1 && isEditor)
 						activeEditorButton(k + 2, i);
 					else {
@@ -64,8 +49,6 @@ class MappKeyCode extends TimerTask {
 									if (parent.getMapping()[k + n][i] != 0)
 										try {
 											Robot r = new Robot();
-											System.out.println("Pressed KeyCode: "+parent.getMapping()[k
-													+ n][i]);
 											parent.forward=true;
 											r.keyPress(parent.getMapping()[k
 													+ n][i]);
@@ -85,8 +68,6 @@ class MappKeyCode extends TimerTask {
 						}
 					}
 				} else if (parent.getMapping()[k][i] != parent.getFlag()[k]) {
-//					System.out.println("break");
-//					System.out.println("k: " + k + "i: "+ i);
 					break;
 				}
 			}
@@ -94,7 +75,6 @@ class MappKeyCode extends TimerTask {
 	}
 
 	public void activeEditorButton(int k, int i) {
-//		System.out.println("Activate Button: " + parent.getMapping()[k][i]);
-		editor.getButtonArray()[parent.getMapping()[k][i]].doClick();
+		Editor.buttonArray[parent.getMapping()[k][i]].doClick();
 	}
 }
