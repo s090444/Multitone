@@ -7,16 +7,15 @@ package lernspiel;
 //package lernspiel;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.*;
 /**
  *
  * @author Excalipoor
  */
+@SuppressWarnings("serial")
 public class ColorField extends JPanel {
   private BufferedImage img = new BufferedImage(256, 256, BufferedImage.TYPE_4BYTE_ABGR);
   private int alpha = 255;
@@ -48,7 +47,8 @@ public class ColorField extends JPanel {
   	changed = true;
   }
 
-  public static void main(String[] bla) {
+  @SuppressWarnings("deprecation")
+public static void main(String[] bla) {
   	final JFrame f = new JFrame("Make the world a colorful place");
   	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   	f.setSize(400, 400);
@@ -79,5 +79,6 @@ public class ColorField extends JPanel {
   	f.getContentPane().add(blueSlider, BorderLayout.SOUTH);
 
   	f.show();
+
   }
 }
