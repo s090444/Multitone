@@ -828,7 +828,7 @@ public class RootMenu extends JFrame implements KeyListener {
 		case 1:
 
 			if (menuCounter <= 3) {
-				new Lernspiel("Lernspiel", root, this.menuCounter);
+				new LearningGame("Lernspiel", root, this.menuCounter);
 				System.out.println("starte Lernspiel in Schwierigkeitsgrad "
 						+ this.menuCounter + " ...");
 			}
