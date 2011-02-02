@@ -27,7 +27,7 @@ public class ReadMapping {
 			f = new RandomAccessFile("Mapping.txt", "r");
 			for (int i = 0; i < numOfPoss; i++) {
 				for (String line; (line = f.readLine()) != null;) {
-					for (int k = 0; k < numOfKeys + 1; k++) {
+					for (int k = 0; k < numOfKeys; k++) {
 						int index = line.indexOf(';');
 						mapping[k][i] = Integer.parseInt(line.substring(0,
 								index));
