@@ -72,12 +72,11 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	        jTextPane1 = new javax.swing.JTextPane();
 	        jTextPane1.addKeyListener(this);
 	        jButton1 = new javax.swing.JButton();
-	        jButton1.addKeyListener(this);
+	       jButton1.addKeyListener(this);
 	        jButton2 = new javax.swing.JButton();
 	        jButton2.addKeyListener(this);
 	        jButton3 = new javax.swing.JButton();
 	        jButton3.addKeyListener(this);
-
 	        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 	        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Head"));
@@ -343,12 +342,13 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 	    public void keyPressed(KeyEvent e) {
 	    	
 	    	if (e.getKeyCode()== 27){
-	    		parent.setVisible(true);
-				dispose();
-
-	    	}
-	    	
-	    	
+//	    		parent.setVisible(true);
+//				dispose();}
+	    	jButton2.doClick();}
+				if (e.getKeyCode()== 80){
+					getFocusOwner().transferFocus();}
+				
+				
 	    	
 	    	System.out.println(e.getKeyCode());
 	    }
@@ -356,9 +356,8 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 		// Handle keyTyped Event
 
 		public void keyTyped(KeyEvent e) {
-			
-			
-			// let pass events from Robot()
+				// let pass events from Robot()
+
 			if (parent.forward) {
 				parent.forward = false;
 				Sound.playSound((int) e.getKeyChar());
@@ -378,14 +377,18 @@ public class Email extends javax.swing.JFrame implements KeyListener{
 
 		// Handle keyReleased Event
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode()== 154){
-				getFocusOwner().transferFocus();}
+			if ((e.getKeyCode()==32) &&(getFocusOwner().getClass().getCanonicalName()=="javax.swing.JButton")){
+				getFocusOwner().transferFocus();
+			}
 			if (parent.release) {
 				parent.release = false;
 				e.consume();
 			} else {
 				parent.setFlag(e, 0);
 			}
+			
+    	
+    	
 		}
 		
 		
